@@ -29,11 +29,6 @@ const turfAdminSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        GST: {
-            type: String,
-            required: true,
-            unique: true,
-        },
         aadhar: {
             type: String,
             required: true,

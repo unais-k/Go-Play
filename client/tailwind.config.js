@@ -9,6 +9,7 @@ module.exports = {
             },
             fontFamily: {
                 admin: ["Roboto Slab", "serif"],
+                groundAdd: ["Roboto Mono", "monospace"],
             },
         },
     },

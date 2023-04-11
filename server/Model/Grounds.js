@@ -8,15 +8,24 @@ const groundSchema = new mongoose.Schema(
             max: 30,
             required: true,
         },
+        email: {
+            type: String,
+            unique: true,
+            required: true,
+        },
         address: {
             type: String,
             required: true,
         },
         nearCity: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "city",
+        },
+        images: {
+            type: Array,
             required: true,
         },
-        locality: {
+        place: {
             type: String,
             required: true,
         },
@@ -28,6 +37,11 @@ const groundSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
+        priceAtNight: {
+            type: Number,
+            required: true,
+        },
+
         groundType: {
             type: String,
             required: true,

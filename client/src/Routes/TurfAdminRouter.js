@@ -2,13 +2,18 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import TurfAdminLogin from "../Pages/Turf-Admin/Login";
 import TurfRegisterPage from "../Pages/Turf-Admin/Register";
+import TurfAdminHome from "../Pages/Turf-Admin/Home";
+import GroundList from "../Pages/Turf-Admin/GroundList";
+import GroundAdd from "../Pages/Turf-Admin/GroundAdd";
 function TurfAdminRouter() {
     return (
         <div>
             <Routes>
                 <Route path="/login" element={<TurfAdminLogin />} />
                 <Route path="/register" element={<TurfRegisterPage />} />
-                <Route path="/home" />
+                <Route path="/home" element={<TurfAdminHome />} />
+                <Route path="/ground-list" element={<GroundList />} />
+                <Route path="/ground-add" element={<GroundAdd />} />
             </Routes>
         </div>
     );
