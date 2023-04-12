@@ -6,7 +6,7 @@ function Inbox() {
     return (
         <div className="flex">
             <SidebarPage />
-            <div className="">
+            <div className=" flex h-fit">
                 <InboxPage />
             </div>
         </div>

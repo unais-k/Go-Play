@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { MdDelete } from "react-icons/md";
+import { message } from "antd";
+import { addGroundReqApi } from "../../../API/Services/TurfAdminRequest";
+import { useNavigate } from "react-router-dom";
 
 function AddGroundPage() {
+    const navigate = useNavigate();
     const type = [{ name: "Turf" }, { name: "Soapy" }, { name: "Grass" }, { name: "Sand" }, { name: "Court" }];
     const size = [
         { name: "5 * 5" },
@@ -10,13 +15,88 @@ function AddGroundPage() {
         { name: "10 * 10" },
         { name: "11 * 11" },
     ];
+
+    const base64 = (img) => {
+        setProfileImage(img.target.files[0]);
+        setImagePreview(URL.createObjectURL(img.target.files[0]));
+        let reader = new FileReader();
+        reader.readAsDataURL(img.target.files[0]);
+        reader.onload = () => {
+            setFormData({ ...formData, picturePath: reader.result });
+        };
+        reader.onerror = (error) => {
+            console.log("Error: ", error);
+        };
+    };
+    const [formData, setFormData] = useState({
+        picturePath: "",
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        nearCity: "",
+        place: "",
+        state: "",
+        price: "",
+        priceAtNight: "",
+        groundType: "",
+        size: "",
+    });
+
     const [profileImage, setProfileImage] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
 
-    const handleImageChange = () => {};
+    const handleInputChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+    console.log(profileImage, 111);
+    console.log(formData);
+
+    const inputRef = useRef(null);
+    const handleDelete = () => {
+        setImagePreview(null);
+        inputRef.current.value = null;
+        setProfileImage(null);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (
+            formData.picturePath === "" ||
+            formData.name === "" ||
+            formData.groundType === "" ||
+            formData.size === "" ||
+            formData.nearCity === "" ||
+            formData.email === "" ||
+            formData.phone === "" ||
+            formData.address === "" ||
+            formData.place === "" ||
+            formData.state === "" ||
+            formData.price === "" ||
+            formData.priceAtNight === ""
+        ) {
+            message.error("All fields are required");
+            return false;
+        }
+        if (!/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)) {
+            message.error("Invalid email address.");
+            return false;
+        }
+        if (!/^\d{10}$/.test(formData.phone)) {
+            message.error("Invalid phone number. Phone number must be 10 digits long.");
+            return false;
+        }
+
+        const response = await addGroundReqApi(formData);
+        if (response.status === 200) {
+            navigate("/turf-admin/ground-list");
+            message.success("New Ground added");
+        } else {
+            message.error("Something went wrong");
+        }
     };
 
     return (
@@ -25,7 +105,7 @@ function AddGroundPage() {
                 <h2 className="text-center text-3xl m-3 text-groundAdd">Start a new Venue</h2>
             </div>
             <div class="container mx-auto w-8/12">
-                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
                     <div class="mb-4 flex">
                         <div className="w-8/12 h-1/12">
                             <label class="block text-gray-700 font-bold mb-2" for="company_name">
@@ -34,23 +114,29 @@ function AddGroundPage() {
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="company_name"
-                                name="name"
-                                onChange={handleImageChange}
+                                name="picturePath"
+                                ref={inputRef}
+                                onChange={base64}
+                                acceptedFiles=".jpg,.jpeg,.png"
                                 type="file"
                                 placeholder="Enter your company name"
                             />
-                            <p>{isLoading ? "Uploading" : ""}</p>
                         </div>
-                        <div>{imagePreview}</div>
+                        <div className="h-40 w-40">
+                            {imagePreview && <img src={imagePreview && imagePreview} alt="ProfileImage" />}
+                        </div>
                     </div>
+                    <div onClick={handleDelete}>{imagePreview ? <MdDelete /> : ""}</div>
+
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold mb-2" for="company_name">
                             Full Name
                         </label>
                         <input
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="company_name"
+                            id=""
                             name="name"
+                            onChange={handleInputChange}
                             type="text"
                             placeholder="Enter your company name"
                         />
@@ -63,6 +149,7 @@ function AddGroundPage() {
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="email"
                             name="email"
+                            onChange={handleInputChange}
                             type="email"
                             placeholder="Enter company email address"
                         />
@@ -73,8 +160,9 @@ function AddGroundPage() {
                         </label>
                         <input
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="password"
+                            id="phone"
                             type="text"
+                            onChange={handleInputChange}
                             name="phone"
                             placeholder="Enter your Dial number"
                         />
@@ -86,6 +174,7 @@ function AddGroundPage() {
                         <textarea
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="address"
+                            onChange={handleInputChange}
                             name="address"
                             placeholder="Enter your Turf's address"
                         ></textarea>
@@ -98,9 +187,11 @@ function AddGroundPage() {
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             name="nearCity"
+                            onChange={handleInputChange}
                             placeholder="Enter your Nearest City"
                         >
-                            <option value="">City</option>
+                            <option value="">Choose One City</option>
+                            <option value="nearCity">City</option>
                         </select>
                     </div>
                     <div class="mb-4">
@@ -110,6 +201,7 @@ function AddGroundPage() {
                         <input
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
+                            onChange={handleInputChange}
                             name="place"
                             placeholder="Enter company Place"
                         ></input>
@@ -122,6 +214,7 @@ function AddGroundPage() {
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="password"
                             type="text"
+                            onChange={handleInputChange}
                             name="state"
                             placeholder="Enter your State"
                         />
@@ -135,6 +228,7 @@ function AddGroundPage() {
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="password"
                                 type="text"
+                                onChange={handleInputChange}
                                 name="price"
                                 placeholder="Enter your price"
                             />
@@ -147,6 +241,7 @@ function AddGroundPage() {
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="password"
                                 type="text"
+                                onChange={handleInputChange}
                                 name="priceAtNight"
                                 placeholder="Enter your Price at night"
                             />
@@ -161,9 +256,11 @@ function AddGroundPage() {
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="password"
                                 type="text"
-                                name="state"
+                                onChange={handleInputChange}
+                                name="groundType"
                                 placeholder="Enter your password"
                             >
+                                <option value="">Choose ground type</option>
                                 {type.map((obj, index) => {
                                     return (
                                         <option key={index + Math.round(Math.random) * 124} value={obj.name}>
@@ -181,8 +278,10 @@ function AddGroundPage() {
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="password"
                                 type="text"
-                                name="state"
+                                onChange={handleInputChange}
+                                name="size"
                             >
+                                <option value="">Choose size</option>
                                 {size.map((obj, index) => {
                                     return (
                                         <option key={index + Math.round(Math.random) * 124} value={obj.name}>
@@ -192,6 +291,11 @@ function AddGroundPage() {
                                 })}
                             </select>
                         </div>
+                    </div>
+                    <div>
+                        <button className="bg-black text-white rounded py-2 px-4 m-3" type="submit">
+                            Submit
+                        </button>
                     </div>
                 </form>
             </div>

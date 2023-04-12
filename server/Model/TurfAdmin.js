@@ -34,6 +34,10 @@ const turfAdminSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
+        status: {
+            type: Boolean,
+            default: false,
+        },
     },
     { timestamps: true }
 );

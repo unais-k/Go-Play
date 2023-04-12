@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AxiosClient } from "../../../API/AxiosInstance";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../../Utils/Store/Slice/Client";
 import { FormValidate } from "../../../Utils/Helpers/FormValidate";

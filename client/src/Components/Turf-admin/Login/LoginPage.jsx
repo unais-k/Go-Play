@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AxiosClient } from "../../../API/AxiosInstance";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../../Utils/Store/Slice/Client";
 import { FormValidate } from "../../../Utils/Helpers/FormValidate";
-import { userLogin } from "../../../API/Services/authReq";
+import { turfAdminLogin } from "../../../API/Services/authReq";
 import { message } from "antd";
 
 function TurfLoginPage() {
@@ -27,7 +26,7 @@ function TurfLoginPage() {
         return Object.keys(newErrors).length === 0;
     };
     const submit = async (res) => {
-        const resp = await userLogin(res).then((response) => {
+        const resp = await turfAdminLogin(res).then((response) => {
             if (response?.status === 401) message.warning("Login credential error");
             else if (response?.status === 200) {
                 console.log(response.data);
@@ -35,7 +34,7 @@ function TurfLoginPage() {
                 const name = response.data.name;
                 message.success(`${name} Welcome`);
                 dispatch(setLogin({ token: token, name: name }));
-                navigate("/");
+                navigate("/turf-admin/home");
             } else if (response?.status === 500) message.error(response.data.error);
         });
     };

@@ -5,12 +5,14 @@ import TurfRegisterPage from "../Pages/Turf-Admin/Register";
 import TurfAdminHome from "../Pages/Turf-Admin/Home";
 import GroundList from "../Pages/Turf-Admin/GroundList";
 import GroundAdd from "../Pages/Turf-Admin/GroundAdd";
+import RegSuccess from "../Pages/Turf-Admin/RegSuccess";
 function TurfAdminRouter() {
     return (
         <div>
             <Routes>
                 <Route path="/login" element={<TurfAdminLogin />} />
                 <Route path="/register" element={<TurfRegisterPage />} />
+                <Route path="/regSuccess" element={<RegSuccess />} />
                 <Route path="/home" element={<TurfAdminHome />} />
                 <Route path="/ground-list" element={<GroundList />} />
                 <Route path="/ground-add" element={<GroundAdd />} />

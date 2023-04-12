@@ -59,6 +59,7 @@ export const turfAdminLogin = async (data) => {
 };
 
 export const turfAdminRegister = async (data) => {
+    console.log(data);
     try {
         const response = AxiosTurfAdmin.post("/register", data);
         return response;
