@@ -1,23 +1,39 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { message } from "antd";
+import { adminLog } from "../../../API/Services/authReq";
+import { setLogin } from "../../../Utils/Store/Slice/Admin";
 
 function AdminLoginPage() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errMsg, setErrMsg] = useState("");
 
-    const adminFormSubmit = (e) => {
-        // e.preventDefault();
-        // adminAxios.post("/adminLogin", { email, password }).then((response) => {
-        //     const result = response.data.adminResult;
-        //     if (result.Status) {
-        //         const token = result.token;
-        //         dispatch(AdminLogin({ token: token }));
-        //         navigate("/admin/admin_home");
-        //     } else {
-        //         setErrMsg(result.message);
-        //     }
-        // });
-        console.log("submit");
+    const adminFormSubmit = async (e) => {
+        e.preventDefault();
+        if (email === "" || password === "") {
+            message.error("All fields are required.");
+            return;
+        }
+        if (!/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            message.error("Invalid email address.");
+            return;
+        }
+
+        const response = await adminLog({ email: email, password: password });
+        console.log(response);
+        if (response.status == 200) {
+            dispatch(
+                setLogin({
+                    user: "Admin",
+                    token: response.data.token,
+                })
+            );
+            navigate("/admin/dash");
+        }
     };
 
     return (
@@ -69,7 +85,6 @@ function AdminLoginPage() {
                                     Login
                                 </button>
                             </div>
-                            {errMsg.length > 0 && <p className="text-red-500">{errMsg}</p>}
                         </form>
                     </div>
                 </div>

@@ -59,9 +59,10 @@ export const otpSend = async (req, res, next) => {
 
 export const otpVerify = async (req, res, next) => {
     try {
-        const { phone, otp } = req.body;
         console.log(req.body);
-        const response = await verifyOtp(phone, otp).catch((error) => next(error));
+        const { phone, otpValue } = req.body;
+        console.log(req.body);
+        const response = await verifyOtp(phone, otpValue).catch((error) => next(error));
         if (!response) return res.status(400).json({ message: "Invalid OTP" }); // 400bad request
         else return res.status(200).json({ message: "otp verified" });
 

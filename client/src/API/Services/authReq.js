@@ -28,6 +28,7 @@ export const otpSend = async (data) => {
 };
 
 export const otpVerify = async (data) => {
+    console.log(data);
     try {
         const response = AxiosClient.post("/otp-verify", data);
         return response;
@@ -40,7 +41,7 @@ export const otpVerify = async (data) => {
 
 export const adminLog = async (data) => {
     try {
-        const response = AxiosAdmin.post("/admin-login", data);
+        const response = AxiosAdmin.post("/", data);
         return response;
     } catch (error) {
         return error?.response;

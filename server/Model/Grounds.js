@@ -18,8 +18,8 @@ const groundSchema = new mongoose.Schema(
             required: true,
         },
         nearCity: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "city",
+            type: String,
+            required: true,
         },
         images: {
             type: Array,
@@ -41,7 +41,10 @@ const groundSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-
+        available: {
+            type: Boolean,
+            default: false,
+        },
         groundType: {
             type: String,
             required: true,

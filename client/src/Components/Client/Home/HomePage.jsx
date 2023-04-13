@@ -2,12 +2,11 @@ import React from "react";
 import "./HomePage.css";
 import { FiSearch } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa";
-import { useSelector } from "react-redux";
+
 function HomePage() {
     const truncate = (string, n) => {
         return string?.length > n ? string.substr(0, n - 1) + "..." : string;
     };
-    const token = useSelector((store) => store.userLogin.token);
     return (
         <div className="home-dash">
             <div className="bannerPage">

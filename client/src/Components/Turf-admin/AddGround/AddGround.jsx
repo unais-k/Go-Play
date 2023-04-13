@@ -1,11 +1,42 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { message } from "antd";
 import { addGroundReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { findCityReqApi } from "../../../API/Services/AdminRequest";
 
 function AddGroundPage() {
+    const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
+    const [list, setList] = useState([]);
+    const [formData, setFormData] = useState({
+        picturePath: "",
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        nearCity: "",
+        place: "",
+        state: "",
+        price: "",
+        priceAtNight: "",
+        groundType: "",
+        size: "",
+    });
+    const findCity = async () => {
+        await findCityReqApi().then(async (response) => {
+            console.log(response, "response");
+            if (response.status === 200) {
+                setList(response.data.result);
+            } else {
+                message.error("Something went wrong find");
+            }
+        });
+    };
+    useEffect(() => {
+        findCity();
+    }, [formData]);
     const type = [{ name: "Turf" }, { name: "Soapy" }, { name: "Grass" }, { name: "Sand" }, { name: "Court" }];
     const size = [
         { name: "5 * 5" },
@@ -28,20 +59,6 @@ function AddGroundPage() {
             console.log("Error: ", error);
         };
     };
-    const [formData, setFormData] = useState({
-        picturePath: "",
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        nearCity: "",
-        place: "",
-        state: "",
-        price: "",
-        priceAtNight: "",
-        groundType: "",
-        size: "",
-    });
 
     const [profileImage, setProfileImage] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
@@ -52,9 +69,6 @@ function AddGroundPage() {
             [e.target.name]: e.target.value,
         });
     };
-    console.log(profileImage, 111);
-    console.log(formData);
-
     const inputRef = useRef(null);
     const handleDelete = () => {
         setImagePreview(null);
@@ -90,7 +104,7 @@ function AddGroundPage() {
             return false;
         }
 
-        const response = await addGroundReqApi(formData);
+        const response = await addGroundReqApi(formData, token);
         if (response.status === 200) {
             navigate("/turf-admin/ground-list");
             message.success("New Ground added");
@@ -191,7 +205,9 @@ function AddGroundPage() {
                             placeholder="Enter your Nearest City"
                         >
                             <option value="">Choose One City</option>
-                            <option value="nearCity">City</option>
+                            {list.map((res) => {
+                                return <option value={res.City}>{res.City}</option>;
+                            })}
                         </select>
                     </div>
                     <div class="mb-4">

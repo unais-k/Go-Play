@@ -99,7 +99,9 @@ function OtpPage() {
         e.preventDefault();
         const values = Object.values(otp);
         const otpValue = values.join("");
-        const response = otpVerify(otp, formData.phone).then(async (res) => {
+        const phone = formData.phone;
+        console.log(phone, otpValue, "--------");
+        const response = otpVerify({ otpValue, phone }).then(async (res) => {
             if (res.status === 200) {
                 const data = await userRegister(formData);
                 if (data.status === 201) navigate("/login");

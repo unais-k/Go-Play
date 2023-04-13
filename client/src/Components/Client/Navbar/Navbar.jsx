@@ -15,6 +15,10 @@ function NavbarPage() {
     const handleLogout = () => {
         dispatch(setLogout());
     };
+    const handleBusiness = () => {
+        navigate("/turf-admin/register");
+    };
+
     const user = useSelector((state) => state.userLogin.token);
     console.log(user);
     return (
@@ -29,7 +33,9 @@ function NavbarPage() {
                     </span>
                 </div>
                 <div className="header-right pull-right ">
-                    <a className="text-lime-600">For Business</a>
+                    <a className="text-lime-600" onClick={handleBusiness}>
+                        For Business
+                    </a>
                     <a className="text-lime-600">Mumbai</a>
                     {user ? (
                         <a className="text-lime-600" onClick={handleLogout}>

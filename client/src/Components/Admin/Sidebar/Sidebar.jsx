@@ -4,9 +4,12 @@ import { IoIosNotifications } from "react-icons/io";
 import { MdAnalytics, MdAdminPanelSettings, MdSettings } from "react-icons/md";
 import { BiFootball, BiLogOut } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi";
+import { useDispatch } from "react-redux";
+import { setLogout } from "../../../Utils/Store/Slice/Admin";
 
 function SidebarPage() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
     const handleNotification = () => {
         navigate("/admin/notification");
@@ -22,6 +25,7 @@ function SidebarPage() {
     };
     const logout = () => {
         navigate("/admin");
+        dispatch(setLogout());
     };
     const handleSettings = () => {
         navigate("/admin/settings");

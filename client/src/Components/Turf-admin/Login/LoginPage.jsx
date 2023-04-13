@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../../../Utils/Store/Slice/Client";
+import { setLogin } from "../../../Utils/Store/Slice/TurfAdmin";
 import { FormValidate } from "../../../Utils/Helpers/FormValidate";
 import { turfAdminLogin } from "../../../API/Services/authReq";
 import { message } from "antd";
@@ -27,9 +27,8 @@ function TurfLoginPage() {
     };
     const submit = async (res) => {
         const resp = await turfAdminLogin(res).then((response) => {
-            if (response?.status === 401) message.warning("Login credential error");
-            else if (response?.status === 200) {
-                console.log(response.data);
+            if (response.status === 401) message.warning("Login credential error");
+            else if (response.status === 201) {
                 const token = response.data.token;
                 const name = response.data.name;
                 message.success(`${name} Welcome`);
