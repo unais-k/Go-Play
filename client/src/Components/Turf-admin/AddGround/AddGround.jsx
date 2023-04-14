@@ -25,7 +25,7 @@ function AddGroundPage() {
         size: "",
     });
     const findCity = async () => {
-        await findCityReqApi().then(async (response) => {
+        await findCityReqApi(token).then(async (response) => {
             console.log(response, "response");
             if (response.status === 200) {
                 setList(response.data.result);
@@ -36,7 +36,7 @@ function AddGroundPage() {
     };
     useEffect(() => {
         findCity();
-    }, [formData]);
+    }, []);
     const type = [{ name: "Turf" }, { name: "Soapy" }, { name: "Grass" }, { name: "Sand" }, { name: "Court" }];
     const size = [
         { name: "5 * 5" },

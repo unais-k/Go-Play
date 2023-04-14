@@ -2,6 +2,7 @@ import { generateToken } from "../../Middleware/AuthVerify.js";
 import AdminModel from "../../Model/Admin.js";
 import CityModel from "../../Model/City.js";
 import UserModel from "../../Model/Client.js";
+import GroundModel from "../../Model/Grounds.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
 import nodeMailer from "nodemailer";
 
@@ -109,7 +110,7 @@ export const CancelTurfAdmin = async (req, res, next) => {
 export const AddCity = async (req, res, next) => {
     try {
         const { data } = req.body;
-        console.log(data);
+
         const find = await CityModel.findOne({ data });
         if (find) {
             res.status(401).json({ message: "City already exist" });
@@ -130,9 +131,19 @@ export const AddCity = async (req, res, next) => {
 export const FindCity = async (req, res, next) => {
     try {
         const find = await CityModel.find();
-        console.log(find);
+
         res.status(200).json({ result: find });
     } catch (error) {
+        res.status(500).json({ message: error });
+    }
+};
+
+export const GroundListAdminResApi = async (req, res, next) => {
+    try {
+        const groundList = await GroundModel.find({});
+        res.status(200).json({ result: groundList });
+    } catch (error) {
+        console.log(error, "error");
         res.status(500).json({ message: error });
     }
 };

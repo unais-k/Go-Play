@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import { FiSearch } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa";
+import { GroundListReqApi } from "../../../API/Services/ClientRequest";
+import { message } from "antd";
 
 function HomePage() {
     const truncate = (string, n) => {
         return string?.length > n ? string.substr(0, n - 1) + "..." : string;
     };
+    const [ground, setGround] = useState([]);
+    useEffect(() => {
+        groundList();
+    }, [""]);
+
+    const groundList = async () => {
+        const response = await GroundListReqApi();
+        if (response.status === 200) {
+            setGround(response.data.result);
+        } else {
+            message.error("Something went wrong");
+        }
+    };
+    console.log(ground);
     return (
         <div className="home-dash">
             <div className="bannerPage">
@@ -40,86 +56,27 @@ function HomePage() {
                     </div>
                     <div className="flex">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 mb-16 gap-2">
-                            <div className="w-11/12 h-auto bg-white p-3 m-4 h-fit">
-                                <div className="box-img mb-2">
-                                    <img src="./box-img.jpg" alt="box-img" />
-                                </div>
-                                <div className="img-head">
-                                    <p className="font-bold text-lime-600 uppercase mb-1">
-                                        Play The Turf, Mumbai - by GO Play
-                                    </p>
-                                    {/* <p className="font-bold text-lime-600 uppercase">{truncate(movies ? movies.overview : "", 150)}</p> */}
-                                    <p className="text-xs">Mumbai</p>
-                                </div>
-                                <div className="books flex justify-between mt-4">
-                                    <b className="text-amber-500 hover:text-zinc-950">BOOK NOW</b>
-                                    <FaPlus size={15} className="mt-1" color="grey" />
-                                </div>
-                            </div>
-                            <div className="w-11/12 h-auto bg-white p-3 m-4 h-fit">
-                                <div className="box-img mb-2">
-                                    <img src="./box-img.jpg" alt="box-img" />
-                                </div>
-                                <div className="img-head">
-                                    <p className="font-bold text-lime-600 uppercase mb-1">
-                                        Play The Turf, Mumbai - by GO Play
-                                    </p>
-                                    {/* <p className="font-bold text-lime-600 uppercase">{truncate(movies ? movies.overview : "", 150)}</p> */}
-                                    <p className="text-xs">Mumbai</p>
-                                </div>
-                                <div className="books flex justify-between mt-4">
-                                    <b className="text-amber-500 hover:text-zinc-950">BOOK NOW</b>
-                                    <FaPlus size={15} className="mt-1" color="grey" />
-                                </div>
-                            </div>
-                            <div className="w-11/12 h-auto bg-white p-3 m-4 h-fit">
-                                <div className="box-img mb-2">
-                                    <img src="./box-img.jpg" alt="box-img" />
-                                </div>
-                                <div className="img-head">
-                                    <p className="font-bold text-lime-600 uppercase mb-1">
-                                        Play The Turf, Mumbai - by GO Play
-                                    </p>
-                                    {/* <p className="font-bold text-lime-600 uppercase">{truncate(movies ? movies.overview : "", 150)}</p> */}
-                                    <p className="text-xs">Mumbai</p>
-                                </div>
-                                <div className="books flex justify-between mt-4">
-                                    <b className="text-amber-500 hover:text-zinc-950">BOOK NOW</b>
-                                    <FaPlus size={15} className="mt-1" color="grey" />
-                                </div>
-                            </div>
-                            <div className="w-11/12 h-auto bg-white p-3 m-4 h-fit">
-                                <div className="box-img mb-2">
-                                    <img src="./box-img.jpg" alt="box-img" />
-                                </div>
-                                <div className="img-head">
-                                    <p className="font-bold text-lime-600 uppercase mb-1">
-                                        Play The Turf, Mumbai - by GO Play
-                                    </p>
-                                    {/* <p className="font-bold text-lime-600 uppercase">{truncate(movies ? movies.overview : "", 150)}</p> */}
-                                    <p className="text-xs">Mumbai</p>
-                                </div>
-                                <div className="books flex justify-between mt-4">
-                                    <b className="text-amber-500 hover:text-zinc-950">BOOK NOW</b>
-                                    <FaPlus size={15} className="mt-1" color="grey" />
-                                </div>
-                            </div>
-                            <div className="w-11/12 h-auto bg-white p-3 m-4 h-fit">
-                                <div className="box-img mb-2">
-                                    <img src="./box-img.jpg" alt="box-img" />
-                                </div>
-                                <div className="img-head">
-                                    <p className="font-bold text-lime-600 uppercase mb-1">
-                                        Play The Turf, Mumbai - by GO Play
-                                    </p>
-                                    {/* <p className="font-bold text-lime-600 uppercase">{truncate(movies ? movies.overview : "", 150)}</p> */}
-                                    <p className="text-xs">Mumbai</p>
-                                </div>
-                                <div className="books flex justify-between mt-4">
-                                    <b className="text-amber-500 hover:text-zinc-950">BOOK NOW</b>
-                                    <FaPlus size={15} className="mt-1" color="grey" />
-                                </div>
-                            </div>
+                            {ground
+                                ? ground.map((res) => {
+                                      return (
+                                          <div className="w-11/12 h-auto bg-white p-3 m-4 h-fit">
+                                              <div className="box-img mb-2">
+                                                  <img src={res.images} alt="box-img" />
+                                              </div>
+                                              <div className="img-head">
+                                                  <p className="font-bold text-lime-600 uppercase">
+                                                      {truncate(res ? res.name : "", 150)}
+                                                  </p>
+                                                  <p className="text-xs">{res.place}</p>
+                                              </div>
+                                              <div className="books flex justify-between mt-4">
+                                                  <b className="text-amber-500 hover:text-zinc-950">BOOK NOW</b>
+                                                  <FaPlus size={15} className="mt-1" color="grey" />
+                                              </div>
+                                          </div>
+                                      );
+                                  })
+                                : "No Ground in that Place"}
                         </div>
                     </div>
                 </div>

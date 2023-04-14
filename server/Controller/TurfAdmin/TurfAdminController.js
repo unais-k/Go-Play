@@ -7,7 +7,8 @@ export const addGroundReq = async (req, res, next) => {
     try {
         const { size, groundType, priceAtNight, price, state, place, nearCity, address, phone, email, picturePath, name } =
             req.body;
-        const id = req.user;
+        const id = req.user.id;
+        console.log(id, "-------------------------------id---------------------------");
 
         const Profile = "profile";
         const result = await cloudinary.uploader
@@ -23,6 +24,7 @@ export const addGroundReq = async (req, res, next) => {
             address,
             nearCity: nearCity,
             images: result.secure_url,
+            Owner: id,
             place,
             state,
             price,
@@ -39,9 +41,12 @@ export const addGroundReq = async (req, res, next) => {
     }
 };
 
-export const GroundList = async (req, res, next) => {
+export const GroundListResApi = async (req, res, next) => {
     try {
-        const find = await GroundModel.find({});
+        const id = req.user.id;
+        console.log(id);
+        const find = await GroundModel.find({ Owner: id });
+        console.log(find);
         res.status(201).json({ result: find, message: "Full list" });
     } catch (error) {
         console.log(error);

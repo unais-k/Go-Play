@@ -37,7 +37,7 @@ export const otpVerify = async (data) => {
     }
 };
 
-// ------------------------- User Auth End --------------------------------
+// ------------------------- Client Auth End --------------------------------
 
 export const adminLog = async (data) => {
     try {

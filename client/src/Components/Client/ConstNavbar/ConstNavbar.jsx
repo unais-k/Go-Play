@@ -76,6 +76,28 @@ function ConstNavbar() {
                         }`}
                     >
                         <li>
+                            <a className="flex">
+                                <div>
+                                    <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
+                                        <img
+                                            src="./all-sports.png"
+                                            alt="football"
+                                            className="h-full"
+                                            title="all sport grounds"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="font-semibold">All Sports</div>
+                                    <span className="">
+                                        <p className="w-11/12 text-sm text-stone-500 text-sm">
+                                            See all ground of your city
+                                        </p>
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
                             <a className="flex" onClick={handleFootball}>
                                 <div>
                                     <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
@@ -102,29 +124,30 @@ function ConstNavbar() {
                                 <div>
                                     <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
                                         <img
-                                            src="./football.png"
-                                            alt="football"
+                                            src="./cricket.png"
+                                            alt="cricket"
                                             className="h-full"
                                             title="all sport grounds"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="font-semibold">Football</div>
+                                    <div className="font-semibold">Cricket</div>
                                     <span className="">
                                         <p className="w-11/12 text-sm text-stone-500 text-sm">
-                                            See football ground of your city
+                                            See cricket ground of your city
                                         </p>
                                     </span>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a className="flex">
                                 <div>
                                     <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
                                         <img
-                                            src="./football.png"
+                                            src="./offers.png"
                                             alt="football"
                                             className="h-full"
                                             title="all sport grounds"
@@ -132,33 +155,9 @@ function ConstNavbar() {
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="font-semibold">Football</div>
+                                    <div className="font-semibold">Events</div>
                                     <span className="">
-                                        <p className="w-11/12 text-sm text-stone-500 text-sm">
-                                            See football ground of your city
-                                        </p>
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a className="flex">
-                                <div>
-                                    <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
-                                        <img
-                                            src="./football.png"
-                                            alt="football"
-                                            className="h-full"
-                                            title="all sport grounds"
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="font-semibold">Football</div>
-                                    <span className="">
-                                        <p className="w-11/12 text-sm text-stone-500 text-sm">
-                                            See football ground of your city
-                                        </p>
+                                        <p className="w-11/12 text-sm text-stone-500 text-sm">Offers & discounts</p>
                                     </span>
                                 </div>
                             </a>

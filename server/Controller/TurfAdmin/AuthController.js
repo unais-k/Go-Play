@@ -3,13 +3,17 @@ import TurfAdminModel from "../../Model/TurfAdmin.js";
 import bcrypt from "bcrypt";
 export const TurfAdminLogin = async (req, res, next) => {
     try {
-        console.log(req.body);
         const { email, password } = req.body;
-        const check = await TurfAdminModel.aggregate([{ $match: { email: email, password: password } }]);
+        console.log(req.body);
+        const verify = await TurfAdminModel.aggregate([{ $match: { email: email, status: true } }]);
+        console.log(verify, "verify");
+        const check = await TurfAdminModel.find({ email: email });
+        console.log(check, "check");
         if (!check) res.status(401).json({ message: "Invalid Credential" });
         if (check) {
-            const token = generateToken(check._id);
-            res.status(201).json({ token: token });
+            console.log(check[0]._id, "id----------");
+            const token = await generateToken(check[0]._id);
+            res.status(201).json({ token: token, name: check.name });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -18,7 +22,6 @@ export const TurfAdminLogin = async (req, res, next) => {
 
 export const TurfAdminRegister = async (req, res, next) => {
     try {
-        console.log(req.body);
         const { name, email, phone, password, aadhar } = req.body;
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -31,7 +34,6 @@ export const TurfAdminRegister = async (req, res, next) => {
             status: false,
             password: hashedPassword,
         });
-        console.log(newUser);
         await newUser.save();
         return res.status(201).json({ message: "Owner created" });
     } catch (error) {

@@ -29,6 +29,7 @@ function TurfLoginPage() {
         const resp = await turfAdminLogin(res).then((response) => {
             if (response.status === 401) message.warning("Login credential error");
             else if (response.status === 201) {
+                console.log(response);
                 const token = response.data.token;
                 const name = response.data.name;
                 message.success(`${name} Welcome`);

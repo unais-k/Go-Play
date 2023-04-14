@@ -8,7 +8,7 @@ function Home() {
     return (
         <div>
             <div className="h-16 mt-1">
-                <NavbarPage />
+                <NavbarPage true={true} />
             </div>
             <ConstNavbar />
             <HomePage />

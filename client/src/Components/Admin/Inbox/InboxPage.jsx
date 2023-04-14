@@ -3,22 +3,23 @@ import { notificationReqApi, turfAdminApproveReq } from "../../../API/Services/A
 import { MdFileDownloadDone, MdOutlineCancelPresentation } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
+import { useSelector } from "react-redux";
 
 function InboxPage() {
     const navigate = useNavigate();
     const [list, setList] = useState([]);
-
+    const token = useSelector((state) => state.adminLogin.token);
     useEffect(() => {
         getUser();
     }, [list && ""]);
 
     const getUser = async () => {
-        await notificationReqApi()
+        await notificationReqApi(token)
             .then((data) => setList(data.data.result))
             .catch((err) => console.log(err));
     };
     const handleApprove = async (e) => {
-        const response = await turfAdminApproveReq(e);
+        const response = await turfAdminApproveReq(e, token);
 
         if (response.status === 200) {
             await getUser();
@@ -29,7 +30,7 @@ function InboxPage() {
     };
 
     const handleCancel = async (e) => {
-        const response = await turfAdminApproveReq(e);
+        const response = await turfAdminApproveReq(e, token);
 
         if (response.status === 200) {
             await getUser();

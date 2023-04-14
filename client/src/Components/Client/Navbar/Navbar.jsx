@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./NavbarPage.css";
 import { setLogout } from "../../../Utils/Store/Slice/Client";
-function NavbarPage() {
+import { LocationListReqApi } from "../../../API/Services/ClientRequest";
+function NavbarPage(props) {
     const navigate = useNavigate();
+    console.log(props.true);
     const handleHomePage = () => {
         navigate("/");
     };
@@ -19,8 +21,28 @@ function NavbarPage() {
         navigate("/turf-admin/register");
     };
 
-    const user = useSelector((state) => state.userLogin.token);
-    console.log(user);
+    const [showModal, setShowModal] = React.useState(false);
+    const [list, setList] = useState([]);
+    const [city, setCity] = useState("Kochi");
+    useEffect(() => {
+        cityListReq();
+    }, [city]);
+
+    const cityListReq = async () => {
+        const response = await LocationListReqApi();
+        if (response.status === 200) {
+            setList(response.data.result);
+        }
+    };
+    // setShowModal(props.true);
+    console.log(list);
+    const handleModal = (e) => {
+        setShowModal(false);
+        setCity(e.name);
+    };
+
+    const token = useSelector((state) => state.userLogin.token);
+
     return (
         <header>
             <div className="logo-container">
@@ -36,8 +58,40 @@ function NavbarPage() {
                     <a className="text-lime-600" onClick={handleBusiness}>
                         For Business
                     </a>
-                    <a className="text-lime-600">Mumbai</a>
-                    {user ? (
+                    <a className="text-lime-600" onClick={() => setShowModal(true)}>
+                        {city}
+                    </a>
+                    {showModal ? (
+                        <>
+                            <div className="justify-center items-left ms-24 flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                                    <div className="border-0 bg-gray-400  relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                        <div className="flex items-start justify-center border-2 border-solid border-slate-200 bg-gray-200">
+                                            <h3 className="text-l font-semibold my-2">select your city</h3>
+                                        </div>
+
+                                        <div className="relative p-6 ">
+                                            <ul className="flex flex-wrap w-[300px] h-fit">
+                                                {list.map((res) => {
+                                                    return (
+                                                        <li
+                                                            className="ms-2 me-2 my-1 text-stone-600"
+                                                            key={res._id}
+                                                            onClick={(e) => handleModal({ name: res.City })}
+                                                        >
+                                                            {res.City}
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                        </>
+                    ) : null}
+                    {token ? (
                         <a className="text-lime-600" onClick={handleLogout}>
                             Sign Out
                         </a>

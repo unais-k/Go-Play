@@ -8,6 +8,10 @@ const groundSchema = new mongoose.Schema(
             max: 30,
             required: true,
         },
+        Owner: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        },
         email: {
             type: String,
             unique: true,
