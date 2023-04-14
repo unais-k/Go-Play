@@ -6,6 +6,7 @@ import AdminDashboard from "../Pages/Admin/Dashboard";
 import Inbox from "../Pages/Admin/Inbox";
 import GroundList from "../Pages/Admin/GroundList";
 import City from "../Pages/Admin/City";
+import OwnerList from "../Pages/Admin/OwnerList";
 function AdminRouter() {
     const isAuth = useSelector((state) => state.adminLogin.token);
     console.log(isAuth, "Admin Token");
@@ -13,10 +14,11 @@ function AdminRouter() {
         <div>
             <Routes>
                 <Route path="/" element={<AdminLogin />} />
-                <Route path="/dash" element={<AdminDashboard />} />
-                <Route path="/notification" element={<Inbox />} />
-                <Route path="/ground-list" element={<GroundList />} />
-                <Route path="/add-city" element={<City />} />
+                <Route path="/dash" element={isAuth ? <AdminDashboard /> : <AdminLogin />} />
+                <Route path="/notification" element={isAuth ? <Inbox /> : <AdminLogin />} />
+                <Route path="/ground-list" element={isAuth ? <GroundList /> : <AdminLogin />} />
+                <Route path="/add-city" element={isAuth ? <City /> : <AdminLogin />} />
+                <Route path="/owner-list" element={isAuth ? <OwnerList /> : <AdminLogin />} />
             </Routes>
         </div>
     );

@@ -10,7 +10,7 @@ const groundSchema = new mongoose.Schema(
         },
         Owner: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "turf-admin",
         },
         email: {
             type: String,
@@ -56,6 +56,10 @@ const groundSchema = new mongoose.Schema(
         size: {
             type: String,
             required: true,
+        },
+        status: {
+            type: Boolean,
+            default: false,
         },
     },
     { timestamps: true }

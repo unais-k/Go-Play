@@ -76,3 +76,46 @@ export const groundListAdminReqApi = async (token) => {
         return error?.response;
     }
 };
+
+export const BlockGroundReqApi = async (data, token) => {
+    console.log(data);
+    try {
+        const response = AxiosAdmin.patch(
+            "/block-ground",
+            { data: data },
+            {
+                headers: { Authorization: "Bearer " + token },
+            }
+        );
+        return response;
+    } catch (error) {
+        return error?.response;
+    }
+};
+
+export const UnblockGroundReqApi = async (data, token) => {
+    console.log(data);
+    try {
+        const response = AxiosAdmin.patch(
+            "/unblock-ground",
+            { data: data },
+            {
+                headers: { Authorization: "Bearer " + token },
+            }
+        );
+        return response;
+    } catch (error) {
+        return error?.response;
+    }
+};
+
+export const OwnerListReqApi = async (token) => {
+    try {
+        const response = AxiosAdmin.get("/owner-list", {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        return error?.response;
+    }
+};

@@ -7,6 +7,7 @@ import TurfAdminHome from "../Pages/Turf-Admin/Home";
 import GroundList from "../Pages/Turf-Admin/GroundList";
 import GroundAdd from "../Pages/Turf-Admin/GroundAdd";
 import RegSuccess from "../Pages/Turf-Admin/RegSuccess";
+import GroundView from "../Pages/Turf-Admin/GroundView";
 
 function TurfAdminRouter() {
     const isAuth = useSelector((state) => state.turfAdminLogin.token);
@@ -17,9 +18,10 @@ function TurfAdminRouter() {
                 <Route path="/login" element={<TurfAdminLogin />} />
                 <Route path="/register" element={<TurfRegisterPage />} />
                 <Route path="/regSuccess" element={<RegSuccess />} />
-                <Route path="/home" element={<TurfAdminHome />} />
-                <Route path="/ground-list" element={<GroundList />} />
-                <Route path="/ground-add" element={<GroundAdd />} />
+                <Route path="/home" element={isAuth ? <TurfAdminHome /> : <TurfAdminLogin />} />
+                <Route path="/ground-list" element={isAuth ? <GroundList /> : <TurfAdminLogin />} />
+                <Route path="/ground-add" element={isAuth ? <GroundAdd /> : <TurfAdminLogin />} />
+                <Route path="/ground-view" element={isAuth ? <GroundView /> : <TurfAdminLogin />} />
             </Routes>
         </div>
     );

@@ -5,6 +5,8 @@ import { addGroundReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { findCityReqApi } from "../../../API/Services/AdminRequest";
+import { Breadcrumb } from "flowbite-react";
+import { HiHome } from "react-icons/hi";
 
 function AddGroundPage() {
     const token = useSelector((state) => state.turfAdminLogin.token);
@@ -115,6 +117,13 @@ function AddGroundPage() {
 
     return (
         <div>
+            <Breadcrumb aria-label="Solid background breadcrumb example" className="bg-gray-50 py-3 px-5 dark:bg-gray-900">
+                <Breadcrumb.Item href="#" icon={HiHome}>
+                    Home
+                </Breadcrumb.Item>
+                <Breadcrumb.Item href="#">Venue</Breadcrumb.Item>
+                <Breadcrumb.Item>Add-ground</Breadcrumb.Item>
+            </Breadcrumb>
             <div>
                 <h2 className="text-center text-3xl m-3 text-groundAdd">Start a new Venue</h2>
             </div>

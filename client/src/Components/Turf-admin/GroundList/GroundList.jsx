@@ -3,6 +3,7 @@ import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { GroundListReqApi } from "../../../API/Services/TurfAdminRequest";
+import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { message } from "antd";
 import { useSelector } from "react-redux";
 
@@ -27,6 +28,10 @@ function TurfGroundListPage() {
             }
         });
     };
+
+    const handleView = () => {
+        navigate("/turf-admin/ground-view");
+    };
     return (
         <div>
             <Breadcrumb aria-label="Solid background breadcrumb example" className="bg-gray-50 py-3 px-5 dark:bg-gray-900">
@@ -42,28 +47,34 @@ function TurfGroundListPage() {
             <div className="flex">
                 {state.map((res) => {
                     return (
-                        <div class="max-w-sm rounded overflow-hidden shadow-lg m-3">
-                            <img class="w-full h-2/4" src={res.images} alt="Sunset in the mountains" />
-                            <div class="px-6 py-4">
-                                <div class="font-bold text-xl mb-2">{res.name}</div>
-                                <p class="text-gray-700 text-base">{res.address}</p>
-                            </div>
-                            <div class="mx-3 my-2">
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                    {res.nearCity}
-                                </span>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                    {res.place}
-                                </span>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                    {res.groundType}
-                                </span>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                    {res.size}
-                                </span>
-                            </div>
+                        <div className="max-w-sm rounded overflow-hidden shadow-lg m-3">
                             <div className="">
-                                <button className="bg-black text-white m-2 py-3 px-4 rounded">View -{">"}</button>
+                                <img className="w-full h-2/4 rounded" src={res.images} alt="Sunset in the mountains" />
+                                <div className="px-6 py-4">
+                                    <div className="font-bold text-xl mb-2">{res.name}</div>
+                                    <p className="text-gray-700 text-base">{res.address}</p>
+                                </div>
+                                <div className="mx-3 my-2">
+                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                        {res.nearCity}
+                                    </span>
+                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                        {res.place}
+                                    </span>
+                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                        {res.groundType}
+                                    </span>
+                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                        {res.size}
+                                    </span>
+                                </div>
+                                <div
+                                    className=" flex bg-black w-fit  text-white m-2 py-3 px-4 rounded"
+                                    onClick={handleView}
+                                >
+                                    <button className="me-3">View</button>
+                                    <BsFillArrowRightCircleFill size={23} />
+                                </div>
                             </div>
                         </div>
                     );

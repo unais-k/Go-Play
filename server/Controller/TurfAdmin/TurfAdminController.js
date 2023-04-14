@@ -26,6 +26,7 @@ export const addGroundReq = async (req, res, next) => {
             images: result.secure_url,
             Owner: id,
             place,
+            phone,
             state,
             price,
             priceAtNight,
@@ -46,6 +47,7 @@ export const GroundListResApi = async (req, res, next) => {
         const id = req.user.id;
         console.log(id);
         const find = await GroundModel.find({ Owner: id });
+
         console.log(find);
         res.status(201).json({ result: find, message: "Full list" });
     } catch (error) {

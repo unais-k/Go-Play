@@ -131,7 +131,6 @@ export const AddCity = async (req, res, next) => {
 export const FindCity = async (req, res, next) => {
     try {
         const find = await CityModel.find();
-
         res.status(200).json({ result: find });
     } catch (error) {
         res.status(500).json({ message: error });
@@ -140,10 +139,49 @@ export const FindCity = async (req, res, next) => {
 
 export const GroundListAdminResApi = async (req, res, next) => {
     try {
-        const groundList = await GroundModel.find({});
+        const groundList = await GroundModel.find({}).populate("Owner");
         res.status(200).json({ result: groundList });
     } catch (error) {
         console.log(error, "error");
+        res.status(500).json({ message: error });
+    }
+};
+
+export const BlockGroundResApi = async (req, res, next) => {
+    console.log(req.body);
+    try {
+        const id = req.body.data;
+        console.log(id);
+        const find = await GroundModel.updateOne({ _id: id }, { $set: { status: true } });
+        console.log(find);
+        res.status(202).json({ result: find });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const UnblockGroundResApi = async (req, res, next) => {
+    console.log(req.body);
+    try {
+        const id = req.body.data;
+        console.log(id);
+        const find = await GroundModel.updateOne({ _id: id }, { $set: { status: false } });
+        console.log(find);
+        res.status(202).json({ result: find });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const OwnerListResApi = async (req, res, next) => {
+    try {
+        const find = await TurfAdminModel.find({});
+        console.log(find);
+        res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error });
     }
 };

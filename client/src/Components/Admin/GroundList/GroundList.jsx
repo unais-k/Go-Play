@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TbLockOpen, TbLockOpenOff } from "react-icons/tb";
 import { GrView } from "react-icons/gr";
-import { groundListAdminReqApi } from "../../../API/Services/AdminRequest";
+import { BlockGroundReqApi, UnblockGroundReqApi, groundListAdminReqApi } from "../../../API/Services/AdminRequest";
 import { message } from "antd";
 import { useSelector } from "react-redux";
 
@@ -21,6 +21,20 @@ function GroundListPageAdmin() {
             message.error("Something went wrong");
         }
     };
+
+    const handleBlock = async (id) => {
+        const response = await BlockGroundReqApi(id, token);
+        await groundList();
+        console.log(response);
+        console.log("block");
+    };
+    const handleUnBlock = async (id) => {
+        const response = await UnblockGroundReqApi(id, token);
+        await groundList();
+        console.log(response);
+        console.log("Unblock");
+    };
+
     return (
         <div className="">
             <div>
@@ -58,24 +72,37 @@ function GroundListPageAdmin() {
                                                         <span className="font-medium ">{res.name}</span>
                                                     </div>
                                                 </td>
-                                                <td className="py-3 px-6 text-center">
-                                                    <div className="items-center justify-center">{res.place}</div>
+                                                <td className="py-3 px-6 text-center font-bold">
+                                                    <div className="items-center justify-center">{res.Owner.name}</div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
-                                                    <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                                                        Active
-                                                    </span>
-
-                                                    <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-                                                        Blocked
-                                                    </span>
+                                                    {res.status ? (
+                                                        <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                                                            Blocked
+                                                        </span>
+                                                    ) : (
+                                                        <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                                                            Active
+                                                        </span>
+                                                    )}
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
                                                     <div className="flex item-center justify-center">
-                                                        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                            <TbLockOpen size={20} />
-                                                            <TbLockOpenOff size={20} />
-                                                        </div>
+                                                        {res.status ? (
+                                                            <div
+                                                                className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                                                                onClick={() => handleUnBlock(res._id)}
+                                                            >
+                                                                <TbLockOpenOff size={20} />
+                                                            </div>
+                                                        ) : (
+                                                            <div
+                                                                className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                                                                onClick={() => handleBlock(res._id)}
+                                                            >
+                                                                <TbLockOpen size={20} />
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
