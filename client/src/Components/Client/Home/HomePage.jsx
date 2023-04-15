@@ -22,7 +22,7 @@ function HomePage() {
             message.error("Something went wrong");
         }
     };
-    console.log(ground);
+    console.log(ground, "ground card");
     return (
         <div className="home-dash">
             <div className="bannerPage">

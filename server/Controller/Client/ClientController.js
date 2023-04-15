@@ -26,7 +26,7 @@ export const FootballGroundResApi = async (req, res, next) => {
         const find = await GroundModel.aggregate([
             {
                 $match: {
-                    groundType: "turf",
+                    groundType: "",
                 },
             },
         ]);
@@ -40,9 +40,7 @@ export const FootballGroundResApi = async (req, res, next) => {
 export const GroundViewResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
-        console.log(id);
         const find = await GroundModel.findOne({ _id: id });
-        console.log(find);
         res.status(200).json({ result: find });
     } catch (error) {
         console.log(error);

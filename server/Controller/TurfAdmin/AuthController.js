@@ -10,10 +10,10 @@ export const TurfAdminLogin = async (req, res, next) => {
         const check = await TurfAdminModel.find({ email: email });
         console.log(check, "check");
         if (!check) res.status(401).json({ message: "Invalid Credential" });
+
         if (check) {
-            console.log(check[0]._id, "id----------");
             const token = await generateToken(check[0]._id);
-            res.status(201).json({ token: token, name: check.name });
+            res.status(201).json({ token: token, name: check[0].name });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });

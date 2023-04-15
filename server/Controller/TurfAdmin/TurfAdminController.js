@@ -4,11 +4,12 @@ import GroundModel from "./../../Model/Grounds.js";
 
 export const addGroundReq = async (req, res, next) => {
     console.log(req.body);
+    console.log(req.body.phone, "---------------------------------phone--------------------");
+
     try {
         const { size, groundType, priceAtNight, price, state, place, nearCity, address, phone, email, picturePath, name } =
             req.body;
         const id = req.user.id;
-        console.log(id, "-------------------------------id---------------------------");
 
         const Profile = "profile";
         const result = await cloudinary.uploader

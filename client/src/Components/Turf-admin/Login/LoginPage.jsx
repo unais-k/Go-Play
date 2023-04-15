@@ -46,11 +46,11 @@ function TurfLoginPage() {
     };
 
     const handleRegister = () => {
-        navigate("/register");
+        navigate("/turf-admin/register");
     };
 
     const handleForgetPassword = () => {
-        navigate("/forget_password");
+        navigate("/turf-admin/forget_password");
     };
 
     return (

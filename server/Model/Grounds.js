@@ -17,6 +17,9 @@ const groundSchema = new mongoose.Schema(
             unique: true,
             required: true,
         },
+        phone: {
+            type: String,
+        },
         address: {
             type: String,
             required: true,
@@ -53,6 +56,28 @@ const groundSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        rules: {
+            type: String,
+        },
+        description: {
+            type: String,
+        },
+        openingTime: {
+            type: String,
+        },
+        closingTime: {
+            type: String,
+        },
+        rating: {
+            type: Number,
+            default: 0,
+        },
+        holiday: {
+            type: String,
+            default: "Sunday",
+        },
+        sport: { type: Array },
+        reviews: { type: Array },
         size: {
             type: String,
             required: true,
