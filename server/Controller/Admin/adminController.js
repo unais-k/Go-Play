@@ -14,7 +14,7 @@ export const adminLogin = async (req, res, next) => {
         console.log(Check);
         if (!Check) res.status(401).json({ message: "Email is not valid" });
         if (Check) {
-            const token = generateToken(Check._id);
+            const token = generateToken({ role: "adminLogin", id: Check._id });
             res.status(200).json({ token: token });
         }
     } catch (error) {

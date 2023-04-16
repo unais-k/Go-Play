@@ -21,3 +21,15 @@ export const GroundListReqApi = async (token) => {
         return error?.response;
     }
 };
+
+export const GroundViewReqApi = async (data, token) => {
+    try {
+        console.log(token);
+        const response = AxiosTurfAdmin.get("/ground-view", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        return error?.response;
+    }
+};

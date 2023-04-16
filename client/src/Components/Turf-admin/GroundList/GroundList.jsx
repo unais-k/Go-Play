@@ -6,6 +6,7 @@ import { GroundListReqApi } from "../../../API/Services/TurfAdminRequest";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { message } from "antd";
 import { useSelector } from "react-redux";
+import ListCard from "./ListCard";
 
 function TurfGroundListPage() {
     const navigate = useNavigate();
@@ -29,9 +30,6 @@ function TurfGroundListPage() {
         });
     };
 
-    const handleView = () => {
-        navigate("/turf-admin/ground-view");
-    };
     return (
         <div>
             <Breadcrumb aria-label="Solid background breadcrumb example" className="bg-gray-50 py-3 px-5 dark:bg-gray-900">
@@ -44,41 +42,18 @@ function TurfGroundListPage() {
             <button onClick={handleAddGround} className="bg-green-500 rounded m-3 px-4 py-2">
                 Add Ground
             </button>
-            <div className="flex">
-                {state.map((res) => {
-                    return (
-                        <div className="max-w-sm rounded overflow-hidden shadow-lg m-3">
-                            <div className="">
-                                <img className="w-full h-2/4 rounded" src={res.images} alt="Sunset in the mountains" />
-                                <div className="px-6 py-4">
-                                    <div className="font-bold text-xl mb-2">{res.name}</div>
-                                    <p className="text-gray-700 text-base">{res.address}</p>
+            <div className="">
+                <div class="container my-12 mx-auto px-4 md:px-12">
+                    <div class="flex flex-wrap -mx-1 lg:-mx-4">
+                        {state.map((res) => {
+                            return (
+                                <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                                    <ListCard res={res} />
                                 </div>
-                                <div className="mx-3 my-2">
-                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                        {res.nearCity}
-                                    </span>
-                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                        {res.place}
-                                    </span>
-                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                        {res.groundType}
-                                    </span>
-                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                        {res.size}
-                                    </span>
-                                </div>
-                                <div
-                                    className=" flex bg-black w-fit  text-white m-2 py-3 px-4 rounded"
-                                    onClick={handleView}
-                                >
-                                    <button className="me-3">View</button>
-                                    <BsFillArrowRightCircleFill size={23} />
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
         </div>
     );

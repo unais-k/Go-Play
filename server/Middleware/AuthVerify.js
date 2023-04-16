@@ -12,17 +12,28 @@ export const verifyToken = async (req, res, next) => {
         }
 
         const verified = await jwt.verify(token, process.env.JWT_SECRET);
-
-        req.user = verified;
-        next();
+        console.log(verified, "verify");
+        if (verified.role === "adminLogin") {
+            console.log(1111111);
+            req.user = verified;
+            next();
+        } else if (verified.role === "clientLogin") {
+            console.log(2222222);
+        } else if (verified.role === "turfAdminLogin") {
+            console.log(333333333);
+            req.user = verified;
+            next();
+        }
+        // req.user = verified;
+        // next();
     } catch (error) {
         console.log(error);
         return res.status(404).json({ message: "Authentication failed: invalid token." });
     }
 };
 
-export const generateToken = (userId) => {
-    console.log(userId, "userId =========");
-    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+export const generateToken = (data) => {
+    console.log(data, "userId =========");
+    const token = jwt.sign(data, process.env.JWT_SECRET);
     return token;
 };

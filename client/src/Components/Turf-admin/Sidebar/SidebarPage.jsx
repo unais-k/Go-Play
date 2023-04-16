@@ -1,7 +1,7 @@
 import React from "react";
 import { BiFootball } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import { setLogout } from "../../../Utils/Store/Slice/Admin";
+import { setLogout } from "../../../Utils/Store/Slice/TurfAdmin";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +16,10 @@ function TurfAdminSidebarPage() {
 
     const handleGround = () => {
         navigate("/turf-admin/ground-list");
+    };
+
+    const handleHome = () => {
+        navigate("/turf-admin/home");
     };
 
     return (
@@ -50,7 +54,7 @@ function TurfAdminSidebarPage() {
             >
                 <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                     <ul class="space-y-2 font-medium">
-                        <li>
+                        <li onClick={handleHome}>
                             <a
                                 href="#"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"

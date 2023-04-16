@@ -12,7 +12,7 @@ export const TurfAdminLogin = async (req, res, next) => {
         if (!check) res.status(401).json({ message: "Invalid Credential" });
 
         if (check) {
-            const token = await generateToken(check[0]._id);
+            const token = await generateToken({ id: check[0]._id, role: "turfAdminLogin" });
             res.status(201).json({ token: token, name: check[0].name });
         }
     } catch (error) {

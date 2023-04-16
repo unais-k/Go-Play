@@ -8,7 +8,7 @@ function GroundView() {
             <div className="w-1/5 fixed inset-0 md:relative sm:relative lg:relative lg:translate-x-0">
                 <TurfAdminSidebarPage />
             </div>
-            <div className="w-full ">
+            <div className="">
                 <GroundViewPage />
             </div>
         </div>

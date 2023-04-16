@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./NavbarPage.css";
-import { setLogout } from "../../../Utils/Store/Slice/Client";
+import { setCityOff, setCityOn, setLogout } from "../../../Utils/Store/Slice/Client";
 import { LocationListReqApi } from "../../../API/Services/ClientRequest";
 function NavbarPage(props) {
+    console.log(props, 11111);
     const navigate = useNavigate();
-    console.log(props.true);
+    const [city, setCity] = useState(props.place);
     const handleHomePage = () => {
         navigate("/");
     };
@@ -15,15 +16,17 @@ function NavbarPage(props) {
         navigate("/login");
     };
     const handleLogout = () => {
+        dispatch(setCityOff());
         dispatch(setLogout());
     };
     const handleBusiness = () => {
         navigate("/turf-admin/register");
     };
-
-    const [showModal, setShowModal] = React.useState(false);
+    const Location = useSelector((state) => state.userLogin.city);
+    console.log(Location, "location");
+    const [showModal, setShowModal] = React.useState(props.true);
     const [list, setList] = useState([]);
-    const [city, setCity] = useState("Kochi");
+
     useEffect(() => {
         cityListReq();
     }, [city]);
@@ -35,10 +38,11 @@ function NavbarPage(props) {
         }
     };
     // setShowModal(props.true);
-    console.log(list);
+
     const handleModal = (e) => {
         setShowModal(false);
         setCity(e.name);
+        dispatch(setCityOn({ city: e.name }));
     };
 
     const token = useSelector((state) => state.userLogin.token);

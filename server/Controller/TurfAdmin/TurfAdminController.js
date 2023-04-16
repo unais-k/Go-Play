@@ -56,3 +56,15 @@ export const GroundListResApi = async (req, res, next) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const GroundViewResApi = async (req, res, next) => {
+    try {
+        const id = req.body;
+        const find = await GroundModel.findOne({ _id: id });
+        console.log(find, "find----------find");
+        res.status(201).json({ result: find, message: "data" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+};

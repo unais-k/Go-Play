@@ -12,7 +12,7 @@ export const userLogin = async (req, res, next) => {
         const isMatch = await bcrypt.compare(password, user.password).catch((err) => next(err));
         console.log(isMatch, "password match");
         if (!isMatch) return res.status(401).json({ message: "Invalid credentials.." });
-        const token = generateToken(user._id);
+        const token = generateToken({ id: user._id, role: "clientLogin" });
         console.log(token, "Token ------ create---");
         res.status(200).json({ token: token, name: user.name }); // 500 server error
     } catch (error) {
