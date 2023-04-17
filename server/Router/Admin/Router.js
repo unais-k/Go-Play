@@ -7,6 +7,7 @@ import {
     FindCity,
     GroundListAdminResApi,
     OwnerListResApi,
+    TimeSaveResApi,
     UnblockGroundResApi,
     adminLogin,
     notificationReqApi,
@@ -26,5 +27,6 @@ router.get("/ground-list", verifyToken, GroundListAdminResApi);
 router.patch("/block-ground", verifyToken, BlockGroundResApi);
 router.patch("/unblock-ground", verifyToken, UnblockGroundResApi);
 router.get("/owner-list", verifyToken, OwnerListResApi);
+router.post("/time-save", verifyToken, TimeSaveResApi);
 
 export default router;

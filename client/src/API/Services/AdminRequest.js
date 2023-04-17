@@ -119,3 +119,14 @@ export const OwnerListReqApi = async (token) => {
         return error?.response;
     }
 };
+
+export const TimeSaveReqApi = async (data, token) => {
+    try {
+        const response = AxiosAdmin.post("/time-save", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        return error?.response;
+    }
+};

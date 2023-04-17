@@ -21,7 +21,7 @@ function TurfAdminRouter() {
                 <Route path="/home" element={isAuth ? <TurfAdminHome /> : <TurfAdminLogin />} />
                 <Route path="/ground-list" element={isAuth ? <GroundList /> : <TurfAdminLogin />} />
                 <Route path="/ground-add" element={isAuth ? <GroundAdd /> : <TurfAdminLogin />} />
-                <Route path="/ground-view" element={isAuth ? <GroundView /> : <TurfAdminLogin />} />
+                <Route path="/ground-view/:id" element={isAuth ? <GroundView /> : <TurfAdminLogin />} />
             </Routes>
         </div>
     );

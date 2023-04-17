@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 function ListCard({ res }) {
     const navigate = useNavigate();
     const handleView = (id) => {
-        console.log(id, `11111`);
-        navigate("/turf-admin/ground-view", { state: { id: id } });
+        navigate("/turf-admin/ground-view/" + id);
     };
     return (
         <article class="overflow-hidden rounded-lg shadow-lg">

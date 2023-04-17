@@ -1,11 +1,9 @@
+import timeModel from "../../Model/Time.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
 import { cloudinary } from "../../Utils/Cloudinary.js";
 import GroundModel from "./../../Model/Grounds.js";
 
 export const addGroundReq = async (req, res, next) => {
-    console.log(req.body);
-    console.log(req.body.phone, "---------------------------------phone--------------------");
-
     try {
         const { size, groundType, priceAtNight, price, state, place, nearCity, address, phone, email, picturePath, name } =
             req.body;
@@ -35,7 +33,7 @@ export const addGroundReq = async (req, res, next) => {
             size,
         });
         await newGround.save();
-        console.log(newGround, "newGround");
+
         res.status(200).json({ message: "Ground created" });
     } catch (error) {
         console.log(error);
@@ -46,10 +44,7 @@ export const addGroundReq = async (req, res, next) => {
 export const GroundListResApi = async (req, res, next) => {
     try {
         const id = req.user.id;
-        console.log(id);
         const find = await GroundModel.find({ Owner: id });
-
-        console.log(find);
         res.status(201).json({ result: find, message: "Full list" });
     } catch (error) {
         console.log(error);
@@ -59,10 +54,20 @@ export const GroundListResApi = async (req, res, next) => {
 
 export const GroundViewResApi = async (req, res, next) => {
     try {
-        const id = req.body;
-        const find = await GroundModel.findOne({ _id: id });
-        console.log(find, "find----------find");
-        res.status(201).json({ result: find, message: "data" });
+        const id = req.query.id;
+        const find = await GroundModel.findOne({ _id: id }).populate("Owner");
+        res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const TimeSlotResApi = async (req, res, next) => {
+    try {
+        const find = await timeModel.find({});
+        console.log(find);
+        res.status(201).json({ result: find });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message });

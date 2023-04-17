@@ -3,6 +3,7 @@ import AdminModel from "../../Model/Admin.js";
 import CityModel from "../../Model/City.js";
 import UserModel from "../../Model/Client.js";
 import GroundModel from "../../Model/Grounds.js";
+import timeModel from "../../Model/Time.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
 import nodeMailer from "nodemailer";
 
@@ -35,7 +36,6 @@ export const userListReqApi = async (req, res, next) => {
 export const notificationReqApi = async (req, res, next) => {
     try {
         const getTurfAdminRequest = await TurfAdminModel.aggregate([{ $match: { status: false } }]);
-        console.log(getTurfAdminRequest);
         res.status(200).json({ result: getTurfAdminRequest });
     } catch (error) {
         res.status(500).json({ message: error });
@@ -43,9 +43,7 @@ export const notificationReqApi = async (req, res, next) => {
 };
 
 export const ApproveTurfAdmin = async (req, res, next) => {
-    console.log(req.body);
     try {
-        const { id } = req.body;
         const find = await TurfAdminModel.findOne({ _id: id });
         let transporter = nodeMailer.createTransport({
             port: 465, // true for 465, false for other ports
@@ -180,6 +178,47 @@ export const OwnerListResApi = async (req, res, next) => {
         const find = await TurfAdminModel.find({});
         console.log(find);
         res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const TimeSaveResApi = async (req, res, next) => {
+    try {
+        const data = req.body;
+
+        // for (let i = 0; i < data.length; i++) {
+        //     const createTime = new timeModel({
+        //         time: data[i].time,
+        //         index: data[i].index,
+        //         status: false,
+        //         isSelected: false,
+        //     });
+        //     await createTime.save();
+        //     console.log(createTime);
+        // }
+        const find = await timeModel.find();
+        console.log(find);
+        // const deleted = await timeModel.aggregate([
+        //     {
+        //         $group: {
+        //             _id: { time: "$time" },
+        //             uniqueIds: { $addToSet: "$id" },
+        //             count: { $sum: 1 },
+        //         },
+        //     },
+        //     {
+        //         $match: {
+        //             count: { $gt: 1 },
+        //         },
+        //     },
+        // ]);
+        // console.log(deleted);
+        // deleted.forEach(async (doc) => {
+        //     doc.uniqueIds.shift();
+        //     await timeModel.deleteMany({ _id: { $in: doc.uniqueIds } });
+        // });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error });
