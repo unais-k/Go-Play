@@ -127,8 +127,10 @@ export const AddCity = async (req, res, next) => {
 };
 
 export const FindCity = async (req, res, next) => {
+    console.log(444444444444444);
     try {
-        const find = await CityModel.find();
+        const find = await CityModel.find({});
+        console.log(find);
         res.status(200).json({ result: find });
     } catch (error) {
         res.status(500).json({ message: error });

@@ -4,7 +4,7 @@ import { message } from "antd";
 import { addGroundReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { findCityReqApi } from "../../../API/Services/AdminRequest";
+import { findCityReqApi } from "../../../API/Services/TurfAdminRequest";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 
@@ -29,6 +29,7 @@ function AddGroundPage() {
     const findCity = async () => {
         await findCityReqApi(token).then(async (response) => {
             console.log(response, "response");
+            console.log(response.data);
             if (response.status === 200) {
                 setList(response.data.result);
             } else {

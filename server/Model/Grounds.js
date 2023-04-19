@@ -56,13 +56,21 @@ const groundSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        rules: {
-            type: String,
-        },
+        rules: [
+            {
+                task: {
+                    type: String,
+                },
+                index: {
+                    type: String,
+                },
+            },
+        ],
+
         description: {
             type: String,
         },
-        openingTime: {
+        startingTime: {
             type: String,
         },
         closingTime: {
@@ -73,14 +81,16 @@ const groundSchema = new mongoose.Schema(
             default: 0,
         },
         holiday: {
-            type: String,
-            default: "Sunday",
+            type: Array,
         },
         sport: { type: Array },
         reviews: { type: Array },
         size: {
             type: String,
             required: true,
+        },
+        slots: {
+            type: Array,
         },
         status: {
             type: Boolean,

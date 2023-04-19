@@ -13,20 +13,20 @@ import {
     notificationReqApi,
     userListReqApi,
 } from "../../Controller/Admin/adminController.js";
-import { verifyToken } from "../../Middleware/AuthVerify.js";
+import { adminVerifyToken } from "../../Middleware/AuthVerify.js";
 const router = express.Router();
 
 router.post("/", adminLogin);
-router.get("/client-list", verifyToken, userListReqApi);
-router.get("/notification", verifyToken, notificationReqApi);
-router.post("/approve-turf-admin", verifyToken, ApproveTurfAdmin);
-router.post("/cancel-turf-admin", verifyToken, CancelTurfAdmin);
-router.get("/find-city", verifyToken, FindCity);
-router.post("/add-city", verifyToken, AddCity);
-router.get("/ground-list", verifyToken, GroundListAdminResApi);
-router.patch("/block-ground", verifyToken, BlockGroundResApi);
-router.patch("/unblock-ground", verifyToken, UnblockGroundResApi);
-router.get("/owner-list", verifyToken, OwnerListResApi);
-router.post("/time-save", verifyToken, TimeSaveResApi);
+router.get("/client-list", adminVerifyToken, userListReqApi);
+router.get("/notification", adminVerifyToken, notificationReqApi);
+router.post("/approve-turf-admin", adminVerifyToken, ApproveTurfAdmin);
+router.post("/cancel-turf-admin", adminVerifyToken, CancelTurfAdmin);
+router.get("/find-city", adminVerifyToken, FindCity);
+router.post("/add-city", adminVerifyToken, AddCity);
+router.get("/ground-list", adminVerifyToken, GroundListAdminResApi);
+router.patch("/block-ground", adminVerifyToken, BlockGroundResApi);
+router.patch("/unblock-ground", adminVerifyToken, UnblockGroundResApi);
+router.get("/owner-list", adminVerifyToken, OwnerListResApi);
+router.post("/time-save", adminVerifyToken, TimeSaveResApi);
 
 export default router;
