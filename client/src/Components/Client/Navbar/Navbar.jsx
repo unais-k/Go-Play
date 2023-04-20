@@ -5,7 +5,6 @@ import "./NavbarPage.css";
 import { setCityOff, setCityOn, setLogout } from "../../../Utils/Store/Slice/Client";
 import { LocationListReqApi } from "../../../API/Services/ClientRequest";
 function NavbarPage(props) {
-    console.log(props, 11111);
     const navigate = useNavigate();
     const [city, setCity] = useState(props.place);
     const handleHomePage = () => {
@@ -23,7 +22,7 @@ function NavbarPage(props) {
         navigate("/turf-admin/register");
     };
     const Location = useSelector((state) => state.userLogin.city);
-    console.log(Location, "location");
+
     const [showModal, setShowModal] = React.useState(props.true);
     const [list, setList] = useState([]);
 
@@ -52,7 +51,7 @@ function NavbarPage(props) {
             <div className="logo-container">
                 <div className="logo-left flex justify-between">
                     <a>
-                        <img src="./logo-no-background.png" className="img-logo" alt="logo-left" />
+                        <img src="/logo-no-background.png" className="img-logo" alt="logo-left" />
                     </a>
                     <span className="go-play-logo font-bold text-xl" onClick={handleHomePage}>
                         Go Play

@@ -28,11 +28,20 @@ export const FootballListReqApi = async () => {
 };
 
 export const GroundViewReqApi = async (id) => {
-    console.log(id, "=================");
     try {
         const response = AxiosClient.get(`/ground-view?id=${id}`);
         return response;
     } catch (error) {
+        return error?.response;
+    }
+};
+
+export const TimeSlotReqApi = async () => {
+    try {
+        const response = AxiosClient.get("/time-slot");
+        return response;
+    } catch (error) {
+        console.log(error.message);
         return error?.response;
     }
 };

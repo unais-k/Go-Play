@@ -7,7 +7,7 @@ export const addGroundReqApi = async (data, token) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -30,7 +30,7 @@ export const GroundListReqApi = async (token) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -42,7 +42,7 @@ export const GroundViewReqApi = async (data, token) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -54,19 +54,20 @@ export const TimeSlotReqApi = async (token) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
 
-export const AvailableStatusChangeReqApi = (data, token) => {
+export const AvailableStatusChangeReqApi = (data, id, token) => {
+    console.log(data, "data", "id", id, token, "token");
     try {
-        const response = AxiosTurfAdmin.patch("/available-status", data, {
+        const response = AxiosTurfAdmin.patch(`/available-status?id=${id}`, data, {
             headers: { Authorization: "Bearer " + token },
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -78,7 +79,7 @@ export const TimeSettingReqApi = (data, token) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -90,7 +91,7 @@ export const FindRuleReqApi = (data, token) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -107,7 +108,7 @@ export const RuleAddReqApi = (data, token) => {
         );
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -116,12 +117,12 @@ export const RuleDeleteReqApi = (data, token) => {
     console.log(data, "data", token, "token");
 
     try {
-        const response = AxiosTurfAdmin.delete("/rule-delete", data, {
+        const response = AxiosTurfAdmin.delete(`/rule-delete?index=${data.deleteId}&id=${data.id}`, {
             headers: { Authorization: "Bearer " + token },
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -134,7 +135,7 @@ export const RuleUpdateFindReqApi = (data, token) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
     }
 };
@@ -146,7 +147,32 @@ export const RuleUpdateReqApi = (data, token) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return error?.response;
+    }
+};
+
+export const SelectedTimeSlotReqApi = async (data, token) => {
+    try {
+        const response = AxiosTurfAdmin.post("/selected-time-slot", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const GroundDetailSubmitReqApi = async (data, id, token) => {
+    console.log(id);
+    console.log(data, "data", token, "token");
+    try {
+        const response = AxiosTurfAdmin.post(`/ground-detail-form-submit?id=${id}`, data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
     }
 };

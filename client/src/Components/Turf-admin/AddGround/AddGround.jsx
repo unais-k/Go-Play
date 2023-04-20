@@ -20,6 +20,7 @@ function AddGroundPage() {
         address: "",
         nearCity: "",
         place: "",
+        pinCode: "",
         state: "",
         price: "",
         priceAtNight: "",
@@ -91,6 +92,7 @@ function AddGroundPage() {
             formData.phone === "" ||
             formData.address === "" ||
             formData.place === "" ||
+            formData.pinCode === "" ||
             formData.state === "" ||
             formData.price === "" ||
             formData.priceAtNight === ""
@@ -203,22 +205,37 @@ function AddGroundPage() {
                             placeholder="Enter your Turf's address"
                         ></textarea>
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="phone_number">
-                            Nearest City
-                        </label>
-                        <select
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="text"
-                            name="nearCity"
-                            onChange={handleInputChange}
-                            placeholder="Enter your Nearest City"
-                        >
-                            <option value="">Choose One City</option>
-                            {list.map((res) => {
-                                return <option value={res.City}>{res.City}</option>;
-                            })}
-                        </select>
+                    <div class="flex justify-between w-full mb-4">
+                        <div className="me-2 basis-1/2">
+                            <label class="block text-gray-700 font-bold mb-2" for="phone_number">
+                                Nearest City
+                            </label>
+                            <select
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                type="text"
+                                name="nearCity"
+                                onChange={handleInputChange}
+                                placeholder="Enter your Nearest City"
+                            >
+                                <option value="">Choose One City</option>
+                                {list.map((res) => {
+                                    return <option value={res.City}>{res.City}</option>;
+                                })}
+                            </select>
+                        </div>
+                        <div className="ms-2 basis-1/2">
+                            <label class="block text-gray-700 font-bold mb-2" for="Phone">
+                                pin code
+                            </label>
+                            <input
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="phone"
+                                type="text"
+                                onChange={handleInputChange}
+                                name="pinCode"
+                                placeholder="Enter your pin code"
+                            />
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold mb-2" for="phone_number">

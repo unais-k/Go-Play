@@ -13,8 +13,9 @@ function TodoComponent({ toDo, setUpdateData, id, deleteTask }) {
 
     const handleUpdate = async (e) => {
         const response = await RuleUpdateFindReqApi({ index: e, id: id }, token);
+        console.log(response.data.result, "--------------------");
         if (response.status === 201) {
-            setUpdateData(response.data.result[0]);
+            setUpdateData(response.data.result);
         } else {
             message.error("Something went wrong");
         }
@@ -23,13 +24,12 @@ function TodoComponent({ toDo, setUpdateData, id, deleteTask }) {
         <>
             {toDo.length > 0 &&
                 toDo.map((task, i) => {
-                    console.log(task, "task");
                     return (
                         <div>
                             <div className="flex flex-col pe-5">
                                 <div className="m-2 flex justify-between">
                                     <div>
-                                        <span className=" me-2">{task.index}</span>
+                                        <span className=" me-2">{i + 1}</span>
                                         <span className="">{task.task}</span>
                                     </div>
                                     <div className="flex">

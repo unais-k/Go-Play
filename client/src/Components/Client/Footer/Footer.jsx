@@ -6,7 +6,7 @@ function Footer() {
             <div className="footer bg-zinc-700 w-full flex justify-center items-center text-white">
                 <div className="w-2/3 mb-20">
                     <div className="logo-name flex my-8">
-                        <img src="./logo-no-background.png" className="w-20 h-12" alt="footer-logo" />
+                        <img src="/logo-no-background.png" className="w-20 h-12" alt="footer-logo" />
                         <h1 className="go-play-logo font-bold text-xl ">GO-Play</h1>
                     </div>
                     <div className="flex justify-content-evenly  ">

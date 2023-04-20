@@ -1,57 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiAddToQueue } from "react-icons/bi";
-import TodoApp from "./Todo/Todo";
 import ButtonSubmit from "../../Layout/ButtonSubmit";
+import { GroundDetailSubmitReqApi } from "../../../../API/Services/TurfAdminRequest";
+import { useSelector } from "react-redux";
+import { GroundViewReqApi } from "../../../../API/Services/TurfAdminRequest";
 
-function DetailsComponent() {
-    const [state, setState] = useState([]);
+function DetailsComponent({ groundId }) {
+    const token = useSelector((state) => state.turfAdminLogin.token);
+    const [state, setState] = useState({});
 
     const [formData, setFormData] = useState({
         startingTime: "",
         closingTime: "",
-        sport: [],
-        holidays: [],
     });
-    const [holiday, setHoliday] = useState({
-        holidays: [],
-    });
+    const groundDetail = async () => {
+        const response = await GroundViewReqApi(groundId, token);
+        if (response.status === 201) {
+            setState(response.data.result);
+        }
+    };
+    console.log(state);
+    useEffect(() => {
+        groundDetail();
+    }, [token]);
+    const [holiday, setHoliday] = useState([]);
+    const [sport, setSport] = useState([]);
 
     const handleCheckboxSport = (e) => {
         const { value, checked } = e.target;
-        const { sport } = formData;
         if (checked) {
-            setFormData({
-                sport: [...sport, value],
-            });
+            setSport([...sport, value]);
         } else {
-            setFormData({
-                sport: sport.filter((e) => e !== value),
-            });
+            setSport(sport.filter((e) => e !== value));
         }
     };
 
     const handleCheckboxHoliday = (e) => {
         const { value, checked } = e.target;
-        const { holidays } = holiday;
+
         if (checked) {
-            setHoliday({
-                holidays: [...holidays, value],
-            });
+            setHoliday([...holiday, value]);
         } else {
-            setHoliday({
-                holidays: holidays.filter((e) => e !== value),
-            });
+            setHoliday(holiday.filter((e) => e !== value));
         }
     };
 
     const handleChange = (e) => {
-        console.log("handle");
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
-    const handleSubmit = async () => {};
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const response = GroundDetailSubmitReqApi({ data: formData, holiday: holiday, sport: sport }, groundId, token);
+    };
     return (
         <div>
             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
@@ -77,47 +80,72 @@ function DetailsComponent() {
                         </div>
                     </li>
                     <li>
+                        <label className="text-teal-600 text-sms mt-2">Sport Available</label>
                         <ul className="flex text-xs flex-wrap">
-                            <li className="me-2">
-                                <label>
-                                    football
-                                    <input type="checkbox" onClick={handleCheckboxSport} value="Football" />
-                                </label>
-                            </li>
-                            <li className="me-2">
-                                <label>
-                                    cricket
-                                    <input type="checkbox" value="Cricket" onClick={handleCheckboxSport} />
-                                </label>
-                            </li>
-                            <li className="me-2">
-                                <label>
-                                    volleyball
-                                    <input type="checkbox" value="Volley ball" onClick={handleCheckboxSport} />
-                                </label>
-                            </li>
-                            <li className="me-2">
-                                <label>
-                                    tennis
-                                    <input type="checkbox" value="Tennis" onClick={handleCheckboxSport} />
-                                </label>
-                            </li>
-                            <li className="me-2">
-                                <label>
-                                    badminton
-                                    <input type="checkbox" value="Badminton" onClick={handleCheckboxSport} />
-                                </label>
-                            </li>
-                            <li className="me-2">
-                                <label>
-                                    basketball
-                                    <input type="checkbox" value="Basket ball" onClick={handleCheckboxSport} />
-                                </label>
-                            </li>
+                            {state.length > 0 && state ? (
+                                <>
+                                    {state.map((res) => {
+                                        console.log(res);
+                                        return (
+                                            <li className="me-2">
+                                                <label>
+                                                    {res.name}
+                                                    <input type="checkbox" onClick={handleCheckboxSport} value="Football" />
+                                                </label>
+                                            </li>
+                                        );
+                                    })}
+                                </>
+                            ) : (
+                                <>
+                                    <li className="me-2">
+                                        <label>
+                                            football
+                                            <input type="checkbox" onClick={handleCheckboxSport} value="Football" />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            football
+                                            <input type="checkbox" onClick={handleCheckboxSport} value="Football" />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            cricket
+                                            <input type="checkbox" value="Cricket" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            volleyball
+                                            <input type="checkbox" value="Volley ball" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            tennis
+                                            <input type="checkbox" value="Tennis" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            badminton
+                                            <input type="checkbox" value="Badminton" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            basketball
+                                            <input type="checkbox" value="Basket ball" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </li>
                     <li>
-                        <label className="text-teal-600 text-sms">Holiday</label>
+                        <label className="text-teal-600 text-sms my-2">Holiday</label>
                         <ul className="flex text-xs flex-wrap">
                             <li className="me-2">
                                 <label>

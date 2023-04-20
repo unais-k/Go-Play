@@ -14,10 +14,17 @@ const bookingSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
-        time: {
-            type: Array,
-            required: true,
-        },
+        time: [
+            {
+                id: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "time",
+                },
+                time: {
+                    type: String,
+                },
+            },
+        ],
         payment: {
             type: String,
             required: true,

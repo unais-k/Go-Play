@@ -1,4 +1,5 @@
 import CityModel from "../../Model/City.js";
+import timeModel from "../../Model/Time.js";
 import GroundModel from "./../../Model/Grounds.js";
 
 export const CityListResApi = async (req, res, next) => {
@@ -8,6 +9,16 @@ export const CityListResApi = async (req, res, next) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error });
+    }
+};
+
+export const TimeSlotResApi = async (req, res, next) => {
+    try {
+        const find = await timeModel.find({});
+        res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
     }
 };
 

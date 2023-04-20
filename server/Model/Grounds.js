@@ -24,6 +24,11 @@ const groundSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        pinCode: {
+            type: String,
+            required: true,
+        },
+
         nearCity: {
             type: String,
             required: true,

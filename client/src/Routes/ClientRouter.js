@@ -20,7 +20,7 @@ function ClientRouter() {
                 <Route path="/otp" element={<Otp />} />
                 <Route path="/forget_password" element={<ForgetPassword />} />
                 <Route path="/football-turfs" element={<Football />} />
-                <Route path="/ground-view" element={<GroundPage />} />
+                <Route path="/ground-view/:id" element={<GroundPage />} />
             </Routes>
         </div>
     );

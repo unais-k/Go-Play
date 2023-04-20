@@ -9,58 +9,6 @@ function ConstNavbar() {
     let [open, setOpen] = useState(false);
     return (
         <div className="">
-            {/* <div className="const_header">
-                <ul className="flex justify-center">
-                    <li className="li-style text-left ">
-                        <a>
-                            <div className="left-b">
-                                <img src="./all-sports.png" alt="all-sport" title="all sport grounds" />
-                            </div>
-                            All Sport
-                            <br />
-                            <span className="menu-des">
-                                <p>See all sport ground of your city</p>
-                            </span>
-                        </a>
-                    </li>
-                    <li className="li-style text-left">
-                        <a onClick={handleFootball}>
-                            <div className="left-b">
-                                <img src="./football.png" alt="football" title="all sport grounds" />
-                            </div>
-                            Football
-                            <br />
-                            <span className="menu-des">
-                                <p>See football ground of your city</p>
-                            </span>
-                        </a>
-                    </li>
-                    <li className="li-style text-left">
-                        <a>
-                            <div className="left-b">
-                                <img src="./cricket.png" alt="cricket" title="all sport grounds" />
-                            </div>
-                            Cricket
-                            <br />
-                            <span className="menu-des">
-                                <p>See cricket ground of your city</p>
-                            </span>
-                        </a>
-                    </li>
-                    <li className="li-style text-left">
-                        <a>
-                            <div className="left-b">
-                                <img src="./offers.png" alt="offers" title="all sport grounds" />
-                            </div>
-                            Offers
-                            <br />
-                            <span className="menu-des">
-                                <p>See offers on the ground of your city</p>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div> */}
             <div className="w-full py-4 top-0 left-0">
                 <div className="md:flex items-center justify-center bg-white py-5 md:px-10 px-7">
                     <div
@@ -80,7 +28,7 @@ function ConstNavbar() {
                                 <div>
                                     <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
                                         <img
-                                            src="./all-sports.png"
+                                            src="/all-sports.png"
                                             alt="football"
                                             className="h-full"
                                             title="all sport grounds"
@@ -102,7 +50,7 @@ function ConstNavbar() {
                                 <div>
                                     <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
                                         <img
-                                            src="./football.png"
+                                            src="/football.png"
                                             alt="football"
                                             className="h-full"
                                             title="all sport grounds"
@@ -124,7 +72,7 @@ function ConstNavbar() {
                                 <div>
                                     <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
                                         <img
-                                            src="./cricket.png"
+                                            src="/cricket.png"
                                             alt="cricket"
                                             className="h-full"
                                             title="all sport grounds"
@@ -147,7 +95,7 @@ function ConstNavbar() {
                                 <div>
                                     <div className="left-b pt-2 pb-3 ps-2 me-3 border-r border-zinc-300">
                                         <img
-                                            src="./offers.png"
+                                            src="/offers.png"
                                             alt="football"
                                             className="h-full"
                                             title="all sport grounds"

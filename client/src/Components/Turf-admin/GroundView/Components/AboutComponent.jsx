@@ -9,14 +9,17 @@ function AboutComponent({ viewData }) {
     const date = new Date(viewData.createdAt).toDateString();
 
     const handleToggle = async () => {
-        console.log(1111);
+        console.log(viewData.status);
         setToggle((current) => !current);
-        console.log(toggle, "toggle");
-        const response = await AvailableStatusChangeReqApi(toggle, token);
+
+        const id = viewData._id;
+        const response = await AvailableStatusChangeReqApi({ toggle: toggle }, id, token);
         if (response.status === 200) {
-            message.success("Venue is available now");
-        } else if (response.status === 203) {
-            message.warning("Venue is not available now");
+            if (response.data.result.status === true) {
+                message.success("Venue Available");
+            } else {
+                message.warning("Venue not available");
+            }
         } else {
             message.error("Something went wrong");
         }
@@ -25,19 +28,10 @@ function AboutComponent({ viewData }) {
         console.log("UseEffect working");
     }, [toggle]);
 
-    const handleToggleFalse = async () => {
-        setToggle(false);
-        console.log(toggle, "false");
-    };
-    const handleToggleTrue = async () => {
-        setToggle(true);
-        console.log(toggle, "true");
-    };
-
     return (
         <div class="bg-white p-3 shadow-sm rounded-sm">
             <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                <span clas="text-green-500">
+                <span class="text-green-500">
                     <svg
                         class="h-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -116,28 +110,28 @@ function AboutComponent({ viewData }) {
                         <div class="grid grid-cols-2">
                             <div class="px-4 py-2 font-semibold">Available Status</div>
                             <div class="px-4 py-2">
-                                {viewData.available && toggle === true ? (
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        value={viewData.status}
+                                        onClick={handleToggle}
+                                        class="sr-only peer"
+                                        checked={toggle}
+                                    />
+                                    <div class="w-11 h-6 bg-blue-600 peer-focus:outline-none dark:peer-focus:ring-blue-800  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gray-200"></div>
+                                </label>
+                                {/* ) : (
                                     <label class="relative inline-flex items-center cursor-pointer">
                                         <input
                                             type="checkbox"
                                             value={toggle}
-                                            onClick={handleToggleFalse}
-                                            class="sr-only peer"
-                                            checked
-                                        />
-                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-blue-800  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                    </label>
-                                ) : (
-                                    <label class="relative inline-flex items-center cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            value={toggle}
-                                            onClick={handleToggleTrue}
+                                            onClick={handleToggle}
+                                            checked={toggle}
                                             class="sr-only peer"
                                         />
                                         <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-blue-800  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                                     </label>
-                                )}
+                                )} */}
                             </div>
                         </div>
                         <div class="grid grid-cols-2">

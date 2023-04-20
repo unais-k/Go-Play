@@ -10,7 +10,6 @@ function GroundPage() {
     return (
         <div>
             <div className="h-16 mt-1">
-                {" "}
                 {location ? <NavbarPage true={false} place={location} /> : <NavbarPage true={true} place={"Mumbai"} />}
             </div>
             <ConstNavbar />

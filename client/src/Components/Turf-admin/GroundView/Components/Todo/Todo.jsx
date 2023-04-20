@@ -20,8 +20,6 @@ function TodoApp({ id }) {
     const findTask = async () => {
         const response = await FindRuleReqApi({ id: id }, token);
         if (response.status === 201) {
-            console.log(response.data.result.rules, "data arrayy");
-
             setToDo(response.data.result.rules);
         }
     };
@@ -50,7 +48,7 @@ function TodoApp({ id }) {
         // let newTasks = toDo.filter((task) => task.id !== id);
         const response = await RuleDeleteReqApi({ deleteId: deleteId, id: id }, token);
         if (response.status === 201) {
-            setToDo([...toDo, response.data.result.rules]);
+            setToDo(response.data.result.rules);
         } else {
             message.error("Something went wrong");
         }
@@ -76,6 +74,7 @@ function TodoApp({ id }) {
             index: updateData.index,
             task: e.target.value,
         };
+
         setUpdateData(newEntry);
     };
 

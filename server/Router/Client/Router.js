@@ -5,6 +5,7 @@ import {
     FootballGroundResApi,
     GroundListResApi,
     GroundViewResApi,
+    TimeSlotResApi,
 } from "../../Controller/Client/ClientController.js";
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.get("/city-list", CityListResApi);
 router.get("/ground-list", GroundListResApi);
 router.get("/football-ground-list", FootballGroundResApi);
 router.get("/ground-view", GroundViewResApi);
+router.get("/time-slot", TimeSlotResApi);
 
 export default router;

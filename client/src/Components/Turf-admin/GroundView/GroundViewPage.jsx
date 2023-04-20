@@ -53,8 +53,8 @@ function GroundViewPage() {
 
                                     <div className="bg-white p-3 shadow-sm rounded-sm">
                                         <div className="grid grid-cols-2">
-                                            <TimeSlot />
-                                            <DetailsComponent />
+                                            <TimeSlot groundId={viewData._id} />
+                                            <DetailsComponent groundId={viewData._id} />
                                         </div>
                                     </div>
                                     <div className="mt-3">
