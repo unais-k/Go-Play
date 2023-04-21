@@ -1,10 +1,14 @@
 import { AxiosTurfAdmin } from "../AxiosInstance";
 
-export const addGroundReqApi = async (data, token) => {
+export const addGroundReqApi = async (data, rows, token) => {
     try {
-        const response = AxiosTurfAdmin.post("/ground-add", data, {
-            headers: { Authorization: "Bearer " + token },
-        });
+        const response = AxiosTurfAdmin.post(
+            "/ground-add",
+            { data, rows },
+            {
+                headers: { Authorization: "Bearer " + token },
+            }
+        );
         return response;
     } catch (error) {
         console.log(error.message);
@@ -47,9 +51,9 @@ export const GroundViewReqApi = async (data, token) => {
     }
 };
 
-export const TimeSlotReqApi = async (token) => {
+export const TimeSlotReqApi = async (data, token) => {
     try {
-        const response = AxiosTurfAdmin.get("/time-slot", {
+        const response = AxiosTurfAdmin.get(`/find-city?id=${data}`, {
             headers: { Authorization: "Bearer " + token },
         });
         return response;
@@ -152,9 +156,23 @@ export const RuleUpdateReqApi = (data, token) => {
     }
 };
 
-export const SelectedTimeSlotReqApi = async (data, token) => {
+export const SelectedTimeReqApi = async (data, token) => {
     try {
-        const response = AxiosTurfAdmin.post("/selected-time-slot", data, {
+        console.log(data, "data", token, "token");
+        const response = AxiosTurfAdmin.post(`/selected-time-slot`, data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const CancelTimeReqApi = async (data, token) => {
+    try {
+        console.log(data, "data", token, "token");
+        const response = AxiosTurfAdmin.post(`/canceled-time-slot`, data, {
             headers: { Authorization: "Bearer " + token },
         });
         return response;

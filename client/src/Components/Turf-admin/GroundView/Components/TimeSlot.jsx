@@ -1,46 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { BiTime } from "react-icons/bi";
-import { SelectedTimeSlotReqApi, TimeSettingReqApi, TimeSlotReqApi } from "../../../../API/Services/TurfAdminRequest";
+import { CancelTimeReqApi, SelectedTimeReqApi } from "../../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 
-function TimeSlot({ groundId }) {
+function TimeSlot({ viewData }) {
     const token = useSelector((state) => state.turfAdminLogin.token);
 
-    const [state, setState] = useState([]);
-    const [booked, setBooked] = useState([]);
-    const slotsArray = [];
-    const selected = [];
+    const [time, setTime] = useState([]);
+
+    const handleCancel = async (id) => {
+        const response = await CancelTimeReqApi({ id: id, groundId: viewData._id }, token);
+        if (response.status === 200) {
+            setTime(response.data.result);
+            message.warning("Slot canceled");
+        } else {
+            message.error("Something went wrong");
+        }
+    };
+
+    const handleSelect = async (id) => {
+        const response = await SelectedTimeReqApi({ id: id, groundId: viewData._id }, token);
+        if (response.status === 200) {
+            setTime(response.data.result);
+            message.success("Slot selected");
+        } else {
+            message.error("Something went wrong");
+        }
+    };
 
     useEffect(() => {
-        timeSlot();
-    }, [""]);
-    const timeSlot = async () => {
-        const response = await TimeSlotReqApi(token);
-        if (response.status === 201) {
-            setState(response.data.result);
-            bookSlot();
+        if (viewData) {
+            setTime(viewData.slots);
         }
-    };
-    const bookSlot = async (id) => {
-        const response = await SelectedTimeSlotReqApi({ groundId: groundId, slotId: id }, token);
-        if (response.status === 200) {
-            setBooked(response.data.result);
-        }
-    };
-    const cancelSlot = async (id) => {
-        message.warning("Canceled slot");
-        await bookSlot(id);
-        slotsArray.pop(id);
-    };
-    const handleSelect = async (id) => {
-        const compare = slotsArray.includes(id);
+        console.log(111);
+    }, [viewData]);
 
-        compare === false ? slotsArray.push(id) : cancelSlot(id);
-        if (compare === false) {
-            bookSlot(id);
-        }
-    };
     return (
         <div>
             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
@@ -48,18 +43,18 @@ function TimeSlot({ groundId }) {
                 <span className="tracking-wide">Time</span>
             </div>
             <ul className="list-inside space-y-2">
-                {state.length === 0 ? (
+                {time?.length === 0 ? (
                     <div>Please wait</div>
                 ) : (
                     <div className="grid grid-cols-4 content-center gap-1">
-                        {state.map((res) => {
+                        {time?.map((res) => {
                             return (
                                 <>
-                                    {booked.includes(res.index) ? (
+                                    {/* {booked.includes(res.Id) ? (
                                         <div
                                             className="bg-green-400 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
                                             key={res.index}
-                                            onClick={() => handleSelect(res.index)}
+                                            onClick={() => handleSelect(res._id)}
                                         >
                                             {res.time}
                                         </div>
@@ -67,7 +62,24 @@ function TimeSlot({ groundId }) {
                                         <div
                                             className="bg-gray-100 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
                                             key={res.index}
-                                            onClick={() => handleSelect(res.index)}
+                                            onClick={() => handleSelect(res._id)}
+                                        >
+                                            {res.time}
+                                        </div>
+                                    )} */}
+                                    {res.status === true ? (
+                                        <div
+                                            className="bg-green-300 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+                                            key={res.index}
+                                            onClick={() => handleCancel(res._id)}
+                                        >
+                                            {res.time}
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="bg-gray-100 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+                                            key={res.index}
+                                            onClick={() => handleSelect(res._id)}
                                         >
                                             {res.time}
                                         </div>
@@ -75,7 +87,7 @@ function TimeSlot({ groundId }) {
                                     {/* <div
                                         className="bg-gray-100 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
                                         key={res.index}
-                                        onClick={() => handleSelect(res.index)}
+                                        onClick={() => handleSelect(res._id)}
                                     >
                                         {res.time}
                                     </div> */}

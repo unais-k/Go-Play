@@ -19,7 +19,6 @@ function GroundViewPage() {
     const data = objId.id;
 
     useEffect(() => {
-        console.log(7777);
         groundView();
     }, [""]);
     const groundView = async () => {
@@ -53,7 +52,7 @@ function GroundViewPage() {
 
                                     <div className="bg-white p-3 shadow-sm rounded-sm">
                                         <div className="grid grid-cols-2">
-                                            <TimeSlot groundId={viewData._id} />
+                                            <TimeSlot viewData={viewData} />
                                             <DetailsComponent groundId={viewData._id} />
                                         </div>
                                     </div>

@@ -19,7 +19,7 @@ function DetailsComponent({ groundId }) {
             setState(response.data.result);
         }
     };
-    console.log(state);
+
     useEffect(() => {
         groundDetail();
     }, [token]);
@@ -85,7 +85,6 @@ function DetailsComponent({ groundId }) {
                             {state.length > 0 && state ? (
                                 <>
                                     {state.map((res) => {
-                                        console.log(res);
                                         return (
                                             <li className="me-2">
                                                 <label>
@@ -98,12 +97,6 @@ function DetailsComponent({ groundId }) {
                                 </>
                             ) : (
                                 <>
-                                    <li className="me-2">
-                                        <label>
-                                            football
-                                            <input type="checkbox" onClick={handleCheckboxSport} value="Football" />
-                                        </label>
-                                    </li>
                                     <li className="me-2">
                                         <label>
                                             football

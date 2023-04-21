@@ -57,11 +57,8 @@ function GroundViewPage() {
     };
 
     const handleBooking = async (id) => {
-        console.log(id);
         const compare = selected.includes(id);
         compare === false ? selected.push(id) : cancelSlot(id);
-        // if (compare === false) {
-        // }
         console.log(selected, "selected");
     };
 
@@ -139,20 +136,27 @@ function GroundViewPage() {
                             time.map((res) => {
                                 return (
                                     <div className="m-2">
-                                        {selected.includes(res.index) && groundTime.includes(res.index) ? (
-                                            <div
-                                                className="bg-red-300 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
-                                                onClick={() => handleBooking(res.index)}
-                                            >
-                                                Booked
-                                            </div>
+                                        {groundTime.includes(res.index) ? (
+                                            <>
+                                                {selected.includes(res.index) ? (
+                                                    <div
+                                                        className="bg-red-300 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+                                                        onClick={() => handleBooking(res.index)}
+                                                    >
+                                                        Booked
+                                                    </div>
+                                                ) : (
+                                                    ""
+                                                )}
+                                                <div
+                                                    className="bg-green-300 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+                                                    onClick={() => handleBooking(res.index)}
+                                                >
+                                                    {res.time}
+                                                </div>
+                                            </>
                                         ) : (
-                                            <div
-                                                onClick={() => handleBooking(res.index)}
-                                                className="bg-gray-100 transition py-1 w-fit px-2 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
-                                            >
-                                                {res.time}
-                                            </div>
+                                            ""
                                         )}
                                     </div>
                                 );

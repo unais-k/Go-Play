@@ -2,6 +2,7 @@ import express from "express";
 import { TurfAdminLogin, TurfAdminRegister } from "../../Controller/TurfAdmin/AuthController.js";
 import {
     AvailableStatusChangeResApi,
+    CanceledTimeResApi,
     FindCity,
     GroundDetailSubmitResApi,
     GroundListResApi,
@@ -11,7 +12,7 @@ import {
     RuleFindResApi,
     RuleUpdateFindResApi,
     RuleUpdateResApi,
-    SelectedTimeSlotResApi,
+    SelectedTimeResApi,
     TimeSlotResApi,
     addGroundReq,
 } from "../../Controller/TurfAdmin/TurfAdminController.js";
@@ -34,7 +35,8 @@ router.post("/rule-add", turfAdminVerifyToken, RuleAddResApi);
 router.delete("/rule-delete", turfAdminVerifyToken, RuleDeleteResApi);
 router.get("/rule-update-find", turfAdminVerifyToken, RuleUpdateFindResApi);
 router.patch("/rule-update", turfAdminVerifyToken, RuleUpdateResApi);
-router.post("/selected-time-slot", turfAdminVerifyToken, SelectedTimeSlotResApi);
+router.post("/selected-time-slot", turfAdminVerifyToken, SelectedTimeResApi);
+router.post("/canceled-time-slot", turfAdminVerifyToken, CanceledTimeResApi);
 router.post("/ground-detail-form-submit", turfAdminVerifyToken, GroundDetailSubmitResApi);
 
 export default router;

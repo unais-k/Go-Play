@@ -22,8 +22,8 @@ function TodoComponent({ toDo, setUpdateData, id, deleteTask }) {
     };
     return (
         <>
-            {toDo.length > 0 &&
-                toDo.map((task, i) => {
+            {toDo?.length > 0 &&
+                toDo?.map((task, i) => {
                     return (
                         <div>
                             <div className="flex flex-col pe-5">
@@ -37,7 +37,7 @@ function TodoComponent({ toDo, setUpdateData, id, deleteTask }) {
                                             <BsPencilFill size={20} />
                                         </span>
 
-                                        <span title="Delete" onClick={() => deleteTask(task.index)}>
+                                        <span title="Delete" onClick={() => deleteTask(task._id)}>
                                             <BsFillTrashFill size={20} />
                                         </span>
                                     </div>

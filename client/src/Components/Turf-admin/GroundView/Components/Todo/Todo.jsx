@@ -30,7 +30,7 @@ function TodoApp({ id }) {
         } else {
             console.log("no id");
         }
-    }, [id, updateData]);
+    }, [toDo && id]);
 
     const addTask = async () => {
         if (newTask) {
@@ -45,24 +45,14 @@ function TodoApp({ id }) {
     };
 
     const deleteTask = async (deleteId) => {
-        // let newTasks = toDo.filter((task) => task.id !== id);
+        console.log(deleteId);
+
         const response = await RuleDeleteReqApi({ deleteId: deleteId, id: id }, token);
         if (response.status === 201) {
             setToDo(response.data.result.rules);
         } else {
             message.error("Something went wrong");
         }
-        // setToDo(newTasks);
-    };
-
-    const markDone = (id) => {
-        let newTask = toDo.map((task) => {
-            if (task.id === id) {
-                return { ...task, status: !task.status };
-            }
-            return task;
-        });
-        setToDo(newTask);
     };
 
     const cancelUpdate = () => {

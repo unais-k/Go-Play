@@ -12,6 +12,33 @@ function AddGroundPage() {
     const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
     const [list, setList] = useState([]);
+
+    const rows = [
+        { index: "0", time: "12.00am", isSelected: false, status: false },
+        { index: "1", time: "01.00am", isSelected: false, status: false },
+        { index: "2", time: "02.00am", isSelected: false, status: false },
+        { index: "3", time: "03.00am", isSelected: false, status: false },
+        { index: "4", time: "04.00am", isSelected: false, status: false },
+        { index: "5", time: "05.00am", isSelected: false, status: false },
+        { index: "6", time: "06.00am", isSelected: false, status: false },
+        { index: "7", time: "07.00am", isSelected: false, status: false },
+        { index: "8", time: "08.00am", isSelected: false, status: false },
+        { index: "9", time: "09.00am", isSelected: false, status: false },
+        { index: "10", time: "10.00am", isSelected: false, status: false },
+        { index: "11", time: "11.00am", isSelected: false, status: false },
+        { index: "12", time: "12.00pm", isSelected: false, status: false },
+        { index: "13", time: "01.00pm", isSelected: false, status: false },
+        { index: "14", time: "02.00pm", isSelected: false, status: false },
+        { index: "15", time: "03.00pm", isSelected: false, status: false },
+        { index: "16", time: "04.00pm", isSelected: false, status: false },
+        { index: "17", time: "05.00pm", isSelected: false, status: false },
+        { index: "18", time: "06.00pm", isSelected: false, status: false },
+        { index: "19", time: "07.00pm", isSelected: false, status: false },
+        { index: "20", time: "08.00pm", isSelected: false, status: false },
+        { index: "21", time: "09.00pm", isSelected: false, status: false },
+        { index: "22", time: "10.00pm", isSelected: false, status: false },
+        { index: "23", time: "11.00pm", isSelected: false, status: false },
+    ];
     const [formData, setFormData] = useState({
         picturePath: "",
         name: "",
@@ -109,7 +136,7 @@ function AddGroundPage() {
             return false;
         }
 
-        const response = await addGroundReqApi(formData, token);
+        const response = await addGroundReqApi(formData, rows, token);
         if (response.status === 200) {
             navigate("/turf-admin/ground-list");
             message.success("New Ground added");

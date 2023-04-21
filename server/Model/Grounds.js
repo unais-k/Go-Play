@@ -94,9 +94,22 @@ const groundSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        slots: {
-            type: Array,
-        },
+        slots: [
+            {
+                index: {
+                    type: String,
+                },
+                time: {
+                    type: String,
+                },
+                status: {
+                    type: Boolean,
+                },
+                isSelected: {
+                    type: Boolean,
+                },
+            },
+        ],
         status: {
             type: Boolean,
             default: false,

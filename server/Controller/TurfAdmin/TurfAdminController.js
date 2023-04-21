@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import CityModel from "../../Model/City.js";
 import timeModel from "../../Model/Time.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
@@ -6,18 +7,32 @@ import GroundModel from "./../../Model/Grounds.js";
 
 export const addGroundReq = async (req, res, next) => {
     try {
-        const { size, groundType, priceAtNight, price, state, place, nearCity, address, phone, email, picturePath, name } =
-            req.body;
+        const {
+            size,
+            groundType,
+            priceAtNight,
+            price,
+            state,
+            place,
+            nearCity,
+            address,
+            phone,
+            email,
+            pinCode,
+            picturePath,
+            name,
+        } = req.body.data;
         const id = req.user.id;
-
         const Profile = "profile";
         const result = await cloudinary.uploader
             .upload(picturePath, {
                 folder: Profile,
             })
             .catch((err) => {
+                console.log(err.message);
                 console.log(err);
             });
+
         const newGround = new GroundModel({
             name,
             email,
@@ -29,6 +44,7 @@ export const addGroundReq = async (req, res, next) => {
             place,
             phone,
             state,
+            slots: req.body.rows,
             price,
             priceAtNight,
             groundType,
@@ -78,8 +94,10 @@ export const GroundViewResApi = async (req, res, next) => {
 
 export const TimeSlotResApi = async (req, res, next) => {
     try {
-        const find = await timeModel.find({});
-        res.status(201).json({ result: find });
+        console.log(req.body);
+        console.log(req.query);
+        // const find = await GroundModel.find({});
+        // res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
@@ -137,10 +155,12 @@ export const RuleDeleteResApi = async (req, res, next) => {
         console.log(req.query);
         const response = await GroundModel.updateOne(
             { _id: req.query.id },
-            { $pull: { rules: { "rules.index": req.query.index } } }
+            { $pull: { rules: { "rules._id": req.query.index } } }
         );
+        console.log(response);
 
         const find = await GroundModel.find({ _id: req.query.id });
+        res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
@@ -178,17 +198,30 @@ export const RuleUpdateResApi = async (req, res, next) => {
     }
 };
 
-export const SelectedTimeSlotResApi = async (req, res, next) => {
+export const SelectedTimeResApi = async (req, res, next) => {
     try {
-        const findGround = await GroundModel.find({ _id: req.body.groundId });
-        const isBooked = findGround[0].slots.includes(req.body.slotId);
-        if (isBooked) {
-            const dlt = await GroundModel.updateOne({ _id: req.body.groundId }, { $pull: { slots: req.body.slotId } });
-        } else {
-            const save = await GroundModel.updateOne({ _id: req.body.groundId }, { $addToSet: { slots: req.body.slotId } });
-        }
-        const find = await GroundModel.find({ _id: req.body.groundId });
-        res.status(200).json({ result: find[0].slots });
+        const { id, groundId } = req.body;
+        const findGround = await GroundModel.findOneAndUpdate(
+            { _id: groundId, "slots._id": id },
+            { $set: { "slots.$.status": true } },
+            { new: true }
+        );
+        res.status(200).json({ result: findGround.slots });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const CanceledTimeResApi = async (req, res, next) => {
+    try {
+        const { id, groundId } = req.body;
+        const findGround = await GroundModel.findOneAndUpdate(
+            { _id: groundId, "slots._id": id },
+            { $set: { "slots.$.status": false } },
+            { new: true }
+        );
+        res.status(200).json({ result: findGround.slots });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
