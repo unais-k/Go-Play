@@ -17,50 +17,27 @@ const groundSchema = new mongoose.Schema(
             unique: true,
             required: true,
         },
+        address: {
+            type: String,
+        },
+
+        place: {
+            type: String,
+        },
         phone: {
             type: String,
         },
-        address: {
-            type: String,
-            required: true,
-        },
-        pinCode: {
-            type: String,
-            required: true,
-        },
 
-        nearCity: {
-            type: String,
-            required: true,
-        },
         images: {
             type: Array,
             required: true,
         },
-        place: {
-            type: String,
-            required: true,
-        },
-        state: {
-            type: String,
-            required: true,
-        },
-        price: {
-            type: Number,
-            required: true,
-        },
-        priceAtNight: {
-            type: Number,
-            required: true,
-        },
+
         available: {
             type: Boolean,
             default: false,
         },
-        groundType: {
-            type: String,
-            required: true,
-        },
+
         rules: [
             {
                 task: {
@@ -88,28 +65,7 @@ const groundSchema = new mongoose.Schema(
         holiday: {
             type: Array,
         },
-        sport: { type: Array },
         reviews: { type: Array },
-        size: {
-            type: String,
-            required: true,
-        },
-        slots: [
-            {
-                index: {
-                    type: String,
-                },
-                time: {
-                    type: String,
-                },
-                status: {
-                    type: Boolean,
-                },
-                isSelected: {
-                    type: Boolean,
-                },
-            },
-        ],
         status: {
             type: Boolean,
             default: false,

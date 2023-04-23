@@ -1,14 +1,12 @@
 import { AxiosTurfAdmin } from "../AxiosInstance";
+import AddEvent from "./../../Pages/Turf-Admin/AddEvent";
 
-export const addGroundReqApi = async (data, rows, token) => {
+export const addGroundReqApi = async (data, token) => {
+    console.log(data, "data", token, "token");
     try {
-        const response = AxiosTurfAdmin.post(
-            "/ground-add",
-            { data, rows },
-            {
-                headers: { Authorization: "Bearer " + token },
-            }
-        );
+        const response = AxiosTurfAdmin.post("/ground-add", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
         return response;
     } catch (error) {
         console.log(error.message);
@@ -40,6 +38,7 @@ export const GroundListReqApi = async (token) => {
 };
 
 export const GroundViewReqApi = async (data, token) => {
+    console.log(data, "data", token, "token");
     try {
         const response = AxiosTurfAdmin.get(`/ground-view?id=${data}`, {
             headers: { Authorization: "Bearer " + token },
@@ -187,6 +186,41 @@ export const GroundDetailSubmitReqApi = async (data, id, token) => {
     console.log(data, "data", token, "token");
     try {
         const response = AxiosTurfAdmin.post(`/ground-detail-form-submit?id=${id}`, data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const AddEventReqApi = async (data, token) => {
+    console.log(data, "data", token, "token");
+    try {
+        const response = AxiosTurfAdmin.post(`/add-event`, data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const TimeSaveOnEventReqApi = async (data, token) => {
+    try {
+        const response = AxiosTurfAdmin.post(`/add-time-on-event?id=${data}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const EventDetailFetchReqApi = async (data, token) => {
+    console.log(data, "data", token, "token");
+    try {
+        const response = AxiosTurfAdmin.get(`/event-detail?id=${data}`, {
             headers: { Authorization: "Bearer " + token },
         });
         return response;

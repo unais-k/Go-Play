@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { BiTime } from "react-icons/bi";
-import { CancelTimeReqApi, SelectedTimeReqApi } from "../../../../API/Services/TurfAdminRequest";
+
 import { useSelector } from "react-redux";
 import { message } from "antd";
+import { CancelTimeReqApi, SelectedTimeReqApi } from "../../../API/Services/TurfAdminRequest";
 
-function TimeSlot({ eventData, movingDiv, time }) {
+function TimeSlotComponent({ eventData, time }) {
     const token = useSelector((state) => state.turfAdminLogin.token);
 
     const [slots, setSlots] = useState([]);
@@ -28,6 +29,7 @@ function TimeSlot({ eventData, movingDiv, time }) {
             message.error("Something went wrong");
         }
     };
+    console.log(time, eventData);
 
     useEffect(() => {
         if (eventData && time) {
@@ -42,7 +44,7 @@ function TimeSlot({ eventData, movingDiv, time }) {
                 <BiTime size={20} color="green" />
                 <span className="tracking-wide">Time</span>
             </div>
-            <ul ref={movingDiv ? movingDiv : ""} className="list-inside space-y-2">
+            <ul className="list-inside space-y-2">
                 {time?.length === 0 ? (
                     <div>Please wait</div>
                 ) : (
@@ -77,4 +79,4 @@ function TimeSlot({ eventData, movingDiv, time }) {
     );
 }
 
-export default TimeSlot;
+export default TimeSlotComponent;

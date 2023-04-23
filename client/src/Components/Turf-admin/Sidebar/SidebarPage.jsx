@@ -93,7 +93,11 @@ function TurfAdminSidebarPage() {
                                     ></path>
                                 </svg> */}
                                 <BiFootball color="gray" size={23} />
-                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>
+                                <span
+                                    class="flex-1 ml-3 text-left whitespace-nowrap"
+                                    onClick={handleGround}
+                                    sidebar-toggle-item
+                                >
                                     Venue
                                 </span>
                                 <svg

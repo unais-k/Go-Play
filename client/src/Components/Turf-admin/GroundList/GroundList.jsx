@@ -20,9 +20,7 @@ function TurfGroundListPage() {
     }, []);
     const GroundList = async () => {
         await GroundListReqApi(token).then((response) => {
-            console.log(response, "list response");
             if (response.status === 201) {
-                console.log(response);
                 setState(response.data.result);
             } else {
                 message.error("No response in list req");

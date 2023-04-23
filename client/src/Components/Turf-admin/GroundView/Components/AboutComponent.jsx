@@ -103,10 +103,7 @@ function AboutComponent({ viewData }) {
                             <div class="px-4 py-2 font-semibold">Contact No.</div>
                             <div class="px-4 py-2">+91{viewData.phone}</div>
                         </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Current Address</div>
-                            <div class="px-4 py-2">{viewData.address}</div>
-                        </div>
+
                         <div class="grid grid-cols-2">
                             <div class="px-4 py-2 font-semibold">Available Status</div>
                             <div class="px-4 py-2">
@@ -142,10 +139,7 @@ function AboutComponent({ viewData }) {
                                 </a>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Type</div>
-                            <div class="px-4 py-2">{viewData.groundType}</div>
-                        </div>
+
                         <div class="grid grid-cols-2">
                             <div class="px-4 py-2 font-semibold">Created At</div>
                             <div class="px-4 py-2">{date}</div>

@@ -2,6 +2,7 @@ import React from "react";
 
 function ProfileCard({ viewData }) {
     const date = new Date(viewData.createdAt).toDateString();
+
     return (
         <div class="w-full md:w-3/12 md:mx-2">
             {viewData.name ? (

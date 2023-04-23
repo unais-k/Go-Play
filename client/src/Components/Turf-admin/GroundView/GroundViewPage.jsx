@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { HiHome } from "react-icons/hi";
 import ProfileCard from "./Components/ProfileCard";
 import AboutComponent from "./Components/AboutComponent";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { GroundViewReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
@@ -11,10 +11,13 @@ import { message } from "antd";
 import TimeSlot from "./Components/TimeSlot";
 import DetailsComponent from "./Components/DetailsComponent";
 import TodoApp from "./Components/Todo/Todo";
+import ListEvent from "./Components/ListEvent";
 
 function GroundViewPage() {
+    const navigate = useNavigate();
     const token = useSelector((state) => state.turfAdminLogin.token);
     const [viewData, setViewData] = useState([]);
+    const [event, setEvent] = useState([]);
     const objId = useParams();
     const data = objId.id;
 
@@ -25,9 +28,14 @@ function GroundViewPage() {
         const response = await GroundViewReqApi(data, token);
         if (response.status === 201) {
             setViewData(response.data.result);
+            setEvent(response.data.event);
         } else {
             message.error("Something went wrong");
         }
+    };
+
+    const handleAddEvent = (id) => {
+        navigate("/turf-admin/add-event/" + id);
     };
 
     return (
@@ -49,11 +57,17 @@ function GroundViewPage() {
                                     <AboutComponent viewData={viewData} />
 
                                     <div className="my-4"></div>
-
+                                    <div
+                                        className="bg-green-400 px-4 py-2 rounded w-fit"
+                                        onClick={() => handleAddEvent(viewData._id)}
+                                    >
+                                        Add Event
+                                    </div>
                                     <div className="bg-white p-3 shadow-sm rounded-sm">
-                                        <div className="grid grid-cols-2">
-                                            <TimeSlot viewData={viewData} />
-                                            <DetailsComponent groundId={viewData._id} />
+                                        <div className="grid ms:grid-cols-1 ">
+                                            {/* <TimeSlot viewData={viewData} />
+                                            <DetailsComponent groundId={viewData._id} /> */}
+                                            <ListEvent event={event} />
                                         </div>
                                     </div>
                                     <div className="mt-3">

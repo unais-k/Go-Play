@@ -4,24 +4,12 @@ import timeModel from "../../Model/Time.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
 import { cloudinary } from "../../Utils/Cloudinary.js";
 import GroundModel from "./../../Model/Grounds.js";
+import eventModel from "../../Model/Events.js";
 
 export const addGroundReq = async (req, res, next) => {
     try {
-        const {
-            size,
-            groundType,
-            priceAtNight,
-            price,
-            state,
-            place,
-            nearCity,
-            address,
-            phone,
-            email,
-            pinCode,
-            picturePath,
-            name,
-        } = req.body.data;
+        console.log(req.body);
+        const { state, place, nearCity, address, phone, email, pinCode, picturePath, name } = req.body;
         const id = req.user.id;
         const Profile = "profile";
         const result = await cloudinary.uploader
@@ -32,7 +20,6 @@ export const addGroundReq = async (req, res, next) => {
                 console.log(err.message);
                 console.log(err);
             });
-
         const newGround = new GroundModel({
             name,
             email,
@@ -44,11 +31,6 @@ export const addGroundReq = async (req, res, next) => {
             place,
             phone,
             state,
-            slots: req.body.rows,
-            price,
-            priceAtNight,
-            groundType,
-            size,
         });
         await newGround.save();
 
@@ -85,7 +67,8 @@ export const GroundViewResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
         const find = await GroundModel.findOne({ _id: id }).populate("Owner");
-        res.status(201).json({ result: find });
+        const events = await eventModel.find({ groundId: id });
+        res.status(201).json({ result: find, event: events });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
@@ -201,7 +184,7 @@ export const RuleUpdateResApi = async (req, res, next) => {
 export const SelectedTimeResApi = async (req, res, next) => {
     try {
         const { id, groundId } = req.body;
-        const findGround = await GroundModel.findOneAndUpdate(
+        const findGround = await eventModel.findOneAndUpdate(
             { _id: groundId, "slots._id": id },
             { $set: { "slots.$.status": true } },
             { new: true }
@@ -216,7 +199,7 @@ export const SelectedTimeResApi = async (req, res, next) => {
 export const CanceledTimeResApi = async (req, res, next) => {
     try {
         const { id, groundId } = req.body;
-        const findGround = await GroundModel.findOneAndUpdate(
+        const findGround = await eventModel.findOneAndUpdate(
             { _id: groundId, "slots._id": id },
             { $set: { "slots.$.status": false } },
             { new: true }
@@ -247,6 +230,50 @@ export const GroundDetailSubmitResApi = async (req, res, next) => {
         console.log(updateGroundDetail);
         const find = await GroundModel.findOne({ _id: id });
         console.log(find);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const AddEventResApi = async (req, res, next) => {
+    try {
+        const groundId = req.body.groundId;
+        const data = req.body.data;
+        const find = new eventModel({
+            groundId: groundId,
+            title: data.title,
+            price: data.price,
+            priceAtNight: data.priceAtNight,
+            size: data.size,
+            type: data.type,
+            groundName: data.groundName,
+            slots: req.body.slots,
+        });
+        await find.save();
+        console.log(find);
+        res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const TimeSaveOnEventResApi = async (req, res, next) => {
+    try {
+        console.log(req.body);
+        console.log(req.query);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const EventDetailFetchResApi = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        const findDetail = await eventModel.findOne({ _id: id });
+        res.status(201).json({ result: findDetail });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
