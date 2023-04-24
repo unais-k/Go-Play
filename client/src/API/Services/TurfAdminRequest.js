@@ -218,7 +218,7 @@ export const TimeSaveOnEventReqApi = async (data, token) => {
 };
 
 export const EventDetailFetchReqApi = async (data, token) => {
-    console.log(data, "data", token, "token");
+    console.log(data, "data");
     try {
         const response = AxiosTurfAdmin.get(`/event-detail?id=${data}`, {
             headers: { Authorization: "Bearer " + token },

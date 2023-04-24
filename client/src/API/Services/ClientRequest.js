@@ -45,3 +45,35 @@ export const TimeSlotReqApi = async () => {
         return error?.response;
     }
 };
+
+export const SelectTypeOfReqApi = async (data) => {
+    try {
+        const response = AxiosClient.get(`/select-type?id=${data}`);
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const GroundFetchOnSelectReqApi = async (data) => {
+    console.log(data);
+    try {
+        const response = AxiosClient.get(`/selected-type?id=${data.groundId}&data=${data.value}`);
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const EventFetchOnSelectReqApi = async (data) => {
+    console.log(data);
+    try {
+        const response = AxiosClient.get(`/event-fetch?id=${data}`);
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};

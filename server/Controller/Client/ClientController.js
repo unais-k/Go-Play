@@ -1,6 +1,8 @@
 import CityModel from "../../Model/City.js";
 import timeModel from "../../Model/Time.js";
 import GroundModel from "./../../Model/Grounds.js";
+import eventModel from "./../../Model/Events.js";
+import mongoose from "mongoose";
 
 export const CityListResApi = async (req, res, next) => {
     try {
@@ -52,7 +54,67 @@ export const GroundViewResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
         const find = await GroundModel.findOne({ _id: id });
-        res.status(200).json({ result: find });
+        const events = await eventModel.find({ groundId: id });
+        console.log(events);
+        res.status(200).json({ result: find, events: events });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+function multiIntersect(arr) {
+    let result = [];
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+            if (i !== j) {
+                continue;
+            }
+            result = result.concat(arr[i].filter((value) => arr[j].includes(value)));
+        }
+    }
+    return Array.from(new Set(result));
+}
+
+export const SelectTypeResApi = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        let event = [];
+        const find = await eventModel.find({ groundId: id });
+        for (let i = 0; i < find.length; i++) {
+            // event = find[i].eventAvailable;
+            event.push(find[i].eventAvailable);
+        }
+        const concatArray = multiIntersect(event);
+        res.status(201).json({ result: concatArray });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const GroundFetchOnSelectResApi = async (req, res, next) => {
+    try {
+        const matchGround = await eventModel.aggregate([
+            {
+                $match: {
+                    groundId: new mongoose.Types.ObjectId(req.query.id),
+                    eventAvailable: req.query.data,
+                },
+            },
+        ]);
+        res.status(201).json({ result: matchGround });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const EventFetchOnSelectResApi = async (req, res, next) => {
+    try {
+        console.log(req.query);
+        const findEvent = await eventModel.findOne({ _id: req.query.id });
+        res.status(201).json({ result: findEvent });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error });

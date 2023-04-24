@@ -148,11 +148,11 @@ function EditEventComponent() {
                                         Update
                                     </button>
                                 </div>
-                                <div className="">
-                                    {eventData && time ? <TimeSlotComponent eventData={eventData} time={time} /> : ""}
-                                </div>
                             </div>
                         </form>
+                    </div>
+                    <div className="flex justify-center">
+                        {eventData && time ? <TimeSlotComponent eventData={eventData} time={time} /> : ""}
                     </div>
                 </div>
             </div>

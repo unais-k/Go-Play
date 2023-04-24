@@ -37,12 +37,12 @@ function TimeSlot({ eventData, movingDiv, time }) {
     }, [eventData]);
 
     return (
-        <div>
+        <div ref={movingDiv}>
             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
                 <BiTime size={20} color="green" />
                 <span className="tracking-wide">Time</span>
             </div>
-            <ul ref={movingDiv ? movingDiv : ""} className="list-inside space-y-2">
+            <ul className="list-inside space-y-2">
                 {time?.length === 0 ? (
                     <div>Please wait</div>
                 ) : (

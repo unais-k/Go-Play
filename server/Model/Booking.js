@@ -25,6 +25,10 @@ const bookingSchema = new mongoose.Schema(
                 },
             },
         ],
+        event: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "event",
+        },
         payment: {
             type: String,
             required: true,

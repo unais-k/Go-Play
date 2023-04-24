@@ -14,6 +14,7 @@ function AddEventComponent() {
     const [viewData, setViewData] = useState([]);
     const [time, setTime] = useState([]);
     const [eventData, setEventData] = useState([]);
+    const [sport, setSport] = useState([]);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -28,6 +29,15 @@ function AddEventComponent() {
     const groundDetails = async () => {
         const response = await GroundViewReqApi(groundId, token);
         return response;
+    };
+
+    const handleCheckboxSport = (e) => {
+        const { value, checked } = e.target;
+        if (checked) {
+            setSport([...sport, value]);
+        } else {
+            setSport(sport.filter((e) => e !== value));
+        }
     };
 
     const rows = [
@@ -96,7 +106,6 @@ function AddEventComponent() {
         e.preventDefault();
         if (
             formData.groundName === "" ||
-            formData.title === "" ||
             formData.size === "" ||
             formData.price === "" ||
             formData.priceAtNight === "" ||
@@ -105,8 +114,11 @@ function AddEventComponent() {
             message.error("All fields are required");
             return false;
         }
+        if (sport.length === 0) {
+            message.error("Choose a sport");
+        }
 
-        const response = await AddEventReqApi({ groundId: groundId, data: formData, slots: rows }, token);
+        const response = await AddEventReqApi({ groundId: groundId, sport: sport, data: formData, slots: rows }, token);
         console.log(response);
         if (response.status === 201) {
             message.success("Event added");
@@ -147,26 +159,48 @@ function AddEventComponent() {
                                     placeholder="Ground name"
                                 />
                             </div>
-                            <div class="col-span-2 lg:col-span-1 ">
-                                <select
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="password"
-                                    type="text"
-                                    onChange={handleInputChange}
-                                    name="title"
-                                >
-                                    <option value="">Choose Title</option>
-                                    {title.map((obj, index) => {
-                                        return (
-                                            <option key={index + Math.round(Math.random) * 124} value={obj.titles}>
-                                                {obj.titles}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
+                            <div class="col-span-2">
+                                <ul className="flex justify-between">
+                                    <li className="me-2">
+                                        <label>
+                                            football
+                                            <input type="checkbox" onClick={handleCheckboxSport} value="Football" />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            cricket
+                                            <input type="checkbox" value="Cricket" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            volleyball
+                                            <input type="checkbox" value="Volley ball" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            tennis
+                                            <input type="checkbox" value="Tennis" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            badminton
+                                            <input type="checkbox" value="Badminton" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                    <li className="me-2">
+                                        <label>
+                                            basketball
+                                            <input type="checkbox" value="Basket ball" onClick={handleCheckboxSport} />
+                                        </label>
+                                    </li>
+                                </ul>
                             </div>
 
-                            <div class="col-span-2 lg:col-span-1">
+                            <div class="col-span-2">
                                 <select
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="password"

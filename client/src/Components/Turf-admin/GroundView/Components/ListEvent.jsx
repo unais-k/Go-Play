@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineFolderView } from "react-icons/ai";
 import { BiEditAlt } from "react-icons/bi";
+import { MdViewColumn } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function ListEvent({ event }) {
+    const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
     const [events, setEvents] = useState([]);
 
@@ -18,6 +21,9 @@ function ListEvent({ event }) {
     };
     const handleBookingView = (id) => {
         console.log("handleBookingView");
+    };
+    const handleView = (id) => {
+        navigate("/turf-admin/event-view/" + id);
     };
 
     return (
@@ -36,6 +42,9 @@ function ListEvent({ event }) {
                                             Event name
                                         </th>
                                         <th scope="col" class="px-6 py-4">
+                                            View
+                                        </th>
+                                        <th scope="col" class="px-6 py-4">
                                             Bookings
                                         </th>
                                         <th scope="col" class="px-6 py-4">
@@ -50,6 +59,12 @@ function ListEvent({ event }) {
                                                 <tr class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                                                     <td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
                                                     <td class="whitespace-nowrap px-6 py-4">{res.groundName}</td>
+                                                    <td
+                                                        class="whitespace-nowrap px-6 py-4"
+                                                        onClick={() => handleView(res._id)}
+                                                    >
+                                                        <MdViewColumn size={23} />
+                                                    </td>
                                                     <td
                                                         class="whitespace-nowrap px-6 py-4"
                                                         onClick={() => handleBookingView(res._id)}
@@ -69,6 +84,9 @@ function ListEvent({ event }) {
                                         <tr class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                                             <td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
                                             <td class="whitespace-nowrap px-6 py-4">Football</td>
+                                            <td class="whitespace-nowrap px-6 py-4">
+                                                <MdViewColumn size={23} />
+                                            </td>
                                             <td class="whitespace-nowrap px-6 py-4">
                                                 <AiOutlineFolderView size={23} />
                                             </td>

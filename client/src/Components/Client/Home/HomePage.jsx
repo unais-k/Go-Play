@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import { FiSearch } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa";
-import { GroundListReqApi } from "../../../API/Services/ClientRequest";
+import { GroundListReqApi, GroundViewReqApi } from "../../../API/Services/ClientRequest";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
+    const navigate = useNavigate();
     const truncate = (string, n) => {
         return string?.length > n ? string.substr(0, n - 1) + "..." : string;
     };
@@ -21,6 +23,11 @@ function HomePage() {
         } else {
             message.error("Something went wrong");
         }
+    };
+
+    const handleGroundCard = async (id) => {
+        console.log(id);
+        navigate(`/ground-view/${id}`);
     };
     return (
         <div className="home-dash">
@@ -58,7 +65,10 @@ function HomePage() {
                             {ground
                                 ? ground.map((res) => {
                                       return (
-                                          <div className="w-11/12 h-auto bg-white p-3 m-4 h-fit">
+                                          <div
+                                              className="w-11/12 h-auto bg-white p-3 m-4 h-fit"
+                                              onClick={() => handleGroundCard(res._id)}
+                                          >
                                               <div className="box-img mb-2">
                                                   <img src={res.images} alt="box-img" />
                                               </div>

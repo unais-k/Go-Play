@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const eventSchema = new mongoose.Schema({
-    title: {
-        type: String,
+    eventAvailable: {
+        type: Array,
     },
     groundId: {
         type: mongoose.Schema.Types.ObjectId,

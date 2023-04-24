@@ -52,6 +52,9 @@ const groundSchema = new mongoose.Schema(
         description: {
             type: String,
         },
+        nearCity: {
+            type: String,
+        },
         startingTime: {
             type: String,
         },

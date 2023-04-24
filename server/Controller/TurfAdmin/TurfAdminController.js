@@ -137,11 +137,10 @@ export const RuleDeleteResApi = async (req, res, next) => {
         const data = req.body;
         console.log(req.query);
         const response = await GroundModel.updateOne(
-            { _id: req.query.id },
-            { $pull: { rules: { "rules._id": req.query.index } } }
+            { _id: req.query.id, "rules.index": "2" },
+            { $pull: { rules: { "rules.$._id": new mongoose.Types.ObjectId(req.query.index) } } }
         );
         console.log(response);
-
         const find = await GroundModel.find({ _id: req.query.id });
         res.status(201).json({ result: find });
     } catch (error) {
@@ -189,6 +188,7 @@ export const SelectedTimeResApi = async (req, res, next) => {
             { $set: { "slots.$.status": true } },
             { new: true }
         );
+        console.log(findGround);
         res.status(200).json({ result: findGround.slots });
     } catch (error) {
         console.log(error.message);
@@ -240,9 +240,10 @@ export const AddEventResApi = async (req, res, next) => {
     try {
         const groundId = req.body.groundId;
         const data = req.body.data;
+        console.log(req.body.sport);
         const find = new eventModel({
             groundId: groundId,
-            title: data.title,
+            eventAvailable: req.body.sport,
             price: data.price,
             priceAtNight: data.priceAtNight,
             size: data.size,
@@ -271,8 +272,11 @@ export const TimeSaveOnEventResApi = async (req, res, next) => {
 
 export const EventDetailFetchResApi = async (req, res, next) => {
     try {
+        console.log(req.query);
+        console.log(req.body);
         const id = req.query.id;
-        const findDetail = await eventModel.findOne({ _id: id });
+        const findDetail = await eventModel.findOne({ _id: id }).populate("groundId");
+        console.log(findDetail);
         res.status(201).json({ result: findDetail });
     } catch (error) {
         console.log(error.message);

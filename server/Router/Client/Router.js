@@ -2,9 +2,12 @@ import express from "express";
 import { otpSend, otpVerify, userLogin, userRegister } from "../../Controller/Client/AuthController.js";
 import {
     CityListResApi,
+    EventFetchOnSelectResApi,
     FootballGroundResApi,
+    GroundFetchOnSelectResApi,
     GroundListResApi,
     GroundViewResApi,
+    SelectTypeResApi,
     TimeSlotResApi,
 } from "../../Controller/Client/ClientController.js";
 const router = express.Router();
@@ -18,5 +21,7 @@ router.get("/ground-list", GroundListResApi);
 router.get("/football-ground-list", FootballGroundResApi);
 router.get("/ground-view", GroundViewResApi);
 router.get("/time-slot", TimeSlotResApi);
-
+router.get("/select-type", SelectTypeResApi);
+router.get("/selected-type", GroundFetchOnSelectResApi);
+router.get("/event-fetch", EventFetchOnSelectResApi);
 export default router;

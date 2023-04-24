@@ -10,6 +10,7 @@ import RegSuccess from "../Pages/Turf-Admin/RegSuccess";
 import GroundView from "../Pages/Turf-Admin/GroundView";
 import AddEvent from "../Pages/Turf-Admin/AddEvent";
 import EditEvent from "../Pages/Turf-Admin/EditEvent";
+import EventView from "../Pages/Turf-Admin/EventView";
 
 function TurfAdminRouter() {
     const isAuth = useSelector((state) => state.turfAdminLogin.token);
@@ -26,6 +27,7 @@ function TurfAdminRouter() {
                 <Route path="/ground-view/:id" element={isAuth ? <GroundView /> : <TurfAdminLogin />} />
                 <Route path="/add-event/:id" element={isAuth ? <AddEvent /> : <TurfAdminLogin />} />
                 <Route path="/edit-event/:id" element={isAuth ? <EditEvent /> : <TurfAdminLogin />} />
+                <Route path="/event-view/:id" element={isAuth ? <EventView /> : <TurfAdminLogin />} />
             </Routes>
         </div>
     );
