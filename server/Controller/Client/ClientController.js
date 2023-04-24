@@ -113,8 +113,15 @@ export const GroundFetchOnSelectResApi = async (req, res, next) => {
 export const EventFetchOnSelectResApi = async (req, res, next) => {
     try {
         console.log(req.query);
-        const findEvent = await eventModel.findOne({ _id: req.query.id });
-        res.status(201).json({ result: findEvent });
+        const findEvent = await eventModel.find({ _id: req.query.id });
+        // console.log(findEvent[0]);
+        const slotsAvailable = findEvent[0].slots;
+        // console.log(slotsAvailable);
+        const slow = await slotsAvailable.filter((e) => e.status === true);
+        console.log(slow);
+        // const slots = slotsAvailable.find({ "slots.status": true });
+        // console.log(slots);
+        res.status(201).json({ result: findEvent, slots: slow });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error });

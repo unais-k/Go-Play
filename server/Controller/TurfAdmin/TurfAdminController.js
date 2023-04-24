@@ -135,12 +135,15 @@ export const RuleAddResApi = async (req, res, next) => {
 export const RuleDeleteResApi = async (req, res, next) => {
     try {
         const data = req.body;
+        const { id, index } = req.query;
         console.log(req.query);
-        const response = await GroundModel.updateOne(
-            { _id: req.query.id, "rules.index": "2" },
-            { $pull: { rules: { "rules.$._id": new mongoose.Types.ObjectId(req.query.index) } } }
+
+        const response = await GroundModel.findOneAndUpdate(
+            { _id: id, "rules._id": index },
+            { $pull: { rules: { _id: index } } },
+            { new: true }
         );
-        console.log(response);
+
         const find = await GroundModel.find({ _id: req.query.id });
         res.status(201).json({ result: find });
     } catch (error) {

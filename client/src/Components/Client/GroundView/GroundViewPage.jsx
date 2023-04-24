@@ -21,12 +21,13 @@ function GroundViewPage() {
     const [sport, setSport] = useState([]);
     const [time, setTime] = useState([]);
     const [event, setEvent] = useState([]);
+    const [eventOnTime, setEventOnTime] = useState([]);
     const [date, setDate] = useState(new Date());
-    const [booked, setBooked] = useState([]);
-    const [showDiv, setShowDiv] = useState(false);
-    const [showDiv1, setShowDiv1] = useState(false);
-    const [showDiv2, setShowDiv2] = useState(false);
-    const [showDiv3, setShowDiv3] = useState(false);
+
+    const [showDiv, setShowDiv] = useState(true);
+    const [showDiv1, setShowDiv1] = useState(true);
+    const [showDiv2, setShowDiv2] = useState(true);
+
     const [ground, setGround] = useState([]);
     const selected = [];
     useEffect(() => {
@@ -35,11 +36,14 @@ function GroundViewPage() {
         } else {
             console.log("use");
         }
+        console.log(selected, "select");
     }, [id]);
+
+    useEffect(() => {}, [time]);
     const movingDiv = useRef(null);
     const movingDiv1 = useRef(null);
     const movingDiv2 = useRef(null);
-    const movingDiv3 = useRef(null);
+
     const bookNow = () => {
         setShowDiv(true);
         movingDiv?.current?.scrollIntoView({ behavior: "smooth" });
@@ -52,19 +56,7 @@ function GroundViewPage() {
         setShowDiv2(true);
         movingDiv2?.current?.scrollIntoView({ behavior: "smooth" });
     };
-    const bookNow3 = () => {
-        setShowDiv3(true);
-        movingDiv3?.current?.scrollIntoView({ behavior: "smooth" });
-    };
-    const timeSlot = async () => {
-        const response = await TimeSlotReqApi();
-        if (response.status === 201) {
-            console.log(response);
-            setTime(response.data.result);
-        } else {
-            message.error("Something went wrong");
-        }
-    };
+
     const GroundData = async () => {
         const response = await GroundViewReqApi(id);
 
@@ -84,11 +76,18 @@ function GroundViewPage() {
         selected.pop(id);
     };
 
+    const selectedSlot = async (id) => {
+        message.success("Slot added");
+    };
+
     const handleBooking = async (id) => {
-        const compare = selected.includes(id);
+        console.log(id);
+        const compare = await selected.includes(id);
+        console.log(compare);
         compare === false ? selected.push(id) : cancelSlot(id);
         console.log(selected, "selected");
     };
+    console.log(selected, "select");
 
     const handleBookNow = async (id) => {
         const response = await SelectTypeOfReqApi(id);
@@ -106,7 +105,8 @@ function GroundViewPage() {
 
     const handleSelectGround = async (id) => {
         const response = await EventFetchOnSelectReqApi(id);
-        setTime(response.data.result.slots);
+        setTime(response.data.slots);
+        setEventOnTime(response.data.result);
         bookNow2();
     };
 
@@ -207,44 +207,59 @@ function GroundViewPage() {
                                 />
                             </div>
                             <div className="flex flex-wrap my-10 w-6/12">
-                                {time.length > 0 &&
-                                    time.map((res) => {
+                                {time?.length > 0 &&
+                                    time?.map((res) => {
                                         return (
                                             <div className="m-2">
-                                                {/* {groundTime.includes(res.index) ? (
-                                            <>
-                                                {selected.includes(res.index) ? (
+                                                {/* {selected.includes(res.index) ? (
                                                     <div
                                                         className="bg-red-300 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
-                                                        onClick={() => handleBooking(res.index)}
+                                                        onClick={() => handleBooking(res._id)}
                                                     >
                                                         Booked
                                                     </div>
                                                 ) : (
-                                                    ""
+                                                    <div
+                                                        className="bg-green-300 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+                                                        onClick={() => handleBooking(res._id)}
+                                                    >
+                                                        {res.time}
+                                                    </div>
+                                                )} */}
+                                                {res.index > 18 && res.index < 6 ? (
+                                                    <div
+                                                        className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+                                                        onClick={() => handleBooking(res.index)}
+                                                    >
+                                                        {res.time}
+                                                        {eventOnTime.priceAtNight}
+                                                    </div>
+                                                ) : (
+                                                    <div
+                                                        className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+                                                        onClick={() => handleBooking(res.index)}
+                                                    >
+                                                        {res.time}
+                                                        {eventOnTime.price}
+                                                    </div>
                                                 )}
-                                                <div
-                                                className="bg-green-300 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+
+                                                {/* <div
+                                                    className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
                                                     onClick={() => handleBooking(res.index)}
                                                 >
                                                     {res.time}
-                                                </div>
-                                            </>
-                                        ) : (
-                                            ""
-                                        )} */}
-                                                <div
-                                                    className="bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
-                                                    onClick={() => handleBooking(res.index)}
-                                                >
-                                                    {res.time}
-                                                </div>
+                                                    {eventOnTime.price}
+                                                </div> */}
                                             </div>
                                         );
                                     })}
                             </div>
                         </div>
                     )}
+                    <div>
+                        <div>{selected.length}</div>
+                    </div>
                 </div>
             </div>
             <div className="flex justify-center">
@@ -252,7 +267,7 @@ function GroundViewPage() {
                     <div className="">
                         <RulesComponent state={state} />
                     </div>
-                    <div>
+                    <div className="mb-10">
                         <ReviewComponent />
                     </div>
                 </div>
