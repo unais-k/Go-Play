@@ -1,15 +1,19 @@
 import React from "react";
 import SidebarPage from "../../Components/Admin/Sidebar/Sidebar";
 import OwnerListPage from "../../Components/Admin/OwnerList/OwnerListPage";
+import Layout from "../../Components/Admin/SideBarComponents/components/Layout";
 
 function OwnerList() {
     return (
-        <div className="flex overflow-hidden">
-            <SidebarPage />
-            <div className="w-full">
-                <OwnerListPage />
-            </div>
-        </div>
+        // <div className="flex overflow-hidden">
+        //     <SidebarPage />
+        //     <div className="w-full">
+        //         <OwnerListPage />
+        //     </div>
+        // </div>
+        <Layout>
+            <OwnerListPage/>
+        </Layout>
     );
 }
 
