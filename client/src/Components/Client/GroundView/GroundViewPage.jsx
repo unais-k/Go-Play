@@ -81,11 +81,9 @@ function GroundViewPage() {
     };
 
     const handleBooking = async (id) => {
-        console.log(id);
-        const compare = await selected.includes(id);
+        const compare = await selected.includes(id.index);
         console.log(compare);
         compare === false ? selected.push(id) : cancelSlot(id);
-        console.log(selected, "selected");
     };
     console.log(selected, "select");
 
@@ -106,7 +104,7 @@ function GroundViewPage() {
     const handleSelectGround = async (id) => {
         const response = await EventFetchOnSelectReqApi(id);
         setTime(response.data.slots);
-        setEventOnTime(response.data.result);
+        setEventOnTime(response.data.result[0]);
         bookNow2();
     };
 
@@ -208,7 +206,7 @@ function GroundViewPage() {
                             </div>
                             <div className="flex flex-wrap my-10 w-6/12">
                                 {time?.length > 0 &&
-                                    time?.map((res) => {
+                                    time?.map((res, index) => {
                                         return (
                                             <div className="m-2">
                                                 {/* {selected.includes(res.index) ? (
@@ -226,21 +224,30 @@ function GroundViewPage() {
                                                         {res.time}
                                                     </div>
                                                 )} */}
-                                                {res.index > 18 && res.index < 6 ? (
+                                                {parseInt(res.index) > 17 || parseInt(res.index) < 6 ? (
                                                     <div
                                                         className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
-                                                        onClick={() => handleBooking(res.index)}
+                                                        onClick={() =>
+                                                            handleBooking({
+                                                                id: res.index,
+                                                                price: eventOnTime.priceAtNight,
+                                                            })
+                                                        }
                                                     >
                                                         {res.time}
-                                                        {eventOnTime.priceAtNight}
+                                                        <br></br>
+                                                        Rs.{eventOnTime.priceAtNight}
                                                     </div>
                                                 ) : (
                                                     <div
                                                         className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
-                                                        onClick={() => handleBooking(res.index)}
+                                                        onClick={() =>
+                                                            handleBooking({ id: res.index, price: eventOnTime.price })
+                                                        }
                                                     >
                                                         {res.time}
-                                                        {eventOnTime.price}
+                                                        <br></br>
+                                                        Rs.{eventOnTime.price}
                                                     </div>
                                                 )}
 

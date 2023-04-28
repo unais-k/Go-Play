@@ -162,39 +162,69 @@ function AddEventComponent() {
                             <div class="col-span-2">
                                 <ul className="flex justify-between">
                                     <li className="me-2">
-                                        <label>
+                                        <label className="">
                                             football
-                                            <input type="checkbox" onClick={handleCheckboxSport} value="Football" />
+                                            <input
+                                                className="ms-2"
+                                                type="checkbox"
+                                                onClick={handleCheckboxSport}
+                                                value="Football"
+                                            />
                                         </label>
                                     </li>
                                     <li className="me-2">
-                                        <label>
+                                        <label className="">
                                             cricket
-                                            <input type="checkbox" value="Cricket" onClick={handleCheckboxSport} />
+                                            <input
+                                                className="ms-2"
+                                                type="checkbox"
+                                                value="Cricket"
+                                                onClick={handleCheckboxSport}
+                                            />
                                         </label>
                                     </li>
                                     <li className="me-2">
-                                        <label>
+                                        <label className="">
                                             volleyball
-                                            <input type="checkbox" value="Volley ball" onClick={handleCheckboxSport} />
+                                            <input
+                                                className="ms-2"
+                                                type="checkbox"
+                                                value="Volley ball"
+                                                onClick={handleCheckboxSport}
+                                            />
                                         </label>
                                     </li>
                                     <li className="me-2">
-                                        <label>
+                                        <label className="">
                                             tennis
-                                            <input type="checkbox" value="Tennis" onClick={handleCheckboxSport} />
+                                            <input
+                                                className="ms-2"
+                                                type="checkbox"
+                                                value="Tennis"
+                                                onClick={handleCheckboxSport}
+                                            />
                                         </label>
                                     </li>
                                     <li className="me-2">
-                                        <label>
+                                        <label className="">
                                             badminton
-                                            <input type="checkbox" value="Badminton" onClick={handleCheckboxSport} />
+                                            <input
+                                                className="ms-2"
+                                                type="checkbox"
+                                                value="Badminton"
+                                                onClick={handleCheckboxSport}
+                                            />
                                         </label>
                                     </li>
                                     <li className="me-2">
-                                        <label>
+                                        <label className="">
                                             basketball
-                                            <input type="checkbox" value="Basket ball" onClick={handleCheckboxSport} />
+                                            <input
+                                                className="ms-2"
+                                                type="checkbox"
+                                                value="Basket ball"
+                                                onClick={handleCheckboxSport}
+                                            />
                                         </label>
                                     </li>
                                 </ul>
