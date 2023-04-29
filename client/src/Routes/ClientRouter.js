@@ -8,6 +8,7 @@ import Register from "../Pages/Client/Register";
 import Football from "../Pages/Client/Football";
 import { useSelector } from "react-redux";
 import GroundPage from "../Pages/Client/GroundPage";
+import Payment from "../Pages/Client/Payment";
 function ClientRouter() {
     const isAuth = useSelector((state) => state.userLogin.token);
     console.log(isAuth, "Client Token");
@@ -21,6 +22,7 @@ function ClientRouter() {
                 <Route path="/forget_password" element={<ForgetPassword />} />
                 <Route path="/football-turfs" element={<Football />} />
                 <Route path="/ground-view/:id" element={<GroundPage />} />
+                <Route path="/payment" element={<Payment />} />
             </Routes>
         </div>
     );

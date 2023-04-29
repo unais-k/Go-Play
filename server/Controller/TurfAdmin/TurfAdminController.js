@@ -320,6 +320,23 @@ export const AddPhotoOnEventPostApi = async (req, res, next) => {
   try {
     console.log(req.query);
     console.log(req.body);
+    const { photo, groundId, eventId } = req.body;
+    const Profile = "profile";
+    const result = await cloudinary.uploader
+      .upload(photo, {
+        folder: Profile,
+      })
+      .catch((err) => {
+        console.log(err.message);
+        console.log(err);
+      });
+
+    const updatePhoto = await eventModel.updateOne(
+      { _id: eventId },
+      { $push: { photo: result.secure_url } }
+    );
+    const find = await eventModel.findOne({ _id: eventId });
+    res.status(201).json({ result: find });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: error.message });

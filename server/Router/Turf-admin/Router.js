@@ -2,6 +2,7 @@ import express from "express";
 import { TurfAdminLogin, TurfAdminRegister } from "../../Controller/TurfAdmin/AuthController.js";
 import {
     AddEventResApi,
+    AddPhotoOnEventPostApi,
     AvailableStatusChangeResApi,
     CanceledTimeResApi,
     EventDetailFetchResApi,
@@ -46,6 +47,6 @@ router.post("/ground-detail-form-submit", turfAdminVerifyToken, GroundDetailSubm
 router.post("/add-time-on-event", turfAdminVerifyToken, TimeSaveOnEventResApi);
 router.get("/event-detail", turfAdminVerifyToken, EventDetailFetchResApi);
 router.get("/owner-data",turfAdminVerifyToken,OwnerDataFetcResApi)
-router.post('/photo-add-on-event',turfAdminVerifyToken)
+router.post('/photo-add-on-event',turfAdminVerifyToken,AddPhotoOnEventPostApi)
 
 export default router;

@@ -28,6 +28,7 @@ export const FootballListReqApi = async () => {
 };
 
 export const GroundViewReqApi = async (id) => {
+    console.log(id,"id");
     try {
         const response = AxiosClient.get(`/ground-view?id=${id}`);
         return response;

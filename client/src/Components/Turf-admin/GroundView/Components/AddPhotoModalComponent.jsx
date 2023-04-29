@@ -2,10 +2,11 @@ import React, { useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { AddPhotoOnEventPostApi } from "../../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
+import { message } from "antd";
 
 export default function AddPhotoModalComponent({ setShowModal, state }) {
   const token = useSelector((state) => state.turfAdminLogin.token);
- 
+
   const [photo, setPhoto] = useState("");
   const [profileImage, setProfileImage] = useState("");
 
@@ -39,7 +40,12 @@ export default function AddPhotoModalComponent({ setShowModal, state }) {
       },
       token
     );
+    if (response.status === 201) {
+      message.success("Photo added");
+      setShowModal(false);
+    }
   };
+
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
