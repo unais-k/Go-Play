@@ -36,9 +36,9 @@ function OwnerListPage() {
                                         <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                             <th className="py-3 px-6 text-center">Name</th>
                                             <th className="py-3 px-6 text-center">Phone</th>
-                                            <th className="py-3 px-6 text-center">Booking</th>
+                                            {/* <th className="py-3 px-6 text-center">Booking</th> */}
                                             <th className="py-3 px-6 text-center">Actions</th>
-                                            <th className="py-3 px-6 text-center">Reviews</th>
+                                            <th className="py-3 px-6 text-center">View</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-600 text-sm font-light">
@@ -55,9 +55,9 @@ function OwnerListPage() {
                                                             <span className="font-medium ">{res.phone}</span>
                                                         </div>
                                                     </td>
-                                                    <td className="py-3 px-6 text-center">
+                                                    {/* <td className="py-3 px-6 text-center">
                                                         <div className="items-center justify-center">0</div>
-                                                    </td>
+                                                    </td> */}
                                                     <td className="py-3 px-6 text-center">
                                                         {/* {res.status ? (
                                                             <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">

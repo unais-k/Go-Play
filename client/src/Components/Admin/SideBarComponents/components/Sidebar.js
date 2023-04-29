@@ -8,8 +8,7 @@ import { BiFootball,  } from "react-icons/bi";
 import { MdAnalytics, MdAdminPanelSettings, MdSettings } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import HamburgerButton from "../HamburgerMenuButton/HamburgerButton";
-import { setLogout } from "../../../Utils/Store/Slice/Admin";
-
+import { setLogout } from "../../../../Utils/Store/Slice/Admin";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -31,7 +30,7 @@ const Sidebar = () => {
       path: "/admin/owner-list",
       src: <MdAdminPanelSettings />,
     },
-    { title: "customer", path: "/admin/customer", src: <HiUsers /> },
+    { title: "customer", path: "/admin/client-list", src: <HiUsers /> },
     { title: "Settings", path: "/admin/settings", src: <MdSettings /> },
   ];
   const handleLogout = () => {

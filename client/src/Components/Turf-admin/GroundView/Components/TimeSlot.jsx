@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiTime } from "react-icons/bi";
-import { CancelTimeReqApi, SelectedTimeReqApi } from "../../../../API/Services/TurfAdminRequest";
+import { CancelTimeReqApi, EventDetailFetchReqApi, SelectedTimeReqApi } from "../../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 
@@ -29,11 +29,19 @@ function TimeSlot({ eventData, movingDiv, time }) {
         }
     };
 
-    useEffect(() => {
-        if (eventData && time) {
-            setSlots(time);
+    const eventDetail = async (id) => {
+        const response = await EventDetailFetchReqApi(id, token);
+        console.log(response.data.result);
+        if (response.status === 201) {
+            setSlots(response.data.result.slots);
         }
-        console.log(111);
+    };
+
+    useEffect(() => {
+        if (eventData ) {
+            const id = eventData._id
+          eventDetail(id)
+        }
     }, [eventData]);
 
     return (

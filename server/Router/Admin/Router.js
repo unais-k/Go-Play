@@ -4,8 +4,10 @@ import {
     ApproveTurfAdmin,
     BlockGroundResApi,
     CancelTurfAdmin,
+    EventDetailFetchResApi,
     FindCity,
     GroundListAdminResApi,
+    GroundViewResApi,
     OwnerListResApi,
     TimeSaveResApi,
     UnblockGroundResApi,
@@ -24,9 +26,11 @@ router.post("/cancel-turf-admin", adminVerifyToken, CancelTurfAdmin);
 router.get("/find-city", adminVerifyToken, FindCity);
 router.post("/add-city", adminVerifyToken, AddCity);
 router.get("/ground-list", adminVerifyToken, GroundListAdminResApi);
+router.get("/ground-view", adminVerifyToken, GroundViewResApi);
 router.patch("/block-ground", adminVerifyToken, BlockGroundResApi);
 router.patch("/unblock-ground", adminVerifyToken, UnblockGroundResApi);
 router.get("/owner-list", adminVerifyToken, OwnerListResApi);
 router.post("/time-save", adminVerifyToken, TimeSaveResApi);
+router.get("/event-detail",adminVerifyToken,EventDetailFetchResApi)
 
 export default router;

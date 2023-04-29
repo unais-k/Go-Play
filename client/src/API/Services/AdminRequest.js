@@ -130,3 +130,30 @@ export const TimeSaveReqApi = async (data, token) => {
         return error?.response;
     }
 };
+
+
+export const GroundViewReqApi = async (data, token) => {
+    console.log(data, "data", token, "token");
+    try {
+        const response = AxiosAdmin.get(`/ground-view?id=${data}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+
+export const EventDetailFetchReqApi = async (data, token) => {
+    console.log(data, "data");
+    try {
+        const response = AxiosAdmin.get(`/event-detail?id=${data}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+}

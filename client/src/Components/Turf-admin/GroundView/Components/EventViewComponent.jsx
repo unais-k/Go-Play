@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { EventDetailFetchReqApi } from "../../../../API/Services/TurfAdminRequest";
-import { MdViewColumn } from "react-icons/md";
+import { MdAddPhotoAlternate, MdViewColumn } from "react-icons/md";
+import AddPhotoModalComponent from "./AddPhotoModalComponent";
 
 function EventViewComponent() {
     const token = useSelector((state) => state.turfAdminLogin.token);
@@ -11,6 +12,7 @@ function EventViewComponent() {
     const [ground, setGround] = useState([]);
     const [sport, setSport] = useState([]);
     const [rows, setRows] = useState([]);
+    const [showModal, setShowModal] = React.useState(false);
     const eventId = params.id;
 
     const eventDetail = async () => {
@@ -23,7 +25,7 @@ function EventViewComponent() {
             setRows(response.data.result.slots);
         }
     };
-    console.log(state, "state");
+   
 
     const handleSelectedSlots = (id) => {
         // const response =
@@ -34,6 +36,11 @@ function EventViewComponent() {
         console.log("select done");
     };
 
+    const handleAddPhoto = async () =>{
+        setShowModal(true)
+
+    }
+
     useEffect(() => {
         if (eventId) {
             eventDetail();
@@ -43,6 +50,11 @@ function EventViewComponent() {
         <div>
             <div className="p-5">
                 <div className="p-8 bg-white shadow">
+                <div onClick={handleAddPhoto} className="flex text-normal font-turfView">
+                    Add photo
+                    <MdAddPhotoAlternate size={25}/>
+                </div>
+                {showModal && <AddPhotoModalComponent setShowModal={setShowModal} state={state}/>}
                     <div className="mt-20 text-center pb-5">
                         {state ? (
                             <>

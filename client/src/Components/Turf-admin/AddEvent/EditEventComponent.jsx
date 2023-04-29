@@ -154,6 +154,7 @@ function EditEventComponent() {
                     <div className="flex justify-center">
                         {eventData && time ? <TimeSlotComponent eventData={eventData} time={time} /> : ""}
                     </div>
+                    <div className="m-16 text-center">--------------------------------------------------------</div>
                 </div>
             </div>
         </div>

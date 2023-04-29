@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { TbLockOpen, TbLockOpenOff } from "react-icons/tb";
 import { GrView } from "react-icons/gr";
-import { BlockGroundReqApi, UnblockGroundReqApi, groundListAdminReqApi } from "../../../API/Services/AdminRequest";
+import { BlockGroundReqApi,  UnblockGroundReqApi, groundListAdminReqApi } from "../../../API/Services/AdminRequest";
 import { message } from "antd";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function GroundListPageAdmin() {
     const token = useSelector((state) => state.adminLogin.token);
+    const navigate = useNavigate()
     const [state, setState] = useState([]);
     useEffect(() => {
         groundList();
@@ -34,6 +36,12 @@ function GroundListPageAdmin() {
         console.log(response);
         console.log("Unblock");
     };
+
+    const handleGroundView = async(id) =>{
+        navigate('/admin/ground-view/' + id)
+       
+
+    } 
 
     return (
         <div className="">
@@ -107,7 +115,7 @@ function GroundListPageAdmin() {
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
                                                     <div className="flex item-center justify-center">
-                                                        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                                        <div onClick={()=>handleGroundView(res._id)} className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                                             <GrView size={20} />
                                                         </div>
                                                     </div>

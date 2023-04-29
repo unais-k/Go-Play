@@ -227,4 +227,27 @@ export const EventDetailFetchReqApi = async (data, token) => {
     } catch (error) {
         console.log(error.message);
     }
-};
+}
+
+export const OwnerDataFetcReqApi = async (token) =>{
+    try {
+        const response = AxiosTurfAdmin.get("/owner-data", {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+export const AddPhotoOnEventPostApi = async (data,token) =>{
+    console.log(data, "dataOnPost");
+    try {
+        const response = AxiosTurfAdmin.post(`/photo-add-on-event?id=${data}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+}

@@ -8,13 +8,7 @@ import { useNavigate } from "react-router-dom";
 function ListEvent({ event }) {
     const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
-    const [events, setEvents] = useState([]);
 
-    useEffect(() => {
-        if (event) {
-            setEvents(event);
-        }
-    });
     const handleEdit = (id) => {
         console.log("handleEdit");
         navigate("/turf-admin/edit-event/" + id);
@@ -53,8 +47,8 @@ function ListEvent({ event }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {events?.length ? (
-                                        events?.map((res) => {
+                                    {event?.length ? (
+                                        event?.map((res) => {
                                             return (
                                                 <tr class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                                                     <td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
@@ -83,7 +77,7 @@ function ListEvent({ event }) {
                                     ) : (
                                         <tr class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                                             <td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
-                                            <td class="whitespace-nowrap px-6 py-4">Football</td>
+                                            <td class="whitespace-nowrap px-6 py-4">Football(demo)</td>
                                             <td class="whitespace-nowrap px-6 py-4">
                                                 <MdViewColumn size={23} />
                                             </td>

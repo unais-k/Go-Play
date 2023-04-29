@@ -14,17 +14,7 @@ const bookingSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
-        time: [
-            {
-                id: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "time",
-                },
-                time: {
-                    type: String,
-                },
-            },
-        ],
+        time: {type:Array},
         event: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "event",

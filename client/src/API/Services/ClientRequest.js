@@ -77,3 +77,17 @@ export const EventFetchOnSelectReqApi = async (data) => {
         return error?.response;
     }
 };
+
+
+export const BookingSubmitReqApi = async (data,token ) =>{
+    console.log(data,"data");
+    try {
+        const response = AxiosClient.post(`/booking-submit`,data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+

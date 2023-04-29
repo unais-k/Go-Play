@@ -9,6 +9,7 @@ import {
     GroundDetailSubmitResApi,
     GroundListResApi,
     GroundViewResApi,
+    OwnerDataFetcResApi,
     RuleAddResApi,
     RuleDeleteResApi,
     RuleFindResApi,
@@ -44,5 +45,7 @@ router.post("/canceled-time-slot", turfAdminVerifyToken, CanceledTimeResApi);
 router.post("/ground-detail-form-submit", turfAdminVerifyToken, GroundDetailSubmitResApi);
 router.post("/add-time-on-event", turfAdminVerifyToken, TimeSaveOnEventResApi);
 router.get("/event-detail", turfAdminVerifyToken, EventDetailFetchResApi);
+router.get("/owner-data",turfAdminVerifyToken,OwnerDataFetcResApi)
+router.post('/photo-add-on-event',turfAdminVerifyToken)
 
 export default router;

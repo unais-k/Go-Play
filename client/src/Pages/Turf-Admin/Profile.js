@@ -1,11 +1,12 @@
 import React from 'react'
-import ProfilePageComponent from '../../Components/Turf-admin/Profile/ProfilePageComponent'
+import ProfilePageComponent from "../../Components/Turf-admin/Profile/ProfileComponent"
+import Layout from '../../Components/Turf-admin/SideBarComponents/components/Layout'
 
 function Profile() {
   return (
-    <div>
+    <Layout>
         <ProfilePageComponent/>
-    </div>
+    </Layout>
   )
 }
 

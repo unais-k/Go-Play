@@ -45,7 +45,7 @@ function TimeSlotComponent({ eventData, time }) {
             eventDetail(id);
         }
 
-        console.log(111);
+       
     }, [eventData]);
 
     return (

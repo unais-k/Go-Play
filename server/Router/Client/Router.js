@@ -1,6 +1,7 @@
 import express from "express";
 import { otpSend, otpVerify, userLogin, userRegister } from "../../Controller/Client/AuthController.js";
 import {
+    BookingSubmitResApi,
     CityListResApi,
     EventFetchOnSelectResApi,
     FootballGroundResApi,
@@ -10,6 +11,7 @@ import {
     SelectTypeResApi,
     TimeSlotResApi,
 } from "../../Controller/Client/ClientController.js";
+import { clientVerifyToken } from "../../Middleware/AuthVerify.js";
 const router = express.Router();
 
 router.post("/login", userLogin);
@@ -24,4 +26,5 @@ router.get("/time-slot", TimeSlotResApi);
 router.get("/select-type", SelectTypeResApi);
 router.get("/selected-type", GroundFetchOnSelectResApi);
 router.get("/event-fetch", EventFetchOnSelectResApi);
+router.post("/booking-submit",BookingSubmitResApi)
 export default router;

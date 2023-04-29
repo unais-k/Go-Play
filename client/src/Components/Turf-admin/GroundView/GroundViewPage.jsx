@@ -61,7 +61,7 @@ function GroundViewPage() {
                                         className="bg-green-400 px-4 py-2 rounded w-fit"
                                         onClick={() => handleAddEvent(viewData._id)}
                                     >
-                                        Add Event
+                                        Add Turf
                                     </div>
                                     <div className="bg-white p-3 shadow-sm rounded-sm">
                                         <div className="grid ms:grid-cols-1 ">
