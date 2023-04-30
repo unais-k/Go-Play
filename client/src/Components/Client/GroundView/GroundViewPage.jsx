@@ -39,8 +39,7 @@ function GroundViewPage() {
     price: "",
     time: "",
   });
-  const [numberOfBookedSlot, setNumberOfBookedSlot] = useState([]);
-
+  
   const [showDiv, setShowDiv] = useState(false);
   const [showDiv1, setShowDiv1] = useState(false);
   const [showDiv2, setShowDiv2] = useState(false);
@@ -96,6 +95,7 @@ function GroundViewPage() {
       message.error("Something went wrong");
     }
   };
+  console.log(event,'event');
 
   const maxDate = new Date();
   maxDate.setDate(maxDate.getDate() + 5);
@@ -119,9 +119,7 @@ function GroundViewPage() {
     }
     bookNow3();
   };
-  console.log(selectSlot, 2);
-  console.log(price, 2);
-
+ 
   const handleBookNow = async (id) => {
     const response = await SelectTypeOfReqApi(id);
     setSport(response.data.result);

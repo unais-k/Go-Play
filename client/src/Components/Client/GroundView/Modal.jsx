@@ -31,7 +31,8 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
   }, [bookingData, time]);
 
   const handlePayment = () =>{
-    navigate("/payment" ,{state:{data:bookingData}})
+    console.log("payment");
+    navigate("/payment" ,{state:{time:time,date:date,groundId:groundId, eventId:bookingData.eventId, total:bookingData.price, advance:bookingData.price/15}})
     setShowModal(false)
   }
 
@@ -87,14 +88,14 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
                 <button
                   className="text-red-500 background-transparent font-bold uppercase px-3 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => handlePayment()}
+                  onClick={() => setShowModal(false)}
                 >
                   Close
                 </button>
                 <button
                   className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => handlePayment()}
                 >
                   Payment
                 </button>
