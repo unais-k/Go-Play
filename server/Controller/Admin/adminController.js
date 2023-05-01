@@ -11,7 +11,7 @@ import nodeMailer from "nodemailer";
 export const adminLogin = async (req, res, next) => {
     console.log(req.body);
     try {
-        const hello=5;
+      const kiran = 'git check'
         const { email, password } = req.body;
         const Check = await AdminModel.findOne({ email: email, password: password });
         console.log(Check);
