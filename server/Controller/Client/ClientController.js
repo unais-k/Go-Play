@@ -3,6 +3,7 @@ import timeModel from "../../Model/Time.js";
 import GroundModel from "./../../Model/Grounds.js";
 import eventModel from "./../../Model/Events.js";
 import mongoose from "mongoose";
+import bookingModel from "../../Model/Booking.js";
 
 export const CityListResApi = async (req, res, next) => {
   try {
@@ -130,8 +131,20 @@ export const EventFetchOnSelectResApi = async (req, res, next) => {
 
 export const BookingSubmitResApi = async (req, res, next) => {
   try {
-    console.log(req.query, "query");
+    // console.log(req.body, "body");
     console.log(req.body, "body");
+    const { bookingData } = req.body;
+    const booking = await bookingModel.create({
+      // client:req.user.id,
+      total: req.body.total[0],
+      advance: req.body.advance[0],
+      bookDate: req.body.date,
+      event: bookingData[0].eventId,
+      turf: bookingData[0].groundId,
+      time: req.body.time[0],
+    });
+    console.log(booking, "booking");
+    res.status(201).json({result:booking})
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: error.message });

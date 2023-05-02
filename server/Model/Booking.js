@@ -1,40 +1,52 @@
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
-    {
-        client: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+  {
+    client: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    turf: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ground",
+    },
+    bookDate: {
+      type: Date,
+    },
+    time: [
+      {
+        timeId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "event.slots",
         },
-        turf: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "ground",
+        slots: {
+          type: String,
         },
-        bookDate: {
-            type: Date,
-            required: true,
-        },
-        time: {type:Array},
-        event: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "event",
-        },
-        payment: {
-            type: String,
-            required: true,
-            default: "Pending",
-        },
-        price: {
-            type: String,
-            required: true,
-        },
-        paymentId:{
+        price:{
             type:String
         }
+      },
+    ],
+    event: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "event",
     },
-    {
-        timestamps: true,
-    }
+    payment: {
+      type: String,
+
+      default: "Pending",
+    },
+    advance: { type: String },
+    total: {
+      type: String,
+    },
+    paymentId: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 
 const bookingModel = mongoose.model("booking", bookingSchema);

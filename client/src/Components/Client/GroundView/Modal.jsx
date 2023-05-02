@@ -32,7 +32,7 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
 
   const handlePayment = () =>{
     console.log("payment");
-    navigate("/payment" ,{state:{time:time,date:date,groundId:groundId, eventId:bookingData.eventId, total:bookingData.price, advance:bookingData.price/15}})
+    navigate("/payment" ,{state:{time:time,date:date,groundId:groundId, eventId:bookingData.eventId, total:bookingData.price, advance:Math.round(bookingData.price/15)}})
     setShowModal(false)
   }
 

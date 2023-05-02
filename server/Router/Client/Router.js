@@ -27,4 +27,5 @@ router.get("/select-type", SelectTypeResApi);
 router.get("/selected-type", GroundFetchOnSelectResApi);
 router.get("/event-fetch", EventFetchOnSelectResApi);
 router.post("/booking-submit",BookingSubmitResApi)
+
 export default router;

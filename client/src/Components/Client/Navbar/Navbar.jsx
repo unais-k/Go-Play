@@ -14,9 +14,8 @@ function NavbarPage(props) {
     const handleLogin = () => {
         navigate("/login");
     };
-    const handleLogout = () => {
-        dispatch(setCityOff());
-        dispatch(setLogout());
+    const handleProfile = () => {
+       navigate('/profile')
     };
     const handleBusiness = () => {
         navigate("/turf-admin/register");
@@ -95,8 +94,8 @@ function NavbarPage(props) {
                         </>
                     ) : null}
                     {token ? (
-                        <a className="text-lime-600" onClick={handleLogout}>
-                            Sign Out
+                        <a className="text-lime-600" onClick={handleProfile}>
+                            My Account
                         </a>
                     ) : (
                         <a className="text-lime-600" onClick={handleLogin}>

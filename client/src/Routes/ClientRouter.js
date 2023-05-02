@@ -9,6 +9,7 @@ import Football from "../Pages/Client/Football";
 import { useSelector } from "react-redux";
 import GroundPage from "../Pages/Client/GroundPage";
 import Payment from "../Pages/Client/Payment";
+import Profile from "../Pages/Client/Profile";
 function ClientRouter() {
     const isAuth = useSelector((state) => state.userLogin.token);
     console.log(isAuth, "Client Token");
@@ -23,6 +24,7 @@ function ClientRouter() {
                 <Route path="/football-turfs" element={<Football />} />
                 <Route path="/ground-view/:id" element={<GroundPage />} />
                 <Route path="/payment" element={<Payment />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </div>
     );

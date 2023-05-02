@@ -39,7 +39,7 @@ function GroundViewPage() {
     price: "",
     time: "",
   });
-  
+
   const [showDiv, setShowDiv] = useState(false);
   const [showDiv1, setShowDiv1] = useState(false);
   const [showDiv2, setShowDiv2] = useState(false);
@@ -95,7 +95,7 @@ function GroundViewPage() {
       message.error("Something went wrong");
     }
   };
-  console.log(event,'event');
+  // console.log(event, "event");
 
   const maxDate = new Date();
   maxDate.setDate(maxDate.getDate() + 5);
@@ -112,14 +112,20 @@ function GroundViewPage() {
     }
   };
   const handleBooking = async (id) => {
-    const compare = selectSlot.some((res) => res.id === id.id);
+    const compare = await selectSlot.find(
+      res => JSON.stringify(res) === JSON.stringify(id)
+    );
+    console.log(compare,'compare');
     if (!compare) {
       setSelectSlot([...selectSlot, id]);
       setPrice(+price + +id.price);
     }
+    else{
+      message.warning("Already selected")
+    }
     bookNow3();
   };
- 
+
   const handleBookNow = async (id) => {
     const response = await SelectTypeOfReqApi(id);
     setSport(response.data.result);
@@ -261,7 +267,7 @@ function GroundViewPage() {
                   return (
                     <div
                       className="bg-gray-200 px-4 py-2 m-2 mb-10"
-                      key={Math.floor(Math.random)*.2351 + 124}
+                      key={Math.floor(Math.random) * 0.2351 + 124}
                       onClick={() =>
                         handleSelectedSport({ value: res, groundId: state._id })
                       }
@@ -333,8 +339,8 @@ function GroundViewPage() {
                             className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
                             onClick={() =>
                               handleBooking({
-                                id: res._id,
-                                time: res.time,
+                                timeId: res._id,
+                                slots: res.time,
                                 price: eventOnTime.priceAtNight,
                               })
                             }
@@ -348,8 +354,8 @@ function GroundViewPage() {
                             className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
                             onClick={() =>
                               handleBooking({
-                                id: res._id,
-                                time: res.time,
+                                timeId: res._id,
+                                slots: res.time,
                                 price: eventOnTime.price,
                               })
                             }
@@ -389,7 +395,10 @@ function GroundViewPage() {
                   Book Now
                 </p>
                 {showModal && (
-                   <ModalBookingComponent bookingData={bookingData} setShowModal={setShowModal} />
+                  <ModalBookingComponent
+                    bookingData={bookingData}
+                    setShowModal={setShowModal}
+                  />
                 )}
                 <p></p>
               </div>

@@ -1,3 +1,4 @@
+import { token } from "morgan";
 import { AxiosClient } from "../AxiosInstance";
 
 export const LocationListReqApi = async () => {
@@ -89,6 +90,19 @@ export const BookingSubmitReqApi = async (data,token ) =>{
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 }
 
+export const PaymentSuccessReqApi = async (data,token) =>{
+    console.log(data,"data");
+try {
+    const response = AxiosClient.post ("/booking-submit",data,{
+        headers:{Authorization:"Bearer " + token}
+    })
+    return response 
+} catch (error) {
+    console.log(error.message);
+    return error?.response;
+}
+}
