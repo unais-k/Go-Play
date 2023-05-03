@@ -10,6 +10,9 @@ import {
     GroundViewResApi,
     SelectTypeResApi,
     TimeSlotResApi,
+    UserBookingDetailFetchResApi,
+    UserDataFetchResApi,
+    UserEditResApi,
 } from "../../Controller/Client/ClientController.js";
 import { clientVerifyToken } from "../../Middleware/AuthVerify.js";
 const router = express.Router();
@@ -26,6 +29,9 @@ router.get("/time-slot", TimeSlotResApi);
 router.get("/select-type", SelectTypeResApi);
 router.get("/selected-type", GroundFetchOnSelectResApi);
 router.get("/event-fetch", EventFetchOnSelectResApi);
-router.post("/booking-submit",BookingSubmitResApi)
+router.post("/booking-submit",clientVerifyToken, BookingSubmitResApi)
+router.get("/user-data",clientVerifyToken,UserDataFetchResApi)
+router.patch('/user-edit',clientVerifyToken,UserEditResApi)
+router.get("/booking-data",clientVerifyToken,UserBookingDetailFetchResApi)
 
 export default router;

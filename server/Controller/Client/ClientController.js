@@ -4,6 +4,7 @@ import GroundModel from "./../../Model/Grounds.js";
 import eventModel from "./../../Model/Events.js";
 import mongoose from "mongoose";
 import bookingModel from "../../Model/Booking.js";
+import UserModel from "../../Model/Client.js";
 
 export const CityListResApi = async (req, res, next) => {
   try {
@@ -135,18 +136,62 @@ export const BookingSubmitResApi = async (req, res, next) => {
     console.log(req.body, "body");
     const { bookingData } = req.body;
     const booking = await bookingModel.create({
-      // client:req.user.id,
+      client:req.user.id,
       total: req.body.total[0],
       advance: req.body.advance[0],
       bookDate: req.body.date,
+      sport:bookingData[0].sport,
       event: bookingData[0].eventId,
       turf: bookingData[0].groundId,
       time: req.body.time[0],
     });
     console.log(booking, "booking");
-    res.status(201).json({result:booking})
+    res.status(201).json({ result: booking });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 };
+
+export const UserDataFetchResApi = async (req, res, next) => {
+  try {
+    const id = req.user.id;
+    const find = await UserModel.findOne({ _id: id });
+    console.log(find,"find------------");
+    res.status(201).json({ result: find });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const UserEditResApi = async (req, res, next) => {
+  try {
+    const { name, email, phone, city, dob } = req.body;
+
+    const updateUser =  await UserModel.updateMany(
+      { _id: req.body._id },
+      { $set: { name: name, email: email, phone: phone, city: city, dob: dob } }
+    );
+    console.log(updateUser);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+export const UserBookingDetailFetchResApi = async (req,res,next)=>{
+  try {
+    const id = req.user.id
+    console.log(id);
+    const find  = await bookingModel.findOne({client:id})
+    const ground = await GroundModel.findOne({_id:find.turf})
+    console.log(ground);
+    console.log(find);
+    res.status(201).json({result:find})
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+}

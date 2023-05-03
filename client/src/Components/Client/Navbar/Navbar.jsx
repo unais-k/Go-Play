@@ -57,9 +57,16 @@ function NavbarPage(props) {
                     </span>
                 </div>
                 <div className="header-right pull-right ">
-                    <a className="text-lime-600" onClick={handleBusiness}>
+                    {/* <a className="text-lime-600" onClick={handleBusiness}>
+                        For Business
+                    </a> */}
+                    {token ? (
+                        ""
+                    ) : (
+                        <a className="text-lime-600" onClick={handleBusiness}>
                         For Business
                     </a>
+                    )}
                     <a className="text-lime-600" onClick={() => setShowModal(true)}>
                         {city}
                     </a>
@@ -105,6 +112,7 @@ function NavbarPage(props) {
                     <a className="log-btn text-white bg-amber-500"> Book online</a>
                 </div>
             </div>
+            <div className=""></div>
         </header>
     );
 }

@@ -37,6 +37,7 @@ const bookingSchema = new mongoose.Schema(
       default: "Pending",
     },
     advance: { type: String },
+    sport: { type: String },
     total: {
       type: String,
     },

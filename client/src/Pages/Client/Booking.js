@@ -1,12 +1,12 @@
 import React from "react";
+import BookingListComponent from "../../Components/Client/BookingDetails/BookingListComponent";
 import NavbarPage from "../../Components/Client/Navbar/Navbar";
 import ConstNavbar from "../../Components/Client/ConstNavbar/ConstNavbar";
-import ProfileComponent from "../../Components/Client/Profile/ProfileComponent";
-import { Footer } from "flowbite-react";
+import Footer from "../../Components/Client/Footer/Footer";
 import { useSelector } from "react-redux";
 
-function Profile() {
-  const location = useSelector((state) => state.userLogin.city);
+function Booking() {
+    const location = useSelector((state) => state.userLogin.city);
   return (
     <div>
       <div className="h-16 mt-1 border-b">
@@ -17,12 +17,10 @@ function Profile() {
         )}
       </div>
       <ConstNavbar />
-     
-        <ProfileComponent />
-     
+      <BookingListComponent />
       <Footer />
     </div>
   );
 }
 
-export default Profile;
+export default Booking;

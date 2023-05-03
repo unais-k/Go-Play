@@ -25,6 +25,7 @@ function GroundViewPage() {
   const { id } = useParams();
   const [state, setState] = useState([]);
   const [sport, setSport] = useState([]);
+  const [selectedSport,setSelectedSport] = useState({})
   const [time, setTime] = useState([]);
   const [event, setEvent] = useState([]);
   const [selectSlot, setSelectSlot] = useState([]);
@@ -127,6 +128,7 @@ function GroundViewPage() {
   };
 
   const handleBookNow = async (id) => {
+    setSelectedSport(id)
     const response = await SelectTypeOfReqApi(id);
     setSport(response.data.result);
     bookNow();
@@ -148,12 +150,14 @@ function GroundViewPage() {
   };
 
   const handleBookingSubmit = async () => {
+    console.log(selectedSport,'selected');
     setBookingData({
       date: date,
       price: price,
       eventId: eventOnTime._id,
       groundId: id,
       time: selectSlot,
+      sport:selectedSport
     });
     setShowModal(true);
     bookNow();
@@ -342,6 +346,7 @@ function GroundViewPage() {
                                 timeId: res._id,
                                 slots: res.time,
                                 price: eventOnTime.priceAtNight,
+                                sport:selectedSport
                               })
                             }
                           >
@@ -357,6 +362,7 @@ function GroundViewPage() {
                                 timeId: res._id,
                                 slots: res.time,
                                 price: eventOnTime.price,
+                                sport:selectedSport
                               })
                             }
                           >

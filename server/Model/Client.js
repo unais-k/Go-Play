@@ -17,6 +17,14 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
+        dob: {
+            type: Date,
+           
+        },
+        city: {
+            type: String,
+           
+        },
         password: {
             type: String,
             min: 5,
