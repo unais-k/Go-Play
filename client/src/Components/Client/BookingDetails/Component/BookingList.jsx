@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { CiViewBoard } from "react-icons/ci";
+import { AiFillFolderOpen } from "react-icons/ai";
 import { UserBookingDetailFetchReqApi } from "../../../../API/Services/ClientRequest";
+import { useNavigate } from "react-router-dom";
 
 function BookingList() {
+  const navigate = useNavigate();
   const token = useSelector((state) => state.userLogin.token);
   const [bookings, setBookings] = useState([]);
+  const [ground, setGround] = useState([]);
+  const [event, setEvent] = useState([]);
 
   const data = async () => {
     const response = await UserBookingDetailFetchReqApi(token);
-    console.log(response.data.result);
+    // console.log(response.data)
     if (response.status === 201) {
-      setBookings(response.data.result);
+      setBookings([response.data.result]);
     }
   };
   useEffect(() => {
     token && data();
   }, [token]);
+
+  const handleSelectView = (id) => {
+    console.log(id);
+    navigate(`/booking-view/${id}`);
+  };
+
   return (
     <div>
       <div className="text-lime-600 font-semibold text-2xl mb-5">
@@ -24,104 +34,83 @@ function BookingList() {
       </div>
       <div>
         <div class="">
-          <div class="w-full">
-            <div class="overflow-auto lg:overflow-visible ">
-              <table class="table text-gray-400 border-separate space-y-6 text-sm">
-                <thead class="bg-gray-400 text-gray-500">
-                  <tr>
-                    <th class="p-3">Ground</th>
-                    <th class="p-3 text-left">Date</th>
-                    <th class="p-3 text-left">Time</th>
-                    <th class="p-3 text-left">Place</th>
-                    <th class="p-3 text-left">Advance</th>
-                    <th class="p-3 text-left">View</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bookings.length > 0 ? (
-                    bookings.map((res) => {
-                      return (
-                        <tr class="bg-gray-800">
-                          <td class="p-3">
-                            <div class="flex align-items-center">
-                              <img
-                                class="rounded-full h-12 w-12  object-cover"
-                                src={res.photo}
-                                alt="unsplash image"
-                              />
-                              <div class="ml-3">
-                                <div class="">Appple</div>
-                                <div class="text-gray-500">mail@rgmail.com</div>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="p-3">Technology</td>
-                          <td class="p-3 font-bold">200.00$</td>
-                          <td class="p-3">
-                            <span class="bg-green-400 text-gray-50 rounded-md px-2">
-                              available
-                            </span>
-                          </td>
-                          <td class="">
-                            <CiViewBoard size={23} />
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <>
-                      {/* <div>You have not made any previous Bookings!</div> */}
-                    </>
-                  )}
-
-                  {/* <tr class="bg-gray-800">
-                    <td class="p-3">
-                      <div class="flex align-items-center">
-                        <img
-                          class="rounded-full h-12 w-12   object-cover"
-                          src="https://images.unsplash.com/photo-1600856209923-34372e319a5d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2135&q=80"
-                          alt="unsplash image"
-                        />
-                        <div class="ml-3">
-                          <div class="">Samsung</div>
-                          <div class="text-gray-500">mail@rgmail.com</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="p-3">Technology</td>
-                    <td class="p-3 font-bold">200.00$</td>
-                    <td class="p-3">
-                      <span class="bg-yellow-400 text-gray-50  rounded-md px-2">
-                        start sale
-                      </span>
-                    </td>
-                    <td class="p-3">
-                      <a
-                        href="#"
-                        class="text-gray-400 hover:text-gray-100 mr-2"
-                      >
-                        <i class="material-icons-outlined text-base">
-                          visibility
-                        </i>
-                      </a>
-                      <a
-                        href="#"
-                        class="text-gray-400 hover:text-gray-100 mx-2"
-                      >
-                        <i class="material-icons-outlined text-base">edit</i>
-                      </a>
-                      <a
-                        href="#"
-                        class="text-gray-400 hover:text-gray-100 ml-2"
-                      >
-                        <i class="material-icons-round text-base">
-                          delete_outline
-                        </i>
-                      </a>
-                    </td>
-                  </tr> */}
-                </tbody>
-              </table>
+          <div class="overflow-x-auto">
+            <div class="min-w-screen  rounded ps-5 justify-center  font-sans overflow-hidden">
+              <div class="w-full lg:w-5/6">
+                <div class="bg-white shadow-md rounded my-6">
+                  <table class="min-w-max w-full table-auto">
+                    <thead>
+                      <tr class="bg-gray-200 rounded text-gray-600 uppercase text-sm leading-normal">
+                        {/* <th class="py-3 px-6 text-left">Booking Id</th> */}
+                        <th class="py-3 px-6 text-left">Turf Name</th>
+                        <th class="py-3 px-6 text-center">Sport Selected</th>
+                        <th class="py-3 px-6 text-center">Date</th>
+                        <th class="py-3 px-6 text-center">Time</th>
+                        <th class="py-3 px-6 text-center">View</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-gray-600 text-sm font-light">
+                      {bookings.length > 0 &&
+                        bookings.map((res) => {
+                          return (
+                            <>
+                              {res.map((state) => {
+                                console.log(state);
+                                return (
+                                  <tr class="border-b rounded border-gray-200 hover:bg-gray-100">
+                                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                                      <div class="flex items-center">
+                                        <span class="font-medium">
+                                          {state.turf.name}
+                                        </span>
+                                      </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-left">
+                                      <div class="flex font-medium items-center">
+                                        <div class="mr-2"></div>
+                                        <span>{state.sport}</span>
+                                      </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                      <div class="flex items-center justify-center">
+                                        {new Date(
+                                          state.bookDate
+                                        ).toDateString()}
+                                      </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                      <div class="flex font-medium items-center">
+                                        {state.time.map((res) => {
+                                          return (
+                                            <>
+                                              <div className="space-x-4">
+                                                {res.slots}
+                                              </div>
+                                            </>
+                                          );
+                                        })}
+                                      </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                      <div
+                                        onClick={() =>
+                                          handleSelectView(state._id)
+                                        }
+                                        class="flex item-center justify-center"
+                                      >
+                                        <AiFillFolderOpen size={23} />
+                                      </div>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import express from "express";
 import { otpSend, otpVerify, userLogin, userRegister } from "../../Controller/Client/AuthController.js";
 import {
+    BookingDetailViewResApi,
     BookingSubmitResApi,
     CityListResApi,
     EventFetchOnSelectResApi,
@@ -33,5 +34,6 @@ router.post("/booking-submit",clientVerifyToken, BookingSubmitResApi)
 router.get("/user-data",clientVerifyToken,UserDataFetchResApi)
 router.patch('/user-edit',clientVerifyToken,UserEditResApi)
 router.get("/booking-data",clientVerifyToken,UserBookingDetailFetchResApi)
+router.get("/booking-detail-view",clientVerifyToken,BookingDetailViewResApi)
 
 export default router;

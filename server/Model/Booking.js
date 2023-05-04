@@ -22,9 +22,9 @@ const bookingSchema = new mongoose.Schema(
         slots: {
           type: String,
         },
-        price:{
-            type:String
-        }
+        price: {
+          type: String,
+        },
       },
     ],
     event: {
@@ -33,7 +33,6 @@ const bookingSchema = new mongoose.Schema(
     },
     payment: {
       type: String,
-
       default: "Pending",
     },
     advance: { type: String },

@@ -3,7 +3,7 @@ import { AiFillStar } from "react-icons/ai";
 import { FaMapPin } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-function ClientCard({ res }) {
+function    ClientCard({ res }) {
     console.log(res, "res");
     const navigate = useNavigate();
     const handleView = (id) => {

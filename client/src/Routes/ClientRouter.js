@@ -11,6 +11,7 @@ import GroundPage from "../Pages/Client/GroundPage";
 import Payment from "../Pages/Client/Payment";
 import Profile from "../Pages/Client/Profile";
 import Booking from "../Pages/Client/Booking";
+import BookingView from "../Pages/Client/BookingView";
 function ClientRouter() {
     const isAuth = useSelector((state) => state.userLogin.token);
     console.log(isAuth, "Client Token");
@@ -27,6 +28,7 @@ function ClientRouter() {
                 <Route path="/payment" element={isAuth ? <Payment /> : <Navigate to="/login" />} />
                 <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/login" />} />
                 <Route path="/booking" element={isAuth ? <Booking /> : <Navigate to="/login" />} />
+                <Route path="/booking-view/:id" element={isAuth ? <BookingView /> : <Navigate to="/login" />} />
             </Routes>
         </div>
     );

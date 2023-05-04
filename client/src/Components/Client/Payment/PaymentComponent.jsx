@@ -33,15 +33,21 @@ function PaymentComponent() {
       console.log(11);
     }
   }, [""]);
-  console.log(location.state);
   const bookinDate = new Date(date ? date : "").toDateString();
-  const handlePayment = async () => {
+  const handlePayment = async (id) => {
     const response = await BookingSubmitReqApi(
-      { time: time, date: date, advance: advance, total: total, bookingData },
+      {
+        time: time,
+        date: date,
+        advance: advance,
+        total: total,
+        bookingData,
+        bookingId: id,
+      },
       token
     );
     if (response.status === 201) {
-      setModal(true)
+      setModal(true);
     }
   };
   return (
@@ -87,14 +93,14 @@ function PaymentComponent() {
             </dl>
 
             <div className="mt-6 flex flex-col space-y-2">
-              <button
+              {/* <button
                 type="button"
                 onClick={handlePayment}
                 className="inline-flex cursor-pointer items-center justify-center rounded-xl border-2 border-primary bg-green-300 px-4 py-2.5 text-sm font-semibold text-dark shadow-sm hover:border-primary-accent hover:bg-primary-accent focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
               >
                 Paypal
-              </button>
-              {/* {advance.length > 0 && advance ? (
+              </button> */}
+              {advance.length > 0 && advance ? (
                 <PayPalButtons
                   createOrder={(data, actions) => {
                     return actions.order
@@ -102,30 +108,27 @@ function PaymentComponent() {
                         purchase_units: [
                           {
                             amount: {
-                              value: advance,
+                              value: advance[0],
                             },
                           },
                         ],
                       })
                       .then((orderId) => {
+                        console.log(orderId, "orderId");
                         return orderId;
                       });
                   }}
-                  // onApprove={function (data, actions) {
-                  //   return actions.order.capture().then(function () {
-
-                  //     // Your code here after capture the order
-                  //   if(data.orderID){
-                  //       createOrder(data.orderID);
-                  //       setmodal(true)
-
-                  //       alert("its completed");
-
-                  //   }
-                  //   else{
-                  //   }
-                  //   });
-                  // }}
+                  onApprove={async function (data, actions) {
+                    return actions.order.capture().then(async function () {
+                      // Your code here after capture the order
+                      if (data.orderID) {
+                        console.log(data.orderID, "data.orderId");
+                        await handlePayment(data.orderID);
+                        alert("its completed");
+                      } else {
+                      }
+                    });
+                  }}
                 />
               ) : (
                 <button
@@ -135,7 +138,7 @@ function PaymentComponent() {
                 >
                   Paypal
                 </button>
-              )} */}
+              )}
               <button
                 type="button"
                 className="inline-flex cursor-pointer items-center justify-center rounded-xl border-2 border-critical bg-red-300 px-4 py-2.5 text-sm font-semibold text-dark shadow-sm hover:border-critical-accent hover:bg-critical-accent focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-critical disabled:hover:bg-critical disabled:hover:text-white dark:focus:ring-white/80"

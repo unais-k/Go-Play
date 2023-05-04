@@ -109,39 +109,50 @@ export const PaymentSuccessReqApi = async (data, token) => {
 };
 
 export const UserDataFetchReqApi = async (token) => {
-    try {
-        const response = AxiosClient.get("/user-data", {
-          headers: { Authorization: "Bearer " + token },
-        });
-        return response;
-      } catch (error) {
-        console.log(error.message);
-        return error?.response;
-      }
+  try {
+    const response = AxiosClient.get("/user-data", {
+      headers: { Authorization: "Bearer " + token },
+    });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    return error?.response;
+  }
 };
 
-export const UserEditReqApi = async (data,token)=>{
-    console.log(data, "data", token, "token");
-    try {
-        const response = AxiosClient.patch("/user-edit",data, {
-          headers: { Authorization: "Bearer " + token },
-        });
-        return response;
-      } catch (error) {
-        console.log(error.message);
-        return error?.response;
-      }
-}
+export const UserEditReqApi = async (data, token) => {
+  console.log(data, "data", token, "token");
+  try {
+    const response = AxiosClient.patch("/user-edit", data, {
+      headers: { Authorization: "Bearer " + token },
+    });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    return error?.response;
+  }
+};
 
+export const UserBookingDetailFetchReqApi = async (token) => {
+  try {
+    const response = AxiosClient.get("/booking-data", {
+      headers: { Authorization: "Bearer " + token },
+    });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    return error?.response;
+  }
+};
 
-export const UserBookingDetailFetchReqApi = async(token)=>{
-    try {
-        const response = AxiosClient.get("/booking-data", {
-          headers: { Authorization: "Bearer " + token },
-        });
-        return response;
-      } catch (error) {
-        console.log(error.message);
-        return error?.response;
-      }
-}
+export const BookingDetailViewReqApi = async (data, token) => {
+  try {
+    const response = AxiosClient.get(`/booking-detail-view?id=${data}`, {
+      headers: { Authorization: "Bearer " + token },
+    });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    return error?.response;
+  }
+};

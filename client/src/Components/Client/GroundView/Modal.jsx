@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function ModalBookingComponent({ bookingData, setShowModal }) {
   console.log(bookingData);
   const token = useSelector((state) => state.userLogin.token);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   //   const [showModal, setShowModal] = React.useState(false);
   const [time, setTime] = useState([]);
   const [date, setDate] = useState({});
@@ -30,11 +30,21 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
     }
   }, [bookingData, time]);
 
-  const handlePayment = () =>{
+  const handlePayment = () => {
     console.log("payment");
-    navigate("/payment" ,{state:{time:time,date:date,groundId:groundId, eventId:bookingData.eventId, total:bookingData.price, advance:Math.round(bookingData.price/15)}})
-    setShowModal(false)
-  }
+    navigate("/payment", {
+      state: {
+        time: time,
+        date: date,
+        sport:bookingData.sport,
+        groundId: groundId,
+        eventId: bookingData.eventId,
+        total: bookingData.price,
+        advance: Math.round(bookingData.price / 15),
+      },
+    });
+    setShowModal(false);
+  };
 
   return (
     <div>
@@ -59,6 +69,7 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
                     <tr>
                       <th>Time</th>
                       <th>Date</th>
+                      <th>Sport Type</th>
                       <th>Place</th>
                       <th>Total</th>
                       <th>Advance</th>
@@ -68,11 +79,11 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
                     <tr>
                       <td className="px-4">
                         {time?.map((res) => {
-                          return <div>{res.time}</div>;
+                          return <div>{res.slots}</div>;
                         })}
                       </td>
-                      {console.log(date, "kkkk")}
                       <td className="px-4">{new Date(date).toDateString()}</td>
+                      <td className="px-4">{bookingData.sport}</td>
                       <td className="px-4">
                         {groundData.name},{groundData.place}
                       </td>
@@ -83,6 +94,12 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
                     </tr>
                   </tbody>
                 </table>
+                <div className="text-dark font-bold text-2xl mt-10">NB:</div>
+                <div className="m-5 text-red-400 font-semibold text-center">
+                  Once your payment is done, No refund
+                  <br />
+                  If You want to cancel booking, Dial ground directly
+                </div>
               </div>
               <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
                 <button
