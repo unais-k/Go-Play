@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AiOutlineFolderView } from "react-icons/ai";
 import { BiEditAlt } from "react-icons/bi";
 import { MdViewColumn } from "react-icons/md";
@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function ListEvent({ event }) {
-    const token = useSelector((state) => state.turfAdminLogin.token);
+    // const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
 
     const handleEdit = (id) => {

@@ -1,4 +1,3 @@
-import { token } from "morgan";
 import { AxiosClient } from "../AxiosInstance";
 
 export const LocationListReqApi = async () => {
@@ -150,6 +149,30 @@ export const BookingDetailViewReqApi = async (data, token) => {
     const response = AxiosClient.get(`/booking-detail-view?id=${data}`, {
       headers: { Authorization: "Bearer " + token },
     });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    return error?.response;
+  }
+};
+
+export const SubmitReviewReqApi = async (data, token) => {
+  console.log(data, "data", token, "--------");
+  try {
+    const response = AxiosClient.post("/review-submit", data, {
+      headers: { Authorization: "Bearer " + token },
+    });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    return error?.response;
+  }
+};
+
+export const SearchGroundReqApi = async (data) => {
+  console.log(data);
+  try {
+    const response = AxiosClient.get(`/search-turf`, data);
     return response;
   } catch (error) {
     console.log(error.message);

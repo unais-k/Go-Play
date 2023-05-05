@@ -1,6 +1,5 @@
 import React from "react";
 import CityPage from "../../Components/Admin/City/City";
-import SidebarPage from "../../Components/Admin/Sidebar/Sidebar";
 import Layout from "../../Components/Admin/SideBarComponents/components/Layout"
 
 function City() {

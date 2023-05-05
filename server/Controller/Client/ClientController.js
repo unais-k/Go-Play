@@ -5,6 +5,7 @@ import eventModel from "./../../Model/Events.js";
 import mongoose from "mongoose";
 import bookingModel from "../../Model/Booking.js";
 import UserModel from "../../Model/Client.js";
+import reviewModel from "../../Model/Review.js";
 
 export const CityListResApi = async (req, res, next) => {
   try {
@@ -57,8 +58,9 @@ export const GroundViewResApi = async (req, res, next) => {
     const id = req.query.id;
     const find = await GroundModel.findOne({ _id: id });
     const events = await eventModel.find({ groundId: id });
-    console.log(events);
-    res.status(200).json({ result: find, events: events });
+    const review = await reviewModel.find({ turf: id }).populate("client");
+    console.log(review);
+    res.status(200).json({ result: find, events: events, review: review });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error });
@@ -205,6 +207,54 @@ export const BookingDetailViewResApi = async (req, res, next) => {
       .findOne({ _id: id })
       .populate("turf")
       .populate("event");
+    console.log(find);
+    res.status(201).json({ result: find });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const SubmitReviewResApi = async (req, res, next) => {
+  try {
+    const { text, rating, id } = req.body;
+    const setReview = await reviewModel.create({
+      rating: rating,
+      turf: id,
+      client: req.user.id,
+      review: text,
+    });
+    console.log(setReview);
+    res.status(201).json({ message: "Submit success" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const SearchGroundResApi = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    console.log(req.query);
+    console.log(req.body)
+    let regexp = new RegExp(`^${id}`, "i");
+    const find = await GroundModel.aggregate([
+      {
+        $match: {
+          $or: [
+            {
+              city: regexp,
+            },
+            {
+              address: regexp,
+            },
+            {
+              place: regexp,
+            },
+          ],
+        },
+      },
+    ]);
     console.log(find);
     res.status(201).json({ result: find });
   } catch (error) {

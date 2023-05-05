@@ -4,7 +4,6 @@ import { FaMapPin } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function    ClientCard({ res }) {
-    console.log(res, "res");
     const navigate = useNavigate();
     const handleView = (id) => {
         navigate(`/ground-view/${res._id}`);

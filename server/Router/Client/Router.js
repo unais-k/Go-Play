@@ -9,7 +9,9 @@ import {
     GroundFetchOnSelectResApi,
     GroundListResApi,
     GroundViewResApi,
+    SearchGroundResApi,
     SelectTypeResApi,
+    SubmitReviewResApi,
     TimeSlotResApi,
     UserBookingDetailFetchResApi,
     UserDataFetchResApi,
@@ -35,5 +37,7 @@ router.get("/user-data",clientVerifyToken,UserDataFetchResApi)
 router.patch('/user-edit',clientVerifyToken,UserEditResApi)
 router.get("/booking-data",clientVerifyToken,UserBookingDetailFetchResApi)
 router.get("/booking-detail-view",clientVerifyToken,BookingDetailViewResApi)
+router.post("/review-submit",clientVerifyToken,SubmitReviewResApi)
+router.get("/search-turf",SearchGroundResApi)
 
 export default router;

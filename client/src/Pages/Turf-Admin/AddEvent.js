@@ -1,6 +1,5 @@
 import React from "react";
 import AddEventComponent from "../../Components/Turf-admin/AddEvent/AddEventComponent";
-import TurfAdminSidebarPage from "../../Components/Turf-admin/Sidebar/SidebarPage";
 import Layout from "../../Components/Turf-admin/SideBarComponents/components/Layout";
 
 function AddEvent() {

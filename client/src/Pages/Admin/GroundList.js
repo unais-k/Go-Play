@@ -1,6 +1,5 @@
 import React from "react";
 import GroundListPageAdmin from "../../Components/Admin/GroundList/GroundList";
-import SidebarPage from "../../Components/Admin/Sidebar/Sidebar";
 import Layout from "../../Components/Admin/SideBarComponents/components/Layout";
 
 function GroundList() {

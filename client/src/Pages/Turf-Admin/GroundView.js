@@ -1,6 +1,5 @@
 import React from "react";
 import GroundViewPage from "../../Components/Turf-admin/GroundView/GroundViewPage";
-import TurfAdminSidebarPage from "../../Components/Turf-admin/Sidebar/SidebarPage";
 import Layout from "../../Components/Turf-admin/SideBarComponents/components/Layout";
 
 function GroundView() {

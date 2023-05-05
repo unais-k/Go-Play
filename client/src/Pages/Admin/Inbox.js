@@ -1,5 +1,4 @@
 import React from "react";
-import SidebarPage from "../../Components/Admin/Sidebar/Sidebar";
 import InboxPage from "../../Components/Admin/Inbox/InboxPage";
 import Layout from "../../Components/Admin/SideBarComponents/components/Layout";
 

@@ -9,13 +9,14 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { message } from "antd";
 import "react-datepicker/dist/react-datepicker.css";
 import RulesComponent from "./RulesComponent";
-import ReviewComponent from "./ReviewComponent";
+import ReviewComponent from "./Review/ReviewComponent";
 import { useSelector } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import ModalBookingComponent from "./Modal";
 import GroundDetailComponent from "./Components/GroundDetailComponent";
 import { FiDelete } from "react-icons/fi";
+import ReviewAddComponent from "./Review/ReviewAddComponent";
 
 function GroundViewPage() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ function GroundViewPage() {
   const [eventOnTime, setEventOnTime] = useState([]);
   const [date, setDate] = useState(new Date());
   const [price, setPrice] = useState(0);
+  const [review, setReview] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [bookingData, setBookingData] = useState({
     date: "",
@@ -50,13 +52,11 @@ function GroundViewPage() {
   const [ground, setGround] = useState([]);
   const selected = [];
   useEffect(() => {
-    console.log(444);
     if (id) {
       GroundData();
     } else {
       console.log("use");
     }
-    console.log(selected, "select");
   }, [id]);
 
   useEffect(() => {}, [time]);
@@ -88,7 +88,7 @@ function GroundViewPage() {
   const bookNow3 = () => {
     setShowDiv3(true);
     movingDiv3?.current?.scrollIntoView({ behavior: "smooth" });
-    setShowDiv4(false)
+    setShowDiv4(false);
   };
   const bookNow4 = () => {
     setShowDiv4(true);
@@ -101,11 +101,11 @@ function GroundViewPage() {
     if (response.status === 200) {
       setState(response.data.result);
       setEvent(response.data.events);
+      setReview(response.data.review);
     } else {
       message.error("Something went wrong");
     }
   };
-  // console.log(event, "event");
 
   const maxDate = new Date();
   maxDate.setDate(maxDate.getDate() + 5);
@@ -117,7 +117,6 @@ function GroundViewPage() {
     const compare = await selectSlot.find(
       (res) => JSON.stringify(res) === JSON.stringify(id)
     );
-    console.log(compare, "compare");
     if (!compare) {
       setSelectSlot([...selectSlot, id]);
       setPrice(+price + +id.price);
@@ -150,15 +149,14 @@ function GroundViewPage() {
     bookNow2();
   };
 
-  const handleClearSelection = async () =>{
-    setSelectSlot([])
+  const handleClearSelection = async () => {
+    setSelectSlot([]);
     setPrice(0);
-    bookNow4()
-    setShowDiv4(false)
-  }
+    bookNow4();
+    setShowDiv4(false);
+  };
 
   const handleBookingSubmit = async () => {
-    console.log(selectedSport, "selected");
     setBookingData({
       date: date,
       price: price,
@@ -176,7 +174,6 @@ function GroundViewPage() {
     price(0);
     selectSlot([]);
   };
-  console.log(date);
 
   return (
     <div>
@@ -298,7 +295,7 @@ function GroundViewPage() {
                   })}
               </div>
               <div className="flex" onClick={handleClearSelection}>
-                <FiDelete size={23} className="me-3"/> Clear Selection
+                <FiDelete size={23} className="me-3" /> Clear Selection
               </div>
             </div>
           )}
@@ -334,8 +331,33 @@ function GroundViewPage() {
           <div className="">
             <RulesComponent state={state} />
           </div>
-          <div className="mb-10">
-            <ReviewComponent />
+          <div className="pb-10 border-b">
+            <ReviewComponent review={review} />
+          </div>
+          <div>
+            {token ? (
+              <ReviewAddComponent state={state} />
+            ) : (
+              <div className="py-10">
+                <h2 className=" py-3 text-3xl font-bold text-lime-600">
+                  Write a review
+                </h2>
+                <a
+                  onClick={() => navigate("/login")}
+                  className="text-orange-400"
+                >
+                  Login
+                </a>{" "}
+                or{" "}
+                <a
+                  onClick={() => navigate("/register")}
+                  className="text-orange-400"
+                >
+                  Register
+                </a>{" "}
+                first
+              </div>
+            )}
           </div>
         </div>
       </div>
