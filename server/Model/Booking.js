@@ -1,52 +1,46 @@
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
-  {
-    client: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    turf: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ground",
-    },
-    bookDate: {
-      type: Date,
-    },
-    time: [
-      {
-        timeId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "event.slots",
+    {
+        client: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
         },
-        slots: {
-          type: String,
+        turf: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "ground",
         },
-        price: {
-          type: String,
+        bookDate: { type: String },
+        time: [
+            {
+                timeId: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "event.slots",
+                },
+                slots: {
+                    type: String,
+                },
+                price: {
+                    type: String,
+                },
+            },
+        ],
+        event: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "event",
         },
-      },
-    ],
-    event: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "event",
+        payment: { type: String },
+        advance: { type: String },
+        sport: { type: String },
+        advance: { type: String },
+        total: { type: String },
+        paymentId: { type: String },
+        status: { type: String },
+        review: { type: Boolean, default: false },
     },
-    payment: {
-      type: String,
-      default: "Pending",
-    },
-    advance: { type: String },
-    sport: { type: String },
-    total: {
-      type: String,
-    },
-    paymentId: {
-      type: String,
-    },
-  },
-  {
-    timestamps: true,
-  }
+    {
+        timestamps: true,
+    }
 );
 
 const bookingModel = mongoose.model("booking", bookingSchema);

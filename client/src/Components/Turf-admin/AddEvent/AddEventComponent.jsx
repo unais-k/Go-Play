@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AddEventReqApi, GroundViewReqApi, TimeSaveOnEventReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
 import { message } from "antd";
+import LabelCheckbox from "./LabelCheckbox";
 
 function AddEventComponent() {
     const navigate = useNavigate();
@@ -149,7 +150,7 @@ function AddEventComponent() {
                     <div class="text-3xl mb-6 text-center ">Ready to build your Dream?</div>
 
                     <form onSubmit={handleSubmit}>
-                        <div class="grid grid-cols-2 gap-4 max-w-xl m-auto">
+                        <div class="grid gap-4 max-w-xl m-auto">
                             <div className="col-span-2">
                                 <input
                                     type="groundName"
@@ -159,76 +160,7 @@ function AddEventComponent() {
                                     placeholder="Ground name"
                                 />
                             </div>
-                            <div class="col-span-2">
-                                <ul className="flex justify-between">
-                                    <li className="me-2">
-                                        <label className="">
-                                            football
-                                            <input
-                                                className="ms-2"
-                                                type="checkbox"
-                                                onClick={handleCheckboxSport}
-                                                value="Football"
-                                            />
-                                        </label>
-                                    </li>
-                                    <li className="me-2">
-                                        <label className="">
-                                            cricket
-                                            <input
-                                                className="ms-2"
-                                                type="checkbox"
-                                                value="Cricket"
-                                                onClick={handleCheckboxSport}
-                                            />
-                                        </label>
-                                    </li>
-                                    <li className="me-2">
-                                        <label className="">
-                                            volleyball
-                                            <input
-                                                className="ms-2"
-                                                type="checkbox"
-                                                value="Volley ball"
-                                                onClick={handleCheckboxSport}
-                                            />
-                                        </label>
-                                    </li>
-                                    <li className="me-2">
-                                        <label className="">
-                                            tennis
-                                            <input
-                                                className="ms-2"
-                                                type="checkbox"
-                                                value="Tennis"
-                                                onClick={handleCheckboxSport}
-                                            />
-                                        </label>
-                                    </li>
-                                    <li className="me-2">
-                                        <label className="">
-                                            badminton
-                                            <input
-                                                className="ms-2"
-                                                type="checkbox"
-                                                value="Badminton"
-                                                onClick={handleCheckboxSport}
-                                            />
-                                        </label>
-                                    </li>
-                                    <li className="me-2">
-                                        <label className="">
-                                            basketball
-                                            <input
-                                                className="ms-2"
-                                                type="checkbox"
-                                                value="Basket ball"
-                                                onClick={handleCheckboxSport}
-                                            />
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
+                            <LabelCheckbox handleCheckboxSport={handleCheckboxSport} />
 
                             <div class="col-span-2">
                                 <select

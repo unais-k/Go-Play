@@ -12,6 +12,8 @@ import AddEvent from "../Pages/Turf-Admin/AddEvent";
 import EditEvent from "../Pages/Turf-Admin/EditEvent";
 import EventView from "../Pages/Turf-Admin/EventView";
 import Profile from "../Pages/Turf-Admin/Profile";
+import Booking from "../Pages/Turf-Admin/Booking";
+import Error from "../Pages/Turf-Admin/Error";
 
 function TurfAdminRouter() {
     const isAuth = useSelector((state) => state.turfAdminLogin.token);
@@ -23,15 +25,17 @@ function TurfAdminRouter() {
                 <Route path="/register" element={<TurfRegisterPage />} />
                 <Route path="/regSuccess" element={<RegSuccess />} />
                 {/* <Route path="/home" element={<TurfAdminHome />} /> */}
-                <Route path="/home" element={isAuth ? <TurfAdminHome /> : <Navigate to="/turf-admin/login"/>} />
+                <Route path="/home" element={isAuth ? <TurfAdminHome /> : <Navigate to="/turf-admin/login" />} />
                 {/* <Route path="/ground-list" element={<GroundList />} /> */}
-                <Route path="/ground-list" element={isAuth ? <GroundList /> : <Navigate to="/turf-admin/login"/>} />
+                <Route path="/ground-list" element={isAuth ? <GroundList /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/ground-add" element={isAuth ? <GroundAdd /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/ground-view/:id" element={isAuth ? <GroundView /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/add-event/:id" element={isAuth ? <AddEvent /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/edit-event/:id" element={isAuth ? <EditEvent /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/event-view/:id" element={isAuth ? <EventView /> : <Navigate to="/turf-admin/login" />} />
+                <Route path="/booking" element={isAuth ? <Booking /> : <Navigate to="/turf-admin/login" />} />
+                <Route path="/error" element={<Error />} />
             </Routes>
         </div>
     );

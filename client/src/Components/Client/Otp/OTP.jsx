@@ -100,7 +100,6 @@ function OtpPage() {
         const values = Object.values(otp);
         const otpValue = values.join("");
         const phone = formData.phone;
-        console.log(phone, otpValue, "--------");
         const response = otpVerify({ otpValue, phone }).then(async (res) => {
             if (res.status === 200) {
                 const data = await userRegister(formData);
@@ -110,8 +109,6 @@ function OtpPage() {
             else if (res.status === 500) errorSwal(res.data.error);
         });
     };
-
-    const [first, setFirst] = useState("");
 
     return (
         <div className="">

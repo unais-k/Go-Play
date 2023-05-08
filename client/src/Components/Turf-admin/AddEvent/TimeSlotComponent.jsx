@@ -44,8 +44,6 @@ function TimeSlotComponent({ eventData, time }) {
             const id = eventData._id;
             eventDetail(id);
         }
-
-       
     }, [eventData]);
 
     return (
@@ -60,7 +58,6 @@ function TimeSlotComponent({ eventData, time }) {
                 ) : (
                     <div className="grid grid-cols-4 content-center gap-3">
                         {slots?.map((res) => {
-                            console.log(res);
                             return (
                                 <>
                                     {res.status === true ? (

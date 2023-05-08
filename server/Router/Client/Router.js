@@ -3,12 +3,14 @@ import { otpSend, otpVerify, userLogin, userRegister } from "../../Controller/Cl
 import {
     BookingDetailViewResApi,
     BookingSubmitResApi,
+    CancelBookingResApi,
     CityListResApi,
     EventFetchOnSelectResApi,
     FootballGroundResApi,
     GroundFetchOnSelectResApi,
     GroundListResApi,
     GroundViewResApi,
+    OnDateBookedResApi,
     SearchGroundResApi,
     SelectTypeResApi,
     SubmitReviewResApi,
@@ -32,12 +34,14 @@ router.get("/time-slot", TimeSlotResApi);
 router.get("/select-type", SelectTypeResApi);
 router.get("/selected-type", GroundFetchOnSelectResApi);
 router.get("/event-fetch", EventFetchOnSelectResApi);
-router.post("/booking-submit",clientVerifyToken, BookingSubmitResApi)
-router.get("/user-data",clientVerifyToken,UserDataFetchResApi)
-router.patch('/user-edit',clientVerifyToken,UserEditResApi)
-router.get("/booking-data",clientVerifyToken,UserBookingDetailFetchResApi)
-router.get("/booking-detail-view",clientVerifyToken,BookingDetailViewResApi)
-router.post("/review-submit",clientVerifyToken,SubmitReviewResApi)
-router.get("/search-turf",SearchGroundResApi)
+router.get("/date-event-fetch", OnDateBookedResApi);
+router.post("/booking-submit", clientVerifyToken, BookingSubmitResApi);
+router.get("/user-data", clientVerifyToken, UserDataFetchResApi);
+router.patch("/user-edit", clientVerifyToken, UserEditResApi);
+router.get("/booking-data", clientVerifyToken, UserBookingDetailFetchResApi);
+router.get("/booking-detail-view", clientVerifyToken, BookingDetailViewResApi);
+router.post("/review-submit", clientVerifyToken, SubmitReviewResApi);
+router.get("/search-turf", SearchGroundResApi);
+router.patch("/cancel-booking", clientVerifyToken, CancelBookingResApi);
 
 export default router;

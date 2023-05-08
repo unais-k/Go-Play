@@ -5,6 +5,7 @@ import { HiHome } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { EventDetailFetchReqApi } from "../../../API/Services/TurfAdminRequest";
 import TimeSlotComponent from "./TimeSlotComponent";
+import EditLabelComponent from "./EditLabelComponent";
 
 function EditEventComponent() {
     const params = useParams();
@@ -12,6 +13,7 @@ function EditEventComponent() {
     console.log(eventId, "id");
     const [eventData, setEventData] = useState([]);
     const [time, setTime] = useState([]);
+    const [sport, setSport] = useState([]);
     const token = useSelector((state) => state.turfAdminLogin.token);
 
     const eventDetail = async () => {
@@ -19,6 +21,7 @@ function EditEventComponent() {
         setEventData(response.data.result);
         setTime(response.data.result.slots);
     };
+
     const size = [
         { name: "5 * 5" },
         { name: "6 * 6" },
@@ -44,6 +47,14 @@ function EditEventComponent() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("submit");
+    };
+    const handleCheckboxSport = (e) => {
+        const { value, checked } = e.target;
+        if (checked) {
+            setSport([...sport, value]);
+        } else {
+            setSport(sport.filter((e) => e !== value));
+        }
     };
 
     return (
@@ -73,24 +84,14 @@ function EditEventComponent() {
                                         placeholder="Ground name"
                                     />
                                 </div>
-                                <div class="col-span-2 lg:col-span-1 ">
-                                    <select
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="password"
-                                        type="text"
-                                        // onChange={handleInputChange}
-                                        name="title"
-                                    >
-                                        <option value="">Choose Title</option>
-                                        {title.map((obj, index) => {
-                                            return (
-                                                <option key={index + Math.round(Math.random) * 124}>{obj.titles}</option>
-                                            );
-                                        })}
-                                    </select>
+                                <div class="col-span-2 ">
+                                    <EditLabelComponent
+                                        eventAvailable={eventData.eventAvailable}
+                                        handleCheckboxSport={handleCheckboxSport}
+                                    />
                                 </div>
 
-                                <div class="col-span-2 lg:col-span-1">
+                                <div class="col-span-2">
                                     <select
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         id="password"

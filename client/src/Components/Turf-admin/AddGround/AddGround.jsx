@@ -254,51 +254,7 @@ function AddGroundPage() {
                             placeholder="Enter your State"
                         />
                     </div>
-                    {/* <div class="mb-4 flex">
-                        <div className="me-2 basis-1/2">
-                            <label class="block text-gray-700 font-bold mb-2" for="confirm_password">
-                                Ground type
-                            </label>
-                            <select
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="password"
-                                type="text"
-                                onChange={handleInputChange}
-                                name="groundType"
-                                placeholder="Enter your password"
-                            >
-                                <option value="">Choose ground type</option>
-                                {type.map((obj, index) => {
-                                    return (
-                                        <option key={index + Math.round(Math.random) * 124} value={obj.name}>
-                                            {obj.name}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                        <div className="ms-2 basis-1/2">
-                            <label class="block text-gray-700 font-bold mb-2" for="confirm_password">
-                                Size
-                            </label>
-                            <select
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="password"
-                                type="text"
-                                onChange={handleInputChange}
-                                name="size"
-                            >
-                                <option value="">Choose size</option>
-                                {size.map((obj, index) => {
-                                    return (
-                                        <option key={index + Math.round(Math.random) * 124} value={obj.name}>
-                                            {obj.name}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                    </div> */}
+
                     <div>
                         <button className="bg-black text-white rounded py-2 px-4 m-3" type="submit">
                             Submit

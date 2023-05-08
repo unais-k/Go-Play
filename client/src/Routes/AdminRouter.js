@@ -10,6 +10,7 @@ import OwnerList from "../Pages/Admin/OwnerList";
 import ClientList from "../Pages/Admin/ClientList";
 import GroundView from "../Pages/Admin/GroundView";
 import EventView from "../Pages/Admin/EventView";
+import Error from "../Pages/Admin/Error";
 function AdminRouter() {
     // const isAuth = true;
     const isAuth = useSelector((state) => state.adminLogin.token);
@@ -26,6 +27,7 @@ function AdminRouter() {
                 <Route path="/add-city" element={isAuth ? <City /> : <Navigate to="admin/" />} />
                 <Route path="/owner-list" element={isAuth ? <OwnerList /> : <Navigate to="admin/" />} />
                 <Route path="/client-list" element={isAuth ? <ClientList /> : <Navigate to="admin/" />} />
+                <Route path="/error" element={<Error />} />
             </Routes>
         </div>
     );

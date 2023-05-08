@@ -38,9 +38,9 @@ function TimeSlot({ eventData, movingDiv, time }) {
     };
 
     useEffect(() => {
-        if (eventData ) {
-            const id = eventData._id
-          eventDetail(id)
+        if (eventData) {
+            const id = eventData._id;
+            eventDetail(id);
         }
     }, [eventData]);
 

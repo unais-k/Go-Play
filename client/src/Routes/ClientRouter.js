@@ -12,6 +12,7 @@ import Payment from "../Pages/Client/Payment";
 import Profile from "../Pages/Client/Profile";
 import Booking from "../Pages/Client/Booking";
 import BookingView from "../Pages/Client/BookingView";
+import Error from "../Pages/Client/Error";
 function ClientRouter() {
     const isAuth = useSelector((state) => state.userLogin.token);
     console.log(isAuth, "Client Token");
@@ -29,6 +30,7 @@ function ClientRouter() {
                 <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/login" />} />
                 <Route path="/booking" element={isAuth ? <Booking /> : <Navigate to="/login" />} />
                 <Route path="/booking-view/:id" element={isAuth ? <BookingView /> : <Navigate to="/login" />} />
+                <Route path="/error" element={<Error />} />
             </Routes>
         </div>
     );

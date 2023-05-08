@@ -4,13 +4,16 @@ import {
     AddEventResApi,
     AddPhotoOnEventPostApi,
     AvailableStatusChangeResApi,
+    BookingListResApi,
+    BookingStatusSetResApi,
     CanceledTimeResApi,
     EventDetailFetchResApi,
     FindCity,
     GroundDetailSubmitResApi,
     GroundListResApi,
     GroundViewResApi,
-    OwnerDataFetcResApi,
+    OwnerDataFetchResApi,
+    PaymentStatusSetResApi,
     RuleAddResApi,
     RuleDeleteResApi,
     RuleFindResApi,
@@ -46,7 +49,9 @@ router.post("/canceled-time-slot", turfAdminVerifyToken, CanceledTimeResApi);
 router.post("/ground-detail-form-submit", turfAdminVerifyToken, GroundDetailSubmitResApi);
 router.post("/add-time-on-event", turfAdminVerifyToken, TimeSaveOnEventResApi);
 router.get("/event-detail", turfAdminVerifyToken, EventDetailFetchResApi);
-router.get("/owner-data",turfAdminVerifyToken,OwnerDataFetcResApi)
-router.post('/photo-add-on-event',turfAdminVerifyToken,AddPhotoOnEventPostApi)
-
+router.get("/owner-data", turfAdminVerifyToken, OwnerDataFetchResApi);
+router.post("/photo-add-on-event", turfAdminVerifyToken, AddPhotoOnEventPostApi);
+router.get("/booking-list", turfAdminVerifyToken, BookingListResApi);
+router.patch("/payment-status-set", turfAdminVerifyToken, PaymentStatusSetResApi);
+router.patch("/booking-status-set", turfAdminVerifyToken, BookingStatusSetResApi);
 export default router;

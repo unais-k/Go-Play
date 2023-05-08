@@ -1,13 +1,13 @@
 import React from "react";
-import ProfilePageComponent from "../../Components/Turf-admin/Profile/ProfileComponent";
 import Layout from "../../Components/Turf-admin/SideBarComponents/components/Layout";
+import BookingComponent from "../../Components/Turf-admin/Booking/BookingComponent";
 
-function Profile() {
+function Booking() {
     return (
         <Layout>
-            <ProfilePageComponent />
+            <BookingComponent />
         </Layout>
     );
 }
 
-export default Profile;
+export default Booking;

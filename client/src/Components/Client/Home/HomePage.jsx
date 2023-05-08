@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import { FiSearch } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa";
-import { GroundListReqApi, GroundViewReqApi } from "../../../API/Services/ClientRequest";
+import { GroundListReqApi, GroundViewReqApi, SearchGroundReqApi } from "../../../API/Services/ClientRequest";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,7 @@ function HomePage() {
         return string?.length > n ? string.substr(0, n - 1) + "..." : string;
     };
     const [ground, setGround] = useState([]);
+    const [place, setPlace] = useState([]);
     useEffect(() => {
         groundList();
     }, [""]);
@@ -19,10 +20,23 @@ function HomePage() {
     const groundList = async () => {
         const response = await GroundListReqApi();
         if (response.status === 200) {
+            console.log(response.data.result);
             setGround(response.data.result);
+            setPlace(response.data.result);
         } else {
             message.error("Something went wrong");
         }
+    };
+
+    const APIcall = async (id) => {
+        const response = await SearchGroundReqApi(id);
+        if (response.status === 201) {
+            setGround(response.data.result);
+        }
+    };
+
+    const handleSearch = async (e) => {
+        APIcall(e.target.value);
     };
 
     const handleGroundCard = async (id) => {
@@ -46,6 +60,7 @@ function HomePage() {
                     <input
                         type="text"
                         name="search"
+                        onChange={handleSearch}
                         className="w-8/12 bg-xx text-white placeholder-white"
                         placeholder="Search"
                     />
@@ -62,30 +77,34 @@ function HomePage() {
                     </div>
                     <div className="flex">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 mb-16 gap-2">
-                            {ground
-                                ? ground.map((res) => {
-                                      return (
-                                          <div
-                                              className="w-11/12 h-auto bg-white p-3 m-4 h-fit"
-                                              onClick={() => handleGroundCard(res._id)}
-                                          >
-                                              <div className="box-img mb-2">
-                                                  <img src={res.images} alt="box-img" />
-                                              </div>
-                                              <div className="img-head">
-                                                  <p className="font-bold text-lime-600 uppercase">
-                                                      {truncate(res ? res.name : "", 150)}
-                                                  </p>
-                                                  <p className="text-xs">{res.place}</p>
-                                              </div>
-                                              <div className="books flex justify-between mt-4">
-                                                  <b className="text-amber-500 hover:text-zinc-950">BOOK NOW</b>
-                                                  <FaPlus size={15} className="mt-1" color="grey" />
-                                              </div>
-                                          </div>
-                                      );
-                                  })
-                                : "No Ground in that Place"}
+                            {ground.length > 0 ? (
+                                ground.map((res) => {
+                                    return (
+                                        <div
+                                            className="w-11/12 h-auto bg-white p-3 m-4 h-fit"
+                                            onClick={() => handleGroundCard(res._id)}
+                                        >
+                                            <div className="box-img mb-2">
+                                                <img src={res.images} className="w-full h-60" alt="box-img" />
+                                            </div>
+                                            <div className="img-head">
+                                                <p className="font-bold text-lime-600 uppercase">
+                                                    {truncate(res ? res.name : "", 150)}
+                                                </p>
+                                                <p className="text-xs">
+                                                    {res.place},{res.nearCity}
+                                                </p>
+                                            </div>
+                                            <div className="books flex justify-between mt-4">
+                                                <b className="text-amber-500 hover:text-zinc-950">BOOK NOW</b>
+                                                <FaPlus size={15} className="mt-1" color="grey" />
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <div className="m-10">No Ground or turf in that Place</div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -94,88 +113,12 @@ function HomePage() {
                 <div className="popular-locality w-2/3 bg-white mb-16 p-8 pt-12">
                     <h1 className="text-3xl font-bold text-lime-600">Popular Localities</h1>
                     <p>Explore grounds & venues in and around popular areas of your city</p>
-                    <div className="flex justify-content-evenly mt-10">
-                        <div className="me-[20%]">
-                            <ul>
-                                <li className="font-mono hover:text-amber-500">
-                                    Andheri <span className="font-sans text-zinc-400">(13 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Goregaon <span className="font-sans text-zinc-400">(1 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Kandivali <span className="font-sans text-zinc-400">(7 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Andheri <span className="font-sans text-zinc-400">(13 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Goregaon <span className="font-sans text-zinc-400">(1 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Kandivali <span className="font-sans text-zinc-400">(7 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Andheri <span className="font-sans text-zinc-400">(13 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Goregaon <span className="font-sans text-zinc-400">(1 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Kandivali <span className="font-sans text-zinc-400">(7 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Andheri <span className="font-sans text-zinc-400">(13 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Goregaon <span className="font-sans text-zinc-400">(1 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Kandivali <span className="font-sans text-zinc-400">(7 Places)</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="me-[20%]">
-                            <ul>
-                                <li className="font-mono hover:text-amber-500">
-                                    Andheri <span className="font-sans text-zinc-400">(13 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Goregaon <span className="font-sans text-zinc-400">(1 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Kandivali <span className="font-sans text-zinc-400">(7 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Andheri <span className="font-sans text-zinc-400">(13 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Goregaon <span className="font-sans text-zinc-400">(1 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Kandivali <span className="font-sans text-zinc-400">(7 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Andheri <span className="font-sans text-zinc-400">(13 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Goregaon <span className="font-sans text-zinc-400">(1 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Kandivali <span className="font-sans text-zinc-400">(7 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Andheri <span className="font-sans text-zinc-400">(13 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Goregaon <span className="font-sans text-zinc-400">(1 Places)</span>
-                                </li>
-                                <li className="font-mono hover:text-amber-500">
-                                    Kandivali <span className="font-sans text-zinc-400">(7 Places)</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+
+                    <ul className="grid grid-cols-3 mt-10">
+                        {place?.map((res) => {
+                            return <li className="font-mono hover:text-amber-500">{res.place}</li>;
+                        })}
+                    </ul>
                 </div>
             </div>
             <div className="w-full flex justify-center items-center mb-20">

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AxiosClient } from "../../../API/AxiosInstance";
 import { otpSend } from "../../../API/Services/authReq.js";
 import { errorSwal } from "../../../Utils/Helpers/Swal";
 import { message } from "antd";
@@ -20,7 +19,7 @@ function RegisterPage() {
         phone: "",
     });
 
-    const handleLogin = (phone) => {
+    const handleLogin = () => {
         navigate("/login");
     };
 
@@ -33,6 +32,14 @@ function RegisterPage() {
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (!/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)) {
+            message.error("Invalid email address.");
+            return false;
+        }
+        if (!/^\d{10}$/.test(formData.phone)) {
+            message.error("Invalid phone number. Phone number must be 10 digits long.");
+            return false;
+        }
         // navigate("/otp");
         const res = otpSend({
             formData,
