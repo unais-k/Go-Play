@@ -131,7 +131,6 @@ export const TimeSaveReqApi = async (data, token) => {
     }
 };
 
-
 export const GroundViewReqApi = async (data, token) => {
     console.log(data, "data", token, "token");
     try {
@@ -145,7 +144,6 @@ export const GroundViewReqApi = async (data, token) => {
     }
 };
 
-
 export const EventDetailFetchReqApi = async (data, token) => {
     console.log(data, "data");
     try {
@@ -156,4 +154,4 @@ export const EventDetailFetchReqApi = async (data, token) => {
     } catch (error) {
         console.log(error.message);
     }
-}
+};

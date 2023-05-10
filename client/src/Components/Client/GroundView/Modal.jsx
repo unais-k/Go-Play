@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GroundViewReqApi } from "../../../API/Services/ClientRequest";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 function ModalBookingComponent({ bookingData, setShowModal }) {
     const token = useSelector((state) => state.userLogin.token);
@@ -13,6 +14,7 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
     const [groundData, setGroundData] = useState({});
 
     const GroundData = async () => {
+        const token = useSelector((state) => state.userLogin.token);
         const response = await GroundViewReqApi(groundId);
         if (response.status === 200) {
             console.log(response, "response");
@@ -31,18 +33,23 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
 
     const handlePayment = () => {
         console.log("payment");
-        navigate("/payment", {
-            state: {
-                time: time,
-                date: date,
-                sport: bookingData.sport,
-                groundId: groundId,
-                eventId: bookingData.eventId,
-                total: bookingData.price,
-                advance: Math.round(bookingData.price / 15),
-            },
-        });
-        setShowModal(false);
+        if (token) {
+            navigate("/payment", {
+                state: {
+                    time: time,
+                    date: date,
+                    sport: bookingData.sport,
+                    groundId: groundId,
+                    eventId: bookingData.eventId,
+                    total: bookingData.price,
+                    advance: Math.round(bookingData.price / 15),
+                },
+            });
+            setShowModal(false);
+        } else {
+            message.warning("Please Login");
+            navigate("/login");
+        }
     };
 
     return (

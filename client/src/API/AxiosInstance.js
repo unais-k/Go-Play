@@ -10,3 +10,11 @@ export const AxiosAdmin = Axios.create({
 export const AxiosTurfAdmin = Axios.create({
     baseURL: "http://localhost:4001/api/turf-admin",
 });
+
+export const AxiosConversation = Axios.create({
+    baseURL: "http://localhost:4001/api/conversation",
+});
+
+export const AxiosChat = Axios.create({
+    baseURL: "http://localhost:4001/api/chat",
+});

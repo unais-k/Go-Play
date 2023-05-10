@@ -4,15 +4,15 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
-import multer from "multer";
 import morgan from "morgan";
-import path from "path";
 import cookieParser from "cookie-parser";
 dotenv.config();
 
 import ClientRoute from "./Router/Client/Router.js";
 import AdminRoute from "./Router/Admin/Router.js";
 import TurfADminRoute from "./Router/Turf-admin/Router.js";
+import ConversationRoute from "./Router/Conversation/Router.js";
+import MessageRoute from "./Router/Messages/Router.js";
 
 const app = express();
 app.use(express.json({ limit: "30mb", extended: true }));
@@ -27,6 +27,8 @@ app.use(cookieParser());
 app.use("/api/client/", ClientRoute);
 app.use("/api/admin", AdminRoute);
 app.use("/api/turf-admin", TurfADminRoute);
+app.use("/api/conversation", ConversationRoute);
+app.use("/api/chat", MessageRoute);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT;

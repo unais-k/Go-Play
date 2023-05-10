@@ -9,6 +9,7 @@ import {
     CanceledTimeResApi,
     EventDetailFetchResApi,
     FindCity,
+    FindReviewResApi,
     GroundDetailSubmitResApi,
     GroundListResApi,
     GroundViewResApi,
@@ -54,4 +55,5 @@ router.post("/photo-add-on-event", turfAdminVerifyToken, AddPhotoOnEventPostApi)
 router.get("/booking-list", turfAdminVerifyToken, BookingListResApi);
 router.patch("/payment-status-set", turfAdminVerifyToken, PaymentStatusSetResApi);
 router.patch("/booking-status-set", turfAdminVerifyToken, BookingStatusSetResApi);
+router.get("/review-fetch", turfAdminVerifyToken, FindReviewResApi);
 export default router;

@@ -15,7 +15,7 @@ function BookingViewCard() {
     const params = useParams();
     const id = params.id;
     console.log(id);
-    const deta = async () => {
+    const detail = async () => {
         const response = await BookingDetailViewReqApi(id, token);
         console.log(response.data.result);
         if (response.status === 201) {
@@ -26,15 +26,16 @@ function BookingViewCard() {
         }
     };
 
-    const handleSubmitReview = async (data, id, token) => {
-        const response = await SubmitReviewReqApi({ data, id }, token);
+    const handleSubmitReview = async (data) => {
+        const response = await SubmitReviewReqApi(data, id, token);
         if (response.status === 201) {
             message.success("Review added");
+            detail();
         }
     };
     useEffect(() => {
         if (id) {
-            deta();
+            detail();
         }
     }, [token]);
     console.log(time);

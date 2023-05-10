@@ -165,12 +165,16 @@ export const BookingDetailViewReqApi = async (data, token) => {
     }
 };
 
-export const SubmitReviewReqApi = async (data, token) => {
-    console.log(data, "data", token, "--------");
+export const SubmitReviewReqApi = async (data, id, token) => {
+    console.log(data, "data", id, "id", token, "--------");
     try {
-        const response = AxiosClient.post("/review-submit", data, {
-            headers: { Authorization: "Bearer " + token },
-        });
+        const response = AxiosClient.post(
+            "/review-submit",
+            { data, id },
+            {
+                headers: { Authorization: "Bearer " + token },
+            }
+        );
         return response;
     } catch (error) {
         console.log(error.message);

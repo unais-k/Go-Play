@@ -160,7 +160,7 @@ function BookingComponent() {
                     );
                 })
             ) : (
-                <></>
+                <div>No Booking Found</div>
             )}
         </div>
     );

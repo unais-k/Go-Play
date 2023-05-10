@@ -14,6 +14,8 @@ import EventView from "../Pages/Turf-Admin/EventView";
 import Profile from "../Pages/Turf-Admin/Profile";
 import Booking from "../Pages/Turf-Admin/Booking";
 import Error from "../Pages/Turf-Admin/Error";
+import Reviews from "../Pages/Turf-Admin/Reviews";
+import Chat from "../Pages/Turf-Admin/Chat";
 
 function TurfAdminRouter() {
     const isAuth = useSelector((state) => state.turfAdminLogin.token);
@@ -35,6 +37,8 @@ function TurfAdminRouter() {
                 <Route path="/edit-event/:id" element={isAuth ? <EditEvent /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/event-view/:id" element={isAuth ? <EventView /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/booking" element={isAuth ? <Booking /> : <Navigate to="/turf-admin/login" />} />
+                <Route path="/reviews" element={isAuth ? <Reviews /> : <Navigate to="/turf-admin/login" />} />
+                <Route path="/admin-chat" element={isAuth ? <Chat /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/error" element={<Error />} />
             </Routes>
         </div>

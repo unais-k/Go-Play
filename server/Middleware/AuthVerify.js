@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 export const clientVerifyToken = async (req, res, next) => {
     let token = req.header("Authorization");
 
-    console.log(token, "token------");
-
     try {
         if (!token) return res.status(404).json({ message: "Authentication failed: no token provided." });
 
@@ -29,8 +27,6 @@ export const clientVerifyToken = async (req, res, next) => {
 
 export const adminVerifyToken = async (req, res, next) => {
     let token = req.header("Authorization");
-
-    console.log(token, "token------");
 
     try {
         if (!token) return res.status(404).json({ message: "Authentication failed: no token provided." });
@@ -57,8 +53,6 @@ export const adminVerifyToken = async (req, res, next) => {
 export const turfAdminVerifyToken = async (req, res, next) => {
     let token = req.header("Authorization");
 
-    console.log(token, "token------");
-
     try {
         if (!token) return res.status(404).json({ message: "Authentication failed: no token provided." });
 
@@ -75,6 +69,25 @@ export const turfAdminVerifyToken = async (req, res, next) => {
         } else {
             res.status(404).json({ message: "Authentication failed: invalid token." });
         }
+    } catch (error) {
+        console.log(error);
+        return res.status(404).json({ message: "Authentication failed: invalid token." });
+    }
+};
+
+export const ChatVerificationToken = async (req, res, next) => {
+    let token = req.header("Authorization");
+
+    try {
+        if (!token) return res.status(404).json({ message: "Authentication failed: no token provided." });
+
+        if (token.startsWith("Bearer ")) {
+            token = token.slice(7, token.length).trimLeft();
+        }
+
+        const verified = await jwt.verify(token, process.env.JWT_SECRET);
+        req.user = verified;
+        next();
     } catch (error) {
         console.log(error);
         return res.status(404).json({ message: "Authentication failed: invalid token." });

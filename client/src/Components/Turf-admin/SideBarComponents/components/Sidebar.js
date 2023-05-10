@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import { AiFillPieChart } from "react-icons/ai";
 import { BiBeenHere, BiFootball } from "react-icons/bi";
-import { MdOutlineRateReview } from "react-icons/md";
+import { MdAdminPanelSettings, MdOutlineRateReview } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import { CgProfile } from "react-icons/cg";
 // import Logo from '../assets/images/logo.svg'
@@ -23,6 +23,7 @@ const Sidebar = () => {
         { title: "Dashboard", path: "/turf-admin/home", src: <AiFillPieChart /> },
         { title: "Ground", path: "/turf-admin/ground-list", src: <BiFootball /> },
         { title: "Booking", path: "/turf-admin/booking", src: <BiBeenHere /> },
+        { title: "Chat with admin", path: "/turf-admin/admin-chat", src: <MdAdminPanelSettings /> },
         { title: "Review", path: "/turf-admin/reviews", src: <MdOutlineRateReview /> },
         { title: "Profile", path: "/turf-admin/profile", src: <CgProfile /> },
     ];

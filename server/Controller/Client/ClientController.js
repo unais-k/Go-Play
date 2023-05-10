@@ -91,6 +91,7 @@ export const SelectTypeResApi = async (req, res, next) => {
             event.push(find[i].eventAvailable);
         }
         const concatArray = multiIntersect(event);
+
         res.status(201).json({ result: concatArray });
     } catch (error) {
         console.log(error);
@@ -234,13 +235,18 @@ export const BookingDetailViewResApi = async (req, res, next) => {
 export const SubmitReviewResApi = async (req, res, next) => {
     try {
         const { text, rating } = req.body.data;
-        console.log(req.body);
+        const findXx = await bookingModel.find({ _id: req.body.id });
+        const groundId = findXx[0].turf;
         const setReview = await reviewModel.create({
             rating: rating,
-            turf: req.body.id,
+            turf: groundId,
             client: req.user.id,
             review: text,
         });
+        const reviewStatusChangeInBookingModel = await bookingModel.updateOne(
+            { _id: req.body.id },
+            { $set: { review: true } }
+        );
         const find = await reviewModel.find({ turf: req.body.id }).populate("client");
         console.log(setReview);
         res.status(201).json({ result: find });

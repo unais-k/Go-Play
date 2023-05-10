@@ -11,7 +11,7 @@ import nodeMailer from "nodemailer";
 export const adminLogin = async (req, res, next) => {
     console.log(req.body);
     try {
-      const kiran = 'git check'
+        const kiran = "git check";
         const { email, password } = req.body;
         const Check = await AdminModel.findOne({ email: email, password: password });
         console.log(Check);
@@ -153,17 +153,17 @@ export const GroundListAdminResApi = async (req, res, next) => {
 
 export const GroundViewResApi = async (req, res, next) => {
     try {
-      const id = req.query.id;
-      const find = await GroundModel.findOne({ _id: id }).populate("Owner");
-      const events = await eventModel.find({ groundId: id });
-      console.log(find,"----------------------------------");
-      console.log(events,"==================================");
-      res.status(201).json({ result: find, event: events });
+        const id = req.query.id;
+        const find = await GroundModel.findOne({ _id: id }).populate("Owner");
+        const events = await eventModel.find({ groundId: id });
+        console.log(find, "----------------------------------");
+        console.log(events, "==================================");
+        res.status(201).json({ result: find, event: events });
     } catch (error) {
-      console.log(error.message);
-      res.status(500).json({ error: error.message });
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
     }
-  };
+};
 
 export const BlockGroundResApi = async (req, res, next) => {
     console.log(req.body);
@@ -245,20 +245,16 @@ export const TimeSaveResApi = async (req, res, next) => {
     }
 };
 
-
-
 export const EventDetailFetchResApi = async (req, res, next) => {
     try {
-      console.log(req.query);
-      console.log(req.body);
-      const id = req.query.id;
-      const findDetail = await eventModel
-        .findOne({ _id: id })
-        .populate("groundId");
-      console.log(findDetail);
-      res.status(201).json({ result: findDetail });
+        console.log(req.query);
+        console.log(req.body);
+        const id = req.query.id;
+        const findDetail = await eventModel.findOne({ _id: id }).populate("groundId");
+        console.log(findDetail);
+        res.status(201).json({ result: findDetail });
     } catch (error) {
-      console.log(error.message);
-      res.status(500).json({ error: error.message });
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
     }
-  };
+};

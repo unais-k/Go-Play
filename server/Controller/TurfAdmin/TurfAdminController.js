@@ -387,3 +387,14 @@ export const BookingStatusSetResApi = async (req, res, next) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const FindReviewResApi = async (req, res, next) => {
+    try {
+        const find = await GroundModel.find({ Owner: req.user.id });
+        console.log(find);
+        // res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};

@@ -284,3 +284,14 @@ export const BookingStatusSetReqApi = async (data, token) => {
         console.log(error.message);
     }
 };
+
+export const FindReviewReqApi = async (token) => {
+    try {
+        const response = AxiosTurfAdmin.get("/review-fetch", {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+};

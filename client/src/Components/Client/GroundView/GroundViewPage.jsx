@@ -176,6 +176,7 @@ function GroundViewPage() {
                 })
             );
             setSelectSlot(selectSlot.filter((val) => val.time != id.time));
+            setPrice(-price - -id.price);
             message.warning("Already selected");
         }
         bookNow4();
@@ -183,11 +184,13 @@ function GroundViewPage() {
 
     const handleBookNow = async (id) => {
         const response = await SelectTypeOfReqApi(id);
+        console.log(response.data.result);
         setSport(response.data.result);
         bookNow();
     };
 
     const handleSelectedSport = async (id) => {
+        id.e.target.style.backgroundColor = "red";
         setSelectedSport(id.value);
         console.log(id, "value");
         const response = await GroundFetchOnSelectReqApi(id);
@@ -242,6 +245,7 @@ function GroundViewPage() {
             console.log("use");
         }
     }, [id]);
+    console.log(sport);
 
     return (
         <div>
@@ -262,7 +266,9 @@ function GroundViewPage() {
                                             <div
                                                 className="bg-gray-200 px-4 py-2 m-2 mb-10"
                                                 key={Math.floor(Math.random) * 0.2351 + 124}
-                                                onClick={() => handleSelectedSport({ value: res, groundId: state._id })}
+                                                onClick={(e) =>
+                                                    handleSelectedSport({ value: res, groundId: state._id, e: e })
+                                                }
                                             >
                                                 {res}
                                             </div>
