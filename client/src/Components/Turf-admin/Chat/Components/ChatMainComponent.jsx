@@ -51,11 +51,12 @@ function ChatMainComponent() {
             getTurfAdmins();
         }
     }, [token]);
+
     return (
         <div>
             <div class="container w-full mx-auto shadow-lg border-t rounded-lg">
                 <div class="flex w-full h-screen bg-white">
-                    <div class="w-full flex pt-20 flex-col w-3/12 border-r-2 overflow-y-auto">
+                    <div class="w-full flex pt-20 flex-col w-2/6 border-r-2 overflow-y-auto">
                         <div class="border-b-2 mb-2 py-4 px-2">
                             <input
                                 type="text"
@@ -65,7 +66,6 @@ function ChatMainComponent() {
                         </div>
                         <ContactComponent owner={owner} setCurrentChat={setCurrentChat} handleStartChat={handleStartChat} />
                     </div>
-
                     <div class="flex flex-col w-full flex-auto h-full p-6">
                         <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
                             <div class="flex flex-col h-full overflow-x-auto mb-4">

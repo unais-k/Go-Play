@@ -32,7 +32,7 @@ function LoginPage() {
                 const token = response.data.token;
                 const name = response.data.name;
                 message.success(`${name} Welcome`);
-                dispatch(setLogin({ token: token, name: name }));
+                dispatch(setLogin({ token: token, name: name, id: response.data.id }));
                 navigate("/");
             } else if (response?.status === 500) message.error(response.data.error);
         });

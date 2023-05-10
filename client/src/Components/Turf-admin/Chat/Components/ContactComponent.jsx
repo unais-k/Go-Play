@@ -43,9 +43,8 @@ function ContactComponent({ owner, setCurrentChat }) {
                             <>
                                 {conversation.length > 0 ? (
                                     <>
-                                        {conversation?.map((c) =>
-                                            (c.members[0], console.log(c.members[0], "meme")) !=
-                                            (res._id, console.log(res._id, "res")) ? (
+                                        {conversation?.map((c, i) =>
+                                            c.members !== res._id ? (
                                                 <div
                                                     onClick={() => setCurrentChat(c._id)}
                                                     className="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400"

@@ -4,6 +4,8 @@ import notificationModel from "./../../Model/Notification.js";
 
 export const GetMessageResApi = async (req, res, next) => {
     try {
+        console.log(new Date(Date.now()));
+        console.log(req.params.conversationId, " id");
         const find = await chatModel.find({
             conversationId: req.params.conversationId,
         });

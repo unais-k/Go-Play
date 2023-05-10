@@ -30,6 +30,7 @@ function AdminLoginPage() {
                 setLogin({
                     user: "Admin",
                     token: response.data.token,
+                    id: response.data.id,
                 })
             );
             navigate("/admin/dash");

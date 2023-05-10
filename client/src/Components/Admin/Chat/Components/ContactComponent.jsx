@@ -15,6 +15,7 @@ function ContactComponent({ owner, handleStartChat, setCurrentChat }) {
     useEffect(() => {
         if (token) conversationList();
     }, [token]);
+    console.log(conversation);
 
     return (
         <>
