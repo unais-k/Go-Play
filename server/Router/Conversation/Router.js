@@ -1,18 +1,18 @@
 import express from "express";
 import {
-    GetAdminListReqApi,
+    GetChatResApi,
+    GetChatWithAdminResApi,
     GetConversationListResApi,
     GetConversationResApi,
-    GetOwnerListReqApi,
     NewConversationReqApi,
 } from "../../Controller/Conversation/conversationController.js";
 import { ChatVerificationToken } from "../../Middleware/AuthVerify.js";
 const router = express.Router();
 
 router.post("/add-conversation", ChatVerificationToken, NewConversationReqApi);
+router.get("/get-message/:userId", ChatVerificationToken, GetChatResApi);
 router.get("/get-conversation/:userId", ChatVerificationToken, GetConversationResApi);
-router.get("/get-owner", ChatVerificationToken, GetOwnerListReqApi);
-router.get("/get-admin", ChatVerificationToken, GetAdminListReqApi);
+router.get("/get-admin", ChatVerificationToken, GetChatWithAdminResApi);
 router.get("/get-conversation-list", ChatVerificationToken, GetConversationListResApi);
 
 export default router;

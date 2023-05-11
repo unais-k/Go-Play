@@ -1,64 +1,102 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ContactComponent from "./ContactComponent";
 import { useSelector } from "react-redux";
+import { io } from "socket.io-client";
 import {
     AddMessageReqApi,
     GetConversationReqApi,
     GetFullMessagesReqApi,
-    GetOwnerListReqApi,
     NewConversationReqApi,
 } from "../../../../API/Services/ConversationRequest";
-import { message } from "antd";
 import MessageComponent from "./MessageComponent";
-import TurfLoginPage from "../../../Turf-admin/Login/LoginPage";
 
+var socket;
 function ChatPageComponent() {
     const id = useSelector((state) => state.adminLogin.id);
 
     const token = useSelector((state) => state.adminLogin.token);
     const [conversations, setConversations] = useState([]);
+    const [conversationId, setConversationId] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
+    const [socketId, setSocketId] = useState(false);
     const [newMessage, setNewMessage] = useState("");
-    const [owner, setOwner] = useState([]);
+    const [message, setMessage] = useState([]);
+
+    const scrollRef = useRef();
 
     const getChat = async () => {
-        const response = await GetConversationReqApi(token);
+        const response = await GetConversationReqApi(id, token);
+        setConversationId(response.data.result);
     };
 
-    const getTurfAdmins = async () => {
-        const response = await GetOwnerListReqApi(token);
-        setOwner(response.data.result);
-    };
+    const PORT = "http://localhost:4001";
 
     const getMessages = async () => {
         const response = await GetFullMessagesReqApi(currentChat, token);
-
-        setConversations(response.data.result);
+        console.log(response.data.result, "result");
+        setMessage(response.data.result);
     };
+
+    socket = io(PORT);
+
+    useEffect(() => {
+        if (token) {
+            getChat();
+        }
+    }, [token]);
+
+    useEffect(() => {
+        socket?.emit("setup", currentChat);
+        socket?.on("connection", () => {
+            setSocketId(true);
+        });
+        socket?.on("connected", () => {
+            setSocketId(true);
+        });
+    }, [currentChat]);
+
+    useEffect(() => {
+        scrollRef?.current?.scrollIntoView();
+    }, [message]);
 
     useEffect(() => {
         if (currentChat) getMessages();
     }, [currentChat]);
 
-    const handleStartChat = async (id) => {
-        const response = await NewConversationReqApi(id, token);
-        console.log(response.data.result);
-    };
     useEffect(() => {
-        if (token) {
-            // getChat();
-            getTurfAdmins();
-        }
-    }, [token]);
+        socket.on("receive_message", (data) => {
+            console.log(data.conversationId, "on receive_message trainer");
+            if (data?.conversationId === currentChat) {
+                const mess = [...message, data];
+                setMessage(mess);
+            }
+        });
+    });
+
+    const handleStartChat = async (id) => {
+        const response = await NewConversationReqApi({ id: id }, token);
+
+        setCurrentChat(response?.data.result._id);
+    };
 
     const handleSubmit = async (e) => {
+        console.log(currentChat, "current");
         e.preventDefault();
-        const message = {
+        const msg = {
+            sender: id,
             text: newMessage,
             conversationId: currentChat,
         };
 
-        const response = await AddMessageReqApi(message, token);
+        const response = await AddMessageReqApi(msg, token);
+        console.log(response);
+        if (response.status === 201) {
+            console.log(response.data.result, "line 87");
+            setMessage([...message, response.data.result.text]);
+            setNewMessage("");
+            socket.emit("send_message", response.data.result);
+            setNewMessage("");
+        }
     };
 
     return (
@@ -73,7 +111,11 @@ function ChatPageComponent() {
                                 class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
                             />
                         </div>
-                        <ContactComponent owner={owner} setCurrentChat={setCurrentChat} handleStartChat={handleStartChat} />
+                        <ContactComponent
+                            setCurrentChat={setCurrentChat}
+                            socket={socket}
+                            handleStartChat={handleStartChat}
+                        />
                     </div>
 
                     <div class="flex flex-col w-full flex-auto h-full p-6">
@@ -82,8 +124,12 @@ function ChatPageComponent() {
                                 <div class="flex flex-col h-full">
                                     <div class="flex flex-col flex-grow w-full bg-white shadow-xl rounded-lg overflow-hidden">
                                         <div class="flex flex-col flex-grow h-0 p-4 overflow-auto">
-                                            {conversations?.map((res) => {
-                                                return <MessageComponent conversations={res} own={res.sender === id} />;
+                                            {message?.map((res) => {
+                                                return (
+                                                    <div ref={scrollRef}>
+                                                        <MessageComponent message={res} own={res.sender === id} />
+                                                    </div>
+                                                );
                                             })}
                                         </div>
                                     </div>

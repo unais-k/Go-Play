@@ -256,30 +256,26 @@ function GroundViewPage() {
                     </div>
                     {/* GroundDetailComponent */}
                     <GroundDetailComponent reviewDiv={reviewDiv} state={state} handleBookNow={handleBookNow} />
-                    {showDiv && (
-                        <div ref={movingDiv}>
-                            <div className="text-lime-600 mt-5 text-2xl font-bold">Step 1: Select Sport</div>
-                            <div className="flex">
-                                {sport ? (
-                                    sport.map((res) => {
-                                        return (
-                                            <div
-                                                className="bg-gray-200 px-4 py-2 m-2 mb-10"
-                                                key={Math.floor(Math.random) * 0.2351 + 124}
-                                                onClick={(e) =>
-                                                    handleSelectedSport({ value: res, groundId: state._id, e: e })
-                                                }
-                                            >
-                                                {res}
-                                            </div>
-                                        );
-                                    })
-                                ) : (
-                                    <div>Turf under process</div>
-                                )}
-                            </div>
+                    <div>
+                        <div className="text-lime-600 mt-5 text-2xl font-bold">Step 1: Select Sport</div>
+                        <div className="flex">
+                            {sport ? (
+                                sport.map((res) => {
+                                    return (
+                                        <div
+                                            className="bg-gray-200 px-4 py-2 m-2 mb-10"
+                                            key={Math.floor(Math.random) * 0.2351 + 124}
+                                            onClick={(e) => handleSelectedSport({ value: res, groundId: state._id, e: e })}
+                                        >
+                                            {res}
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <div>Turf under process</div>
+                            )}
                         </div>
-                    )}
+                    </div>
                     {showDiv1 && (
                         <div ref={movingDiv1}>
                             <div className="text-lime-600 text-2xl font-bold">Step 2: Select Ground</div>

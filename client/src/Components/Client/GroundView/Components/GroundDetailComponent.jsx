@@ -39,6 +39,7 @@ function GroundDetailComponent({ reviewDiv, state, handleBookNow }) {
                         Book now
                     </button>
                 </div>
+                <div></div>
             </div>
         </div>
     );

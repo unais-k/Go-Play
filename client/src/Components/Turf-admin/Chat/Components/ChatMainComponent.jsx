@@ -1,62 +1,80 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ContactComponent from "./ContactComponent";
 import { useSelector } from "react-redux";
-import {
-    AddMessageReqApi,
-    GetAdminListReqApi,
-    GetFullMessagesReqApi,
-    NewConversationReqApi,
-} from "../../../../API/Services/ConversationRequest";
-import ChatSideComponent from "./ChatSideComponent";
+import { io } from "socket.io-client";
+import { AddMessageReqApi, GetFullMessagesReqApi } from "../../../../API/Services/ConversationRequest";
+import MessageComponent from "../../../Admin/Chat/Components/MessageComponent";
+var socket;
 
 function ChatMainComponent() {
+    const id = useSelector((state) => state.turfAdminLogin.id);
     const token = useSelector((state) => state.turfAdminLogin.token);
     const [newMessage, setNewMessage] = useState("");
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
-    const [messages, setMessages] = useState([]);
-    const [owner, setOwner] = useState([]);
+    const [socketId, setSocketId] = useState(false);
+    const [message, setMessage] = useState([]);
 
-    const getTurfAdmins = async () => {
-        const response = await GetAdminListReqApi(token);
-        setOwner(response.data.result);
-    };
+    const scrollRef = useRef();
+    const PORT = "http://localhost:4001";
+    socket = io(PORT);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const message = {
+        const msg = {
             text: newMessage,
+            sender: id,
             conversationId: currentChat,
         };
 
-        const response = await AddMessageReqApi(message, token);
+        const response = await AddMessageReqApi(msg, token);
+        if (response.status === 201) {
+            setMessage([...message, response.data.result]);
+            setNewMessage("");
+        }
+        socket.emit("send_message", response.data.result);
+        setNewMessage("");
     };
-    const handleStartChat = async (id) => {
-        console.log(id);
-        const response = await NewConversationReqApi(id, token);
-        console.log(response.data.result);
-    };
+
+    useEffect(() => {
+        scrollRef?.current?.scrollIntoView();
+    }, [message]);
+
+    useEffect(() => {
+        socket.on("receive_message", (data) => {
+            console.log(data.conversationId, "on receive_message");
+            if (data?.conversationId === currentChat) {
+                const mess = [...message, data];
+                setMessage(mess);
+            }
+        });
+    });
+
+    useEffect(() => {
+        socket?.emit("setup", currentChat);
+        socket?.on("connection", () => {
+            setSocketId(true);
+        });
+        socket?.on("connected", () => {
+            setSocketId(true);
+        });
+    }, [currentChat]);
 
     const getMessages = async () => {
         const response = await GetFullMessagesReqApi(currentChat, token);
         console.log(response.data.result, "getMessage");
-        setConversations(response.data.result);
+        setMessage(response.data.result);
     };
 
     useEffect(() => {
         if (currentChat) getMessages();
     }, [currentChat]);
 
-    useEffect(() => {
-        if (token) {
-            getTurfAdmins();
-        }
-    }, [token]);
-
     return (
         <div>
             <div class="container w-full mx-auto shadow-lg border-t rounded-lg">
                 <div class="flex w-full h-screen bg-white">
-                    <div class="w-full flex pt-20 flex-col w-2/6 border-r-2 overflow-y-auto">
+                    <div class="flex pt-20 flex-col w-2/6 border-r-2 overflow-y-auto">
                         <div class="border-b-2 mb-2 py-4 px-2">
                             <input
                                 type="text"
@@ -64,13 +82,19 @@ function ChatMainComponent() {
                                 class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
                             />
                         </div>
-                        <ContactComponent owner={owner} setCurrentChat={setCurrentChat} handleStartChat={handleStartChat} />
+                        <ContactComponent setCurrentChat={setCurrentChat} />
                     </div>
                     <div class="flex flex-col w-full flex-auto h-full p-6">
                         <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
                             <div class="flex flex-col h-full overflow-x-auto mb-4">
                                 <div class="flex flex-col h-full">
-                                    <ChatSideComponent />
+                                    <div class="flex flex-col flex-grow w-full bg-white shadow-xl rounded-lg overflow-hidden">
+                                        <div class="flex flex-col flex-grow h-0 p-4 overflow-auto">
+                                            {message?.map((res) => {
+                                                return <MessageComponent message={res} own={res.sender === id} />;
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
@@ -146,19 +170,6 @@ function ChatMainComponent() {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="ps-10">
-                    <div class="w-3/5 justify-center fixed bottom-1 p-10 flex">
-                        <input
-                            class="w-full bg-gray-300 py-5 px-3 rounded-xl"
-                            type="text"
-                            placeholder="type your message here..."
-                        />
-
-                        <button className="ms-10 rounded uppercase text-xs font-bold bg-blue-500 px-5 py-2">
-                            Send
-                        </button>
-                    </div>
-                </div> */}
                 </div>
             </div>
         </div>

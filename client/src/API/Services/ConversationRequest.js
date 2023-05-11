@@ -13,11 +13,11 @@ export const NewConversationReqApi = async (data, token) => {
     }
 };
 
-export const GetConversationReqApi = async (data) => {
+export const GetConversationReqApi = async (data, token) => {
     console.log(data);
     try {
-        const response = await AxiosConversation.get(`/get-message/${data.id}`, {
-            headers: { Authorization: "Bearer " + data.token },
+        const response = await AxiosConversation.get(`/get-conversation/${data}`, {
+            headers: { Authorization: "Bearer " + token },
         });
         return response;
     } catch (error) {
@@ -92,6 +92,7 @@ export const GetFullMessagesReqApi = async (data, token) => {
 };
 
 export const AddMessageReqApi = async (data, token) => {
+    console.log(data);
     try {
         const response = await AxiosChat.post(`/message/`, data, {
             headers: { Authorization: "Bearer " + token },

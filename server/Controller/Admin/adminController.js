@@ -171,7 +171,7 @@ export const BlockGroundResApi = async (req, res, next) => {
         const id = req.body.data;
         console.log(id);
         const find = await GroundModel.updateOne({ _id: id }, { $set: { status: true } });
-        console.log(find);
+
         res.status(202).json({ result: find });
     } catch (error) {
         console.log(error);
@@ -185,7 +185,7 @@ export const UnblockGroundResApi = async (req, res, next) => {
         const id = req.body.data;
         console.log(id);
         const find = await GroundModel.updateOne({ _id: id }, { $set: { status: false } });
-        console.log(find);
+
         res.status(202).json({ result: find });
     } catch (error) {
         console.log(error);
@@ -196,7 +196,7 @@ export const UnblockGroundResApi = async (req, res, next) => {
 export const OwnerListResApi = async (req, res, next) => {
     try {
         const find = await TurfAdminModel.find({});
-        console.log(find);
+
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error);
@@ -247,11 +247,8 @@ export const TimeSaveResApi = async (req, res, next) => {
 
 export const EventDetailFetchResApi = async (req, res, next) => {
     try {
-        console.log(req.query);
-        console.log(req.body);
         const id = req.query.id;
         const findDetail = await eventModel.findOne({ _id: id }).populate("groundId");
-        console.log(findDetail);
         res.status(201).json({ result: findDetail });
     } catch (error) {
         console.log(error.message);

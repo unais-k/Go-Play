@@ -18,18 +18,19 @@ export const GetMessageResApi = async (req, res, next) => {
 
 export const AddMessageResApi = async (req, res, next) => {
     try {
-        console.log(req.body);
-        console.log(req.user.id);
-        const createChat = await chatModel.create({
-            sender: req.user.id,
-            conversationId: req.body.conversationId,
-            text: req.body.text,
-        });
+        if (req.body.conversationId) {
+            const createChat = await chatModel.create({
+                sender: req.user.id,
+                conversationId: req.body.conversationId,
+                text: req.body.text,
+            });
+            console.log(createChat);
+            res.status(201).json({ result: createChat });
+        } else {
+            res.status(203).json({ msg: "something went wrong" });
+        }
         // const newMessage = new Message(req.body);
-        console.log(createChat);
         // const savedMessage = await newMessage.save();
-
-        // res.status(201).json({ result: savedMessage });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
