@@ -2,7 +2,7 @@ import CityModel from "../../Model/City.js";
 import timeModel from "../../Model/Time.js";
 import GroundModel from "./../../Model/Grounds.js";
 import eventModel from "./../../Model/Events.js";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import bookingModel from "../../Model/Booking.js";
 import UserModel from "../../Model/Client.js";
 import reviewModel from "../../Model/Review.js";
@@ -57,10 +57,11 @@ export const FootballGroundResApi = async (req, res, next) => {
 export const GroundViewResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
+        console.log(id, "id");
         const find = await GroundModel.findOne({ _id: id });
         const events = await eventModel.find({ groundId: id });
         const review = await reviewModel.find({ turf: id }).populate("client");
-        console.log(review);
+
         res.status(200).json({ result: find, events: events, review: review });
     } catch (error) {
         console.log(error);
@@ -87,7 +88,6 @@ export const SelectTypeResApi = async (req, res, next) => {
         let event = [];
         const find = await eventModel.find({ groundId: id });
         for (let i = 0; i < find.length; i++) {
-            // event = find[i].eventAvailable;
             event.push(find[i].eventAvailable);
         }
         const concatArray = multiIntersect(event);
@@ -101,7 +101,6 @@ export const SelectTypeResApi = async (req, res, next) => {
 
 export const GroundFetchOnSelectResApi = async (req, res, next) => {
     try {
-        console.log(req.query, 7777777777777);
         const matchGround = await eventModel.aggregate([
             {
                 $match: {
@@ -110,6 +109,7 @@ export const GroundFetchOnSelectResApi = async (req, res, next) => {
                 },
             },
         ]);
+
         res.status(201).json({ result: matchGround });
     } catch (error) {
         console.log(error);
@@ -119,7 +119,6 @@ export const GroundFetchOnSelectResApi = async (req, res, next) => {
 
 export const EventFetchOnSelectResApi = async (req, res, next) => {
     try {
-        console.log(req.query, 4444444);
         const findEvent = await eventModel.find({ _id: req.query.id });
         const slotsAvailable = findEvent[0].slots;
 
@@ -210,9 +209,37 @@ export const UserBookingDetailFetchResApi = async (req, res, next) => {
     try {
         const id = req.user.id;
         console.log(id);
-        const find = await bookingModel.find({ client: id }).populate("turf").populate("event");
 
-        console.log(find);
+        const today = new Date(Date.now());
+
+        const dateObject = moment.utc(today).add(1, "days");
+        const formattedISOString = dateObject.toISOString();
+
+        const date = new Date(formattedISOString);
+        const formattedDate = date.toISOString().split("T")[0];
+        console.log(formattedDate, "date");
+        const find1 = await bookingModel.find({ client: id });
+
+        for (let i = 0; i < find1.length; i++) {
+            let dateString = new Date(find1[i].bookDate);
+            let DateStr = new Date(formattedDate);
+
+            if (dateString < DateStr) {
+                if (find1[i].payment === "Cancelled") {
+                    let update = { $set: { status: "Cancelled" } };
+                    let result = await bookingModel.updateOne(update);
+                    console.log(result);
+
+                    console.log(
+                        `${result.matchedCount} document(s) matched the filter, and ${result.modifiedCount} document(s) were updated.`
+                    );
+                }
+            } else {
+                console.log(777);
+            }
+        }
+        const find = await bookingModel.find({ client: id }).populate("turf").populate("event").sort({ bookDate: -1 });
+
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
@@ -294,6 +321,55 @@ export const CancelBookingResApi = async (req, res, next) => {
         const findAndUpdate = await bookingModel.findOneAndUpdate({ _id: req.body.id }, { $set: { status: "Cancelled" } });
         const find = await bookingModel.find({ client: id }).populate("turf").populate("event");
         res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const EventDateCheckResApi = async (req, res, next) => {
+    try {
+        // const dateString = req.body.date;
+        // const arr = req.body.time;
+        // console.log(arr);
+        // const dateObject = moment.utc(dateString).add(1, "days");
+        // const formattedISOString = dateObject.toISOString();
+        // const date = new Date(formattedISOString);
+        let bookedSlots = [];
+        // const formattedDate = date.toISOString().split("T")[0];
+        console.log(req.body);
+        let checkDateForWeek;
+        if (req.body.event === "Week") {
+            for (let j = 1; j < 8; j++) {
+                const dateString = req.body.date;
+                const arr = req.body.time;
+                const dateObject = moment.utc(dateString).add(j, "days");
+                const formattedISOString = dateObject.toISOString();
+                const date = new Date(formattedISOString);
+                const formattedDate = date.toISOString().split("T")[0];
+                console.log(formattedDate, "date");
+                for (let i = 0; i < arr.length; i++) {
+                    checkDateForWeek = await bookingModel.aggregate([
+                        {
+                            $match: {
+                                event: new mongoose.Types.ObjectId(req.body.eventId),
+                                bookDate: formattedDate,
+                                time: {
+                                    $elemMatch: {
+                                        slots: req.body.time[i].slots,
+                                    },
+                                },
+                            },
+                        },
+                    ]);
+                    if (checkDateForWeek.length > 0) {
+                        bookedSlots.push(checkDateForWeek);
+                    }
+                }
+            }
+        }
+        console.log(bookedSlots);
+        res.status(202).json({ result: bookedSlots });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });

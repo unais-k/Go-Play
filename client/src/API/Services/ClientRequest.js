@@ -58,7 +58,6 @@ export const SelectTypeOfReqApi = async (data) => {
 };
 
 export const GroundFetchOnSelectReqApi = async (data) => {
-    console.log(data, "groundfetch");
     try {
         const response = AxiosClient.get(`/selected-type?id=${data.groundId}&data=${data.value}`);
         return response;
@@ -196,6 +195,19 @@ export const CancelBookingReqApi = async (data, token) => {
     console.log(data.id);
     try {
         const response = AxiosClient.patch("/cancel-booking", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const EventDateCheckReqApi = async (data, token) => {
+    console.log(data, token);
+    try {
+        const response = AxiosClient.post("/event-date-check", data, {
             headers: { Authorization: "Bearer " + token },
         });
         return response;

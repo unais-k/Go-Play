@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { message } from "antd";
 import RequestModal from "./ReqModal";
 
-function ContactComponent({ setCurrentChat }) {
+function ContactComponent({ setCurrentChat, socket }) {
     const id = useSelector((state) => state.turfAdminLogin.id);
     const token = useSelector((state) => state.turfAdminLogin.token);
     const [conversation, setConversation] = useState([]);
@@ -29,7 +29,6 @@ function ContactComponent({ setCurrentChat }) {
     };
 
     useEffect(() => {
-        console.log(44);
         if (token) conversationList();
     }, [token]);
 
@@ -40,7 +39,10 @@ function ContactComponent({ setCurrentChat }) {
                     <>
                         {res?.members[1] === id ? (
                             <div
-                                onClick={() => setCurrentChat(res._id)}
+                                onClick={() => {
+                                    setCurrentChat(res._id);
+                                    socket?.emit("join room", res._id);
+                                }}
                                 class="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400"
                             >
                                 <div class="w-1/4">

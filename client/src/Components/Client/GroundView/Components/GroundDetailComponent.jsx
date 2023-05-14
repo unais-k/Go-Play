@@ -1,7 +1,19 @@
 import React from "react";
 import { AiFillStar } from "react-icons/ai";
+import WeeklyComponent from "./Event/EventComponent";
+import MonthlyComponent from "./Event/MonthlyComponent";
+import { useNavigate } from "react-router-dom";
 
 function GroundDetailComponent({ reviewDiv, state, handleBookNow }) {
+    const navigate = useNavigate();
+    const handleViewEvent = () => {
+        navigate("/event", {
+            state: {
+                groundDetail: state,
+            },
+        });
+    };
+
     return (
         <div className="flex">
             <div className="w-9/12 flex flex-col">
@@ -39,7 +51,11 @@ function GroundDetailComponent({ reviewDiv, state, handleBookNow }) {
                         Book now
                     </button>
                 </div>
-                <div></div>
+                <div className="flex justify-center">
+                    <div onClick={() => handleViewEvent()}>
+                        <WeeklyComponent />
+                    </div>
+                </div>
             </div>
         </div>
     );

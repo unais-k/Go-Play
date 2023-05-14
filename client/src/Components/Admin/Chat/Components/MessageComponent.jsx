@@ -2,7 +2,6 @@ import React from "react";
 import { format } from "timeago.js";
 
 function MessageComponent({ message, own }) {
-    console.log(message, "message");
     return (
         <div
             class={own ? "flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end" : "flex w-full mt-2 space-x-3 max-w-xs"}

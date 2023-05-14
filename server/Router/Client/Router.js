@@ -5,6 +5,7 @@ import {
     BookingSubmitResApi,
     CancelBookingResApi,
     CityListResApi,
+    EventDateCheckResApi,
     EventFetchOnSelectResApi,
     FootballGroundResApi,
     GroundFetchOnSelectResApi,
@@ -43,5 +44,6 @@ router.get("/booking-detail-view", clientVerifyToken, BookingDetailViewResApi);
 router.post("/review-submit", clientVerifyToken, SubmitReviewResApi);
 router.get("/search-turf", SearchGroundResApi);
 router.patch("/cancel-booking", clientVerifyToken, CancelBookingResApi);
+router.post("/event-date-check", clientVerifyToken, EventDateCheckResApi);
 
 export default router;

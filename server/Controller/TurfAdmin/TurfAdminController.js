@@ -324,6 +324,7 @@ export const AddPhotoOnEventPostApi = async (req, res, next) => {
 
         const updatePhoto = await eventModel.updateOne({ _id: eventId }, { $push: { photo: result.secure_url } });
         const find = await eventModel.findOne({ _id: eventId });
+        const addToGround = await GroundModel.updateOne({ _id: find.groundId }, { $push: { images: result.secure_url } });
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);

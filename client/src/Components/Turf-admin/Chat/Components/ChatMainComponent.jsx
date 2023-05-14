@@ -29,11 +29,12 @@ function ChatMainComponent() {
 
         const response = await AddMessageReqApi(msg, token);
         if (response.status === 201) {
+            console.log(message, "add message");
             setMessage([...message, response.data.result]);
             setNewMessage("");
+            socket.emit("send_message", response.data.result);
+            setNewMessage("");
         }
-        socket.emit("send_message", response.data.result);
-        setNewMessage("");
     };
 
     useEffect(() => {
@@ -42,9 +43,13 @@ function ChatMainComponent() {
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
+            console.log(data, "data line 46");
             console.log(data.conversationId, "on receive_message");
             if (data?.conversationId === currentChat) {
+                console.log(message, "message");
+                console.log(data, "data");
                 const mess = [...message, data];
+                console.log(mess);
                 setMessage(mess);
             }
         });
@@ -82,7 +87,7 @@ function ChatMainComponent() {
                                 class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
                             />
                         </div>
-                        <ContactComponent setCurrentChat={setCurrentChat} />
+                        <ContactComponent socket={socket} setCurrentChat={setCurrentChat} />
                     </div>
                     <div class="flex flex-col w-full flex-auto h-full p-6">
                         <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
@@ -91,7 +96,11 @@ function ChatMainComponent() {
                                     <div class="flex flex-col flex-grow w-full bg-white shadow-xl rounded-lg overflow-hidden">
                                         <div class="flex flex-col flex-grow h-0 p-4 overflow-auto">
                                             {message?.map((res) => {
-                                                return <MessageComponent message={res} own={res.sender === id} />;
+                                                return (
+                                                    <div ref={scrollRef}>
+                                                        <MessageComponent message={res} own={res.sender === id} />
+                                                    </div>
+                                                );
                                             })}
                                         </div>
                                     </div>

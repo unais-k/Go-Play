@@ -2,20 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GetConversationListReqApi } from "../../../../API/Services/ConversationRequest";
 
-function ContactComponent({ handleStartChat, socket, setCurrentChat }) {
-    const token = useSelector((state) => state.adminLogin.token);
-
-    const [conversation, setConversation] = useState([]);
-
-    const conversationList = async () => {
-        const response = await GetConversationListReqApi(token);
-        setConversation(response.data.result);
-    };
-
-    useEffect(() => {
-        if (token) conversationList();
-    }, [token]);
-
+function ContactComponent({ handleStartChat, conversation, socket, setCurrentChat }) {
     return (
         <>
             {conversation?.map((res, i) => {
@@ -62,19 +49,6 @@ function ContactComponent({ handleStartChat, socket, setCurrentChat }) {
                     </>
                 );
             })}
-            {/* <div class="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400">
-                <div class="w-1/4">
-                    <img
-                        src="https://source.unsplash.com/L2cxSuKWbpo/600x600"
-                        class="object-cover h-12 w-12 rounded-full"
-                        alt=""
-                    />
-                </div>
-                <div class="w-full">
-                    <div class="text-lg font-semibold">Stack</div>
-                    <span class="text-gray-500">Lus : Thanks Everyone</span>
-                </div>
-            </div> */}
         </>
     );
 }

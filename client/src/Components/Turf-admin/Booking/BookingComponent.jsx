@@ -47,21 +47,21 @@ function BookingComponent() {
     }, [token]);
 
     return (
-        <div class="p-10">
-            {data ? (
-                data.map((res) => {
+        <div className="p-10">
+            {data.length > 0 ? (
+                data?.map((res) => {
                     return (
-                        <div class="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
+                        <div key={res._id} className="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
                             <div
-                                class="h-48 p-2 lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden"
+                                className="h-48 p-2 lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden"
                                 title="Mountain"
                             >
                                 <img src={res.turf.images[0]} alt="" />
                             </div>
-                            <div class=" p-4 flex justify-between leading-normal">
-                                <div class="mb-8">
-                                    <div class="text-gray-900 font-bold text-xl mb-2">{res.turf.name}</div>
-                                    <div class="text-gray-900 font-normal text-md mb-2">{res.event.groundName}</div>
+                            <div className=" p-4 flex justify-between leading-normal">
+                                <div className="mb-8">
+                                    <div className="text-gray-900 font-bold text-xl mb-2">{res.turf.name}</div>
+                                    <div className="text-gray-900 font-normal text-md mb-2">{res.event.groundName}</div>
                                     <table className="min-w-max w-full table-auto">
                                         <thead>
                                             <tr className="text-gray-600 uppercase text-sm leading-normal">

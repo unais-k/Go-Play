@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import {
     AddMessageReqApi,
+    GetConversationListReqApi,
     GetConversationReqApi,
     GetFullMessagesReqApi,
     NewConversationReqApi,
@@ -15,7 +16,7 @@ function ChatPageComponent() {
     const id = useSelector((state) => state.adminLogin.id);
 
     const token = useSelector((state) => state.adminLogin.token);
-    const [conversations, setConversations] = useState([]);
+    const [conversation, setConversation] = useState([]);
     const [conversationId, setConversationId] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [socketId, setSocketId] = useState(false);
@@ -23,6 +24,14 @@ function ChatPageComponent() {
     const [message, setMessage] = useState([]);
 
     const scrollRef = useRef();
+    useEffect(() => {
+        if (token) conversationList();
+    }, [token]);
+
+    const conversationList = async () => {
+        const response = await GetConversationListReqApi(token);
+        setConversation(response.data.result);
+    };
 
     const getChat = async () => {
         const response = await GetConversationReqApi(id, token);
@@ -65,8 +74,10 @@ function ChatPageComponent() {
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
+            console.log(data, "data line 68");
             console.log(data.conversationId, "on receive_message trainer");
             if (data?.conversationId === currentChat) {
+                console.log(message, "topG", data, "top");
                 const mess = [...message, data];
                 setMessage(mess);
             }
@@ -75,8 +86,8 @@ function ChatPageComponent() {
 
     const handleStartChat = async (id) => {
         const response = await NewConversationReqApi({ id: id }, token);
-
         setCurrentChat(response?.data.result._id);
+        await conversationList();
     };
 
     const handleSubmit = async (e) => {
@@ -91,8 +102,7 @@ function ChatPageComponent() {
         const response = await AddMessageReqApi(msg, token);
         console.log(response);
         if (response.status === 201) {
-            console.log(response.data.result, "line 87");
-            setMessage([...message, response.data.result.text]);
+            setMessage([...message, response.data.result]);
             setNewMessage("");
             socket.emit("send_message", response.data.result);
             setNewMessage("");
@@ -114,6 +124,7 @@ function ChatPageComponent() {
                         <ContactComponent
                             setCurrentChat={setCurrentChat}
                             socket={socket}
+                            conversation={conversation}
                             handleStartChat={handleStartChat}
                         />
                     </div>

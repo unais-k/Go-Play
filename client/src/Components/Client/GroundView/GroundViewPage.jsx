@@ -321,8 +321,6 @@ function GroundViewPage() {
                             <div className="flex flex-wrap mt-5 mb-10 w-6/12">
                                 {time?.length > 0 &&
                                     time?.map((res, index) => {
-                                        // console.log(selectSlot[index], "res");
-                                        // console.log(bookedTime, "time");
                                         return (
                                             <div className="m-2">
                                                 {parseInt(res.index) > 17 || parseInt(res.index) < 6 ? (
@@ -377,39 +375,6 @@ function GroundViewPage() {
                                                             </div>
                                                         )}
                                                     </>
-                                                    // time2
-
-                                                    //     <div
-                                                    //         className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
-                                                    //         onClick={() =>
-                                                    //             handleBooking({
-                                                    //                 timeId: res._id,
-                                                    //                 slots: res.time,
-                                                    //                 price: eventOnTime.priceAtNight,
-                                                    //                 sport: selectedSport,
-                                                    //             })
-                                                    //         }
-                                                    //     >
-                                                    //         {res.time}
-                                                    //         <br></br>
-                                                    //         Rs.{eventOnTime.priceAtNight}
-                                                    //     </div>
-                                                    // ) : (
-                                                    //     <div
-                                                    //         className="flex bg-gray-200 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
-                                                    //         onClick={() =>
-                                                    //             handleBooking({
-                                                    //                 timeId: res._id,
-                                                    //                 slots: res.time,
-                                                    //                 price: eventOnTime.price,
-                                                    //                 sport: selectedSport,
-                                                    //             })
-                                                    //         }
-                                                    //     >
-                                                    //         {res.time}
-                                                    //         <br></br>
-                                                    //         Rs.{eventOnTime.price}
-                                                    //     </div>
                                                 )}
                                             </div>
                                         );
