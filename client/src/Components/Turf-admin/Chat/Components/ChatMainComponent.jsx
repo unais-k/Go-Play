@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import ContactComponent from "./ContactComponent";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
+import Picker from "emoji-picker-react";
+
 import { AddMessageReqApi, GetFullMessagesReqApi } from "../../../../API/Services/ConversationRequest";
 import MessageComponent from "../../../Admin/Chat/Components/MessageComponent";
 var socket;
@@ -14,10 +16,25 @@ function ChatMainComponent() {
     const [currentChat, setCurrentChat] = useState(null);
     const [socketId, setSocketId] = useState(false);
     const [message, setMessage] = useState([]);
+    const [isEmojiPickerVisible, setIsEmojiPickerVisible] = useState(false);
 
     const scrollRef = useRef();
     const PORT = "http://localhost:4001";
     socket = io(PORT);
+
+    const getMessages = async () => {
+        const response = await GetFullMessagesReqApi(currentChat, token);
+
+        setMessage(response.data.result);
+    };
+
+    const handleEmojiPickerToggle = () => {
+        setIsEmojiPickerVisible(!isEmojiPickerVisible);
+    };
+
+    const handleEmojiClick = (emojiObject) => {
+        setNewMessage((prevMessage) => prevMessage + emojiObject.emoji);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,14 +60,10 @@ function ChatMainComponent() {
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
-            console.log(data, "data line 46");
-            console.log(data.conversationId, "on receive_message");
             if (data?.conversationId === currentChat) {
-                console.log(message, "message");
-                console.log(data, "data");
-                const mess = [...message, data];
-                console.log(mess);
-                setMessage(mess);
+                // const mess = [...message, data];
+                // setMessage(mess);
+                getMessages();
             }
         });
     });
@@ -64,12 +77,6 @@ function ChatMainComponent() {
             setSocketId(true);
         });
     }, [currentChat]);
-
-    const getMessages = async () => {
-        const response = await GetFullMessagesReqApi(currentChat, token);
-        console.log(response.data.result, "getMessage");
-        setMessage(response.data.result);
-    };
 
     useEffect(() => {
         if (currentChat) getMessages();

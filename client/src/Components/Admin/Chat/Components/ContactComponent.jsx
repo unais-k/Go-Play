@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { GetConversationListReqApi } from "../../../../API/Services/ConversationRequest";
 
 function ContactComponent({ handleStartChat, conversation, socket, setCurrentChat }) {
+    const [color, setColor] = useState(-1);
+
     return (
         <>
             {conversation?.map((res, i) => {
@@ -12,9 +12,12 @@ function ContactComponent({ handleStartChat, conversation, socket, setCurrentCha
                             <div
                                 onClick={() => {
                                     setCurrentChat(res.users[0]._id);
+                                    setColor(res.users[0]._id);
                                     socket?.emit("join room", res.users[0]._id);
                                 }}
-                                class="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400"
+                                class={`flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400 ${
+                                    res.users[0]._id === color ? "bg-blue-400" : "bg-white"
+                                }`}
                             >
                                 <div class="w-1/4">
                                     <img
