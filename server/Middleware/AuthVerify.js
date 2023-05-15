@@ -39,7 +39,6 @@ export const adminVerifyToken = async (req, res, next) => {
         req.user = verified;
 
         if (verified.role === "adminLogin") {
-            console.log(11122);
             next();
         } else {
             res.status(404).json({ message: "Authentication failed: invalid token." });

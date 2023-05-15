@@ -9,6 +9,7 @@ function SidebarComponent() {
     const data = [
         { title: "Profile", path: "/profile" },
         { title: "Booking", path: "/booking" },
+        { title: "Event Booked", path: "/event-booking" },
         { title: "Review", path: "/review" },
         { title: "Change Password", path: "/change-passsword" },
     ];

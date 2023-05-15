@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Text from "./text";
+import { Text } from "./text";
 import { useSelector } from "react-redux";
 import {
     EventDateCheckReqApi,
@@ -16,6 +16,7 @@ import RightSideComponent from "./RightSideComponent";
 import EventCardComponent from "./EventCardComponent";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
+import SuccessModal from "./SucessModal";
 
 function EventMainComponent({ state }) {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ function EventMainComponent({ state }) {
     const [bookedTime, setBookedTime] = useState([]);
     const [price, setPrice] = useState(0);
     const [modalO, setModalO] = useState(false);
+    const [modal1, setModal1] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState([]);
     const [eventOnTime, setEventOnTime] = useState([]);
     const [date, setDate] = useState(new Date(Date.now()));
@@ -118,6 +120,9 @@ function EventMainComponent({ state }) {
         setSelectSlot([]);
     };
 
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 10);
+
     // fetching time slots
 
     const bookedFetchOnDate = async (date) => {
@@ -187,12 +192,15 @@ function EventMainComponent({ state }) {
 
     const handleBookingSubmit = async (e) => {
         e.preventDefault();
-        if (token) {
+        if (token && time.length > 0) {
             setBookingData({
                 date: date,
                 eventId: eventOnTime._id,
-                event: selectedType,
+                offer: selectedType,
+                groundId: state.groundDetail._id,
                 time: selectSlot,
+                price: price,
+                sport: selectedSport,
             });
 
             const eventDateCheck = async () => {
@@ -205,6 +213,7 @@ function EventMainComponent({ state }) {
                     const details = response.data.result;
                     const res = response.data.result;
                     if (res.length == 0) {
+                        setModal1(true);
                         bookNow1();
                         bookNow2();
                         bookNow3();
@@ -214,6 +223,11 @@ function EventMainComponent({ state }) {
                         setSelectSlot([]);
                     } else {
                         setModalO(true);
+                        setPrice(0);
+                        bookNow3();
+                        bookNow4();
+                        setSelectSlot([]);
+                        setShowDiv4(false);
                     }
                 }
             };
@@ -256,6 +270,7 @@ function EventMainComponent({ state }) {
             status: false,
         },
     ];
+
     console.log(sport);
     return (
         <div className="px-10">
@@ -276,6 +291,7 @@ function EventMainComponent({ state }) {
                         })}
                     </div>
                     {modalO && <Modal setModalO={setModalO} />}
+                    {modal1 && <SuccessModal selectedType={selectedType} bookingData={bookingData} setModal1={setModal1} />}
                     <div class="-mx-4 flex flex-wrap lg:justify-between">
                         <RightSideComponent state={state} />
                         <div class="w-full px-4 lg:w-1/2 xl:w-5/12">
@@ -337,6 +353,7 @@ function EventMainComponent({ state }) {
                             <div className="w-96">
                                 <Calendar
                                     minDate={new Date()}
+                                    maxDate={maxDate}
                                     selected={date}
                                     onChange={handleDateChange}
                                     onClickDay={bookNow3}

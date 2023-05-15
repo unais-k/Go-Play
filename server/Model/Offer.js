@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const bookingSchema = new mongoose.Schema(
+const offerSchema = new mongoose.Schema(
     {
         client: {
             type: mongoose.Schema.Types.ObjectId,
@@ -10,7 +10,7 @@ const bookingSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "ground",
         },
-        bookDate: { type: String },
+        bookDate: { type: Array },
         time: [
             {
                 timeId: {
@@ -29,11 +29,8 @@ const bookingSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "event",
         },
-        offerId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "offer",
-        },
         payment: { type: String },
+        offer: { type: String },
         advance: { type: String },
         sport: { type: String },
         advance: { type: String },
@@ -41,12 +38,11 @@ const bookingSchema = new mongoose.Schema(
         paymentId: { type: String },
         status: { type: String },
         review: { type: Boolean, default: false },
-        offer: { type: Boolean, default: false },
     },
     {
         timestamps: true,
     }
 );
 
-const bookingModel = mongoose.model("booking", bookingSchema);
-export default bookingModel;
+const OfferModel = mongoose.model("offer", offerSchema);
+export default OfferModel;

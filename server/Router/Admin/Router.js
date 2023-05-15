@@ -4,6 +4,7 @@ import {
     ApproveTurfAdmin,
     BlockGroundResApi,
     CancelTurfAdmin,
+    ChatRequestResApi,
     EventDetailFetchResApi,
     FindCity,
     GroundListAdminResApi,
@@ -31,6 +32,7 @@ router.patch("/block-ground", adminVerifyToken, BlockGroundResApi);
 router.patch("/unblock-ground", adminVerifyToken, UnblockGroundResApi);
 router.get("/owner-list", adminVerifyToken, OwnerListResApi);
 router.post("/time-save", adminVerifyToken, TimeSaveResApi);
-router.get("/event-detail",adminVerifyToken,EventDetailFetchResApi)
+router.get("/chat-request", adminVerifyToken, ChatRequestResApi);
+router.get("/event-detail", adminVerifyToken, EventDetailFetchResApi);
 
 export default router;

@@ -1,11 +1,11 @@
 import React from "react";
 import NavbarPage from "../../Components/Client/Navbar/Navbar";
 import ConstNavbar from "../../Components/Client/ConstNavbar/ConstNavbar";
-import ProfileComponent from "../../Components/Client/Profile/ProfileComponent";
+import ViewComponent from "../../Components/Client/Event/BookingView/ViewComponent";
 import { useSelector } from "react-redux";
 import Footer from "../../Components/Client/Footer/Footer";
 
-function Profile() {
+function EventBookingView() {
     const location = useSelector((state) => state.userLogin.city);
     return (
         <div>
@@ -13,12 +13,10 @@ function Profile() {
                 {location ? <NavbarPage true={false} place={location} /> : <NavbarPage true={true} place={"mumbai11"} />}
             </div>
             <ConstNavbar />
-
-            <ProfileComponent />
-
+            <ViewComponent />
             <Footer />
         </div>
     );
 }
 
-export default Profile;
+export default EventBookingView;

@@ -7,6 +7,7 @@ import GroundModel from "../../Model/Grounds.js";
 import timeModel from "../../Model/Time.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
 import nodeMailer from "nodemailer";
+import notificationModel from "./../../Model/Notification.js";
 
 export const adminLogin = async (req, res, next) => {
     console.log(req.body);
@@ -249,6 +250,16 @@ export const EventDetailFetchResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
         const findDetail = await eventModel.findOne({ _id: id }).populate("groundId");
+        res.status(201).json({ result: findDetail });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const ChatRequestResApi = async (req, res, next) => {
+    try {
+        const findDetail = await notificationModel.find().populate("sender");
         res.status(201).json({ result: findDetail });
     } catch (error) {
         console.log(error.message);

@@ -216,3 +216,40 @@ export const EventDateCheckReqApi = async (data, token) => {
         return error?.response;
     }
 };
+
+export const EventSubmitReqApi = async (data, token) => {
+    try {
+        const response = AxiosClient.post("/event-submit", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const EventBookingDetailsReqApi = async (token) => {
+    console.log(token);
+    try {
+        const response = AxiosClient.get(`/event-booking-details`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const EventBookingDetailViewReqApi = async (data, token) => {
+    try {
+        const response = AxiosClient.get(`/event-booking-detail-view?id=${data}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};

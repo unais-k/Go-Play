@@ -42,13 +42,12 @@ function BookingList() {
                 <div class="">
                     <div class="overflow-x-auto">
                         <div class="min-w-screen  rounded ps-5 justify-center  font-sans overflow-hidden">
-                            <div class="w-full">
+                            <div class="w-full ">
                                 {bookings.length > 0 ? (
-                                    <div class="bg-white shadow-md rounded my-6">
-                                        <table class="min-w-max w-full table-auto">
-                                            <thead>
+                                    <div class="bg-white shadow-md rounded my-6 h-96 overflow-auto ">
+                                        <table class="relative min-w-max w-full table-auto">
+                                            <thead className="">
                                                 <tr class="bg-gray-200 rounded text-gray-600 uppercase text-sm leading-normal">
-                                                    {/* <th class="py-3 px-6 text-left">Booking Id</th> */}
                                                     <th class="py-3 px-6 text-left">Turf Name</th>
                                                     <th class="py-3 px-6 text-center">Sport Selected</th>
                                                     <th class="py-3 px-6 text-center">Date</th>

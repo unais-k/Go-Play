@@ -14,6 +14,9 @@ import Booking from "../Pages/Client/Booking";
 import BookingView from "../Pages/Client/BookingView";
 import Error from "../Pages/Client/Error";
 import EventPage from "../Pages/Client/Event";
+import EventPayment from "../Pages/Client/EventPayment";
+import EventBook from "../Pages/Client/EventBook";
+import EventBookingView from "../Pages/Client/EventBookingView";
 function ClientRouter() {
     const isAuth = useSelector((state) => state.userLogin.token);
     console.log(isAuth, "Client Token");
@@ -31,6 +34,9 @@ function ClientRouter() {
                 <Route path="/payment" element={isAuth ? <Payment /> : <Navigate to="/login" />} />
                 <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/login" />} />
                 <Route path="/booking" element={isAuth ? <Booking /> : <Navigate to="/login" />} />
+                <Route path="/event-booking" element={isAuth ? <EventBook /> : <Navigate to="/login" />} />
+                <Route path="/event-payment" element={isAuth ? <EventPayment /> : <Navigate to="/login" />} />
+                <Route path="/event-booking-view/:id" element={isAuth ? <EventBookingView /> : <Navigate to="/login" />} />
                 <Route path="/booking-view/:id" element={isAuth ? <BookingView /> : <Navigate to="/login" />} />
                 <Route path="/error" element={<Error />} />
             </Routes>

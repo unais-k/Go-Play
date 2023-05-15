@@ -28,6 +28,7 @@ function BookingComponent() {
             change();
         }
     };
+
     const handleBooking = async (id) => {
         if (id.value === "Pending") {
             return false;

@@ -1,7 +1,7 @@
 import React from "react";
 import { AiFillStar } from "react-icons/ai";
 import WeeklyComponent from "./Event/EventComponent";
-import MonthlyComponent from "./Event/MonthlyComponent";
+import MonthlyComponent from "../../Event/BookingList/components/ListCard";
 import { useNavigate } from "react-router-dom";
 
 function GroundDetailComponent({ reviewDiv, state, handleBookNow }) {

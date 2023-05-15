@@ -20,15 +20,15 @@ function AdminRouter() {
         <div>
             <Routes>
                 <Route path="/" element={<AdminLogin />} />
-                <Route path="/dash" element={isAuth ? <AdminDashboard /> : <Navigate to="admin/" />} />
-                <Route path="/notification" element={isAuth ? <Inbox /> : <Navigate to="admin/" />} />
-                <Route path="/ground-list" element={isAuth ? <GroundList /> : <Navigate to="admin/" />} />
-                <Route path="/ground-view/:id" element={isAuth ? <GroundView /> : <Navigate to="admin/" />} />
-                <Route path="/event-view/:id" element={isAuth ? <EventView /> : <Navigate to="admin/" />} />
-                <Route path="/add-city" element={isAuth ? <City /> : <Navigate to="admin/" />} />
-                <Route path="/owner-list" element={isAuth ? <OwnerList /> : <Navigate to="admin/" />} />
-                <Route path="/client-list" element={isAuth ? <ClientList /> : <Navigate to="admin/" />} />
-                <Route path="/chat" element={isAuth ? <Chat /> : <Navigate to="admin/" />} />
+                <Route path="/dash" element={isAuth ? <AdminDashboard /> : <Navigate to="/admin/" />} />
+                <Route path="/notification" element={isAuth ? <Inbox /> : <Navigate to="/admin/" />} />
+                <Route path="/ground-list" element={isAuth ? <GroundList /> : <Navigate to="/admin/" />} />
+                <Route path="/ground-view/:id" element={isAuth ? <GroundView /> : <Navigate to="/admin/" />} />
+                <Route path="/event-view/:id" element={isAuth ? <EventView /> : <Navigate to="/admin/" />} />
+                <Route path="/add-city" element={isAuth ? <City /> : <Navigate to="/admin/" />} />
+                <Route path="/owner-list" element={isAuth ? <OwnerList /> : <Navigate to="/admin/" />} />
+                <Route path="/client-list" element={isAuth ? <ClientList /> : <Navigate to="/admin/" />} />
+                <Route path="/chat" element={isAuth ? <Chat /> : <Navigate to="/admin/" />} />
                 <Route path="/error" element={<Error />} />
             </Routes>
         </div>

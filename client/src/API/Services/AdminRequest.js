@@ -77,6 +77,17 @@ export const groundListAdminReqApi = async (token) => {
     }
 };
 
+export const ChatRequestReqApi = async (token) => {
+    try {
+        const response = AxiosAdmin.get("/chat-request", {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        return error?.response;
+    }
+};
+
 export const BlockGroundReqApi = async (data, token) => {
     console.log(data);
     try {

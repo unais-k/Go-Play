@@ -13,13 +13,13 @@ function PaymentComponent() {
     const initialOptions = {
         "client-id": process.env.REACT_APP_CLIENT_ID,
     };
+    const location = useLocation();
 
     const [bookingData, setBoookingData] = useState([]);
     const [time, setTime] = useState([]);
     const [date, setDate] = useState({});
     const [total, setTotal] = useState([]);
     const [advance, setAdvance] = useState([]);
-    const location = useLocation();
 
     useEffect(() => {
         if (location.state) {

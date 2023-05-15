@@ -7,6 +7,7 @@ import {
     CityListResApi,
     EventDateCheckResApi,
     EventFetchOnSelectResApi,
+    EventSubmitResApi,
     FootballGroundResApi,
     GroundFetchOnSelectResApi,
     GroundListResApi,
@@ -19,6 +20,8 @@ import {
     UserBookingDetailFetchResApi,
     UserDataFetchResApi,
     UserEditResApi,
+    UserEventBookingDetailFetchResApi,
+    UserEventBookingFetchResApi,
 } from "../../Controller/Client/ClientController.js";
 import { clientVerifyToken } from "../../Middleware/AuthVerify.js";
 const router = express.Router();
@@ -45,5 +48,8 @@ router.post("/review-submit", clientVerifyToken, SubmitReviewResApi);
 router.get("/search-turf", SearchGroundResApi);
 router.patch("/cancel-booking", clientVerifyToken, CancelBookingResApi);
 router.post("/event-date-check", clientVerifyToken, EventDateCheckResApi);
+router.post("/event-submit", clientVerifyToken, EventSubmitResApi);
+router.get("/event-booking-details", clientVerifyToken, UserEventBookingFetchResApi);
+router.get("/event-booking-detail-view", clientVerifyToken, UserEventBookingDetailFetchResApi);
 
 export default router;

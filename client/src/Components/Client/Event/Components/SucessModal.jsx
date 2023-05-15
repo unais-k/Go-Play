@@ -1,73 +1,69 @@
 import React, { useEffect, useState } from "react";
-import { GroundViewReqApi } from "../../../API/Services/ClientRequest";
+import { FaWindowClose } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { message } from "antd";
+import { toast } from "react-toastify";
 
-function ModalBookingComponent({ bookingData, setShowModal }) {
+export default function SuccessModal({ bookingData, selectedType, setModal1 }) {
+    console.log(bookingData, "----------------------------------");
     const token = useSelector((state) => state.userLogin.token);
     const navigate = useNavigate();
-    //   const [showModal, setShowModal] = React.useState(false);
     const [time, setTime] = useState([]);
-    const [date, setDate] = useState({});
-    const [groundId, setGroundId] = useState({});
+    const [date, setDate] = useState(new Date(Date.now()));
+    const [price, setPrice] = useState(null);
+    const [groundId, setGroundId] = useState(null);
     const [groundData, setGroundData] = useState({});
-
-    const GroundData = async () => {
-        const response = await GroundViewReqApi(groundId);
-        if (response.status === 200) {
-            console.log(response, "response");
-            setGroundData(response.data.result);
-        }
-    };
 
     useEffect(() => {
         if (bookingData) {
+            if (selectedType === "Week") {
+                setPrice(bookingData.price * 7);
+            }
             setTime(bookingData.time);
             setDate(bookingData.date);
             setGroundId(bookingData.groundId);
-            GroundData();
         }
     }, [bookingData, time]);
 
     const handlePayment = () => {
         console.log("payment");
         if (token) {
-            navigate("/payment", {
+            navigate("/event-payment", {
                 state: {
                     time: time,
                     date: date,
+                    offer: selectedType,
                     sport: bookingData.sport,
                     groundId: groundId,
                     eventId: bookingData.eventId,
-                    total: bookingData.price,
-                    advance: Math.round(bookingData.price / 11),
+                    total: price,
+                    advance: Math.round(price / 13),
                 },
             });
-            setShowModal(false);
+            setModal1(false);
         } else {
-            message.warning("Please Login");
+            toast.warning("Please Login");
             navigate("/login");
         }
     };
-
     return (
-        <div>
-            <>
-                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                        <div className="border-0 rounded shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                            <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                <h3 className="text-3xl font-semibold">Checkout</h3>
-                                <button
-                                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                    onClick={() => setShowModal(false)}
-                                >
-                                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                        ×
-                                    </span>
-                                </button>
-                            </div>
+        <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                    {/*content*/}
+                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                        {/*header*/}
+                        <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                            <h3 className="text-3xl font-semibold">Checkout</h3>
+                            <button
+                                className="p-1 ml-auto border-0 text-black  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                onClick={() => setModal1(false)}
+                            >
+                                <FaWindowClose />
+                            </button>
+                        </div>
+                        {/*body*/}
+                        <div className="relative p-6 flex-auto">
                             <div className="relative p-6 flex-auto">
                                 <table class="table-auto">
                                     <thead>
@@ -87,11 +83,11 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
                                                     return <div>{res.slots}</div>;
                                                 })}
                                             </td>
-                                            <td className="px-4">{new Date(date).toDateString()}</td>
+                                            <td className="px-4">1 {selectedType}</td>
                                             <td className="px-4">{bookingData.sport}</td>
 
-                                            <td className="px-4">{bookingData.price}</td>
-                                            <td className="px-4">{Math.floor(bookingData.price / 11)}</td>
+                                            <td className="px-4">{price}</td>
+                                            <td className="px-4">{Math.floor(price / 13)}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -106,7 +102,7 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
                                 <button
                                     className="text-red-500 background-transparent font-bold uppercase px-3 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button"
-                                    onClick={() => setShowModal(false)}
+                                    onClick={() => setModal1(false)}
                                 >
                                     Close
                                 </button>
@@ -121,10 +117,8 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
                         </div>
                     </div>
                 </div>
-                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-            </>
-        </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
     );
 }
-
-export default ModalBookingComponent;

@@ -4,6 +4,7 @@ import { MdFileDownloadDone, MdOutlineCancelPresentation } from "react-icons/md"
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { useSelector } from "react-redux";
+import ChatReqComponent from "./ChatReqComponent";
 
 function InboxPage() {
     const navigate = useNavigate();
@@ -108,6 +109,7 @@ function InboxPage() {
                     );
                 })}
             </div>
+            <ChatReqComponent />
         </div>
     );
 }

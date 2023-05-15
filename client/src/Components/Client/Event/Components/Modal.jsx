@@ -1,4 +1,5 @@
 import React from "react";
+import { FaWindowClose } from "react-icons/fa";
 
 export default function Modal({ setModalO }) {
     return (
@@ -11,21 +12,16 @@ export default function Modal({ setModalO }) {
                         <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
                             <h3 className="text-3xl font-semibold">Ops!</h3>
                             <button
-                                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                className="p-1 ml-auto  border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                 onClick={() => setModalO(false)}
                             >
-                                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                    ×
-                                </span>
+                                <FaWindowClose />
                             </button>
                         </div>
                         {/*body*/}
                         <div className="relative p-6 flex-auto">
                             <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                                I always felt like I could do anything. That’s the main thing people are controlled by!
-                                Thoughts- their perception of themselves! They're slowed down by their perception of
-                                themselves. If you're taught you can’t do anything, you won’t do anything. I was taught I
-                                could do everything.
+                                Some slots have already booked in time you have selected, Please try another time
                             </p>
                         </div>
                     </div>

@@ -1,11 +1,11 @@
 import React from "react";
 import NavbarPage from "../../Components/Client/Navbar/Navbar";
 import ConstNavbar from "../../Components/Client/ConstNavbar/ConstNavbar";
-import ProfileComponent from "../../Components/Client/Profile/ProfileComponent";
 import { useSelector } from "react-redux";
 import Footer from "../../Components/Client/Footer/Footer";
+import BookingListComponent from "../../Components/Client/Event/BookingList/BookingListComponent";
 
-function Profile() {
+function EventBook() {
     const location = useSelector((state) => state.userLogin.city);
     return (
         <div>
@@ -14,11 +14,11 @@ function Profile() {
             </div>
             <ConstNavbar />
 
-            <ProfileComponent />
+            <BookingListComponent />
 
             <Footer />
         </div>
     );
 }
 
-export default Profile;
+export default EventBook;

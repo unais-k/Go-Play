@@ -7,6 +7,7 @@ import bookingModel from "../../Model/Booking.js";
 import UserModel from "../../Model/Client.js";
 import reviewModel from "../../Model/Review.js";
 import moment from "moment";
+import OfferModel from "./../../Model/Offer.js";
 
 export const CityListResApi = async (req, res, next) => {
     try {
@@ -238,7 +239,11 @@ export const UserBookingDetailFetchResApi = async (req, res, next) => {
                 console.log(777);
             }
         }
-        const find = await bookingModel.find({ client: id }).populate("turf").populate("event").sort({ bookDate: -1 });
+        const find = await bookingModel
+            .find({ client: id, offer: false })
+            .populate("turf")
+            .populate("event")
+            .sort({ bookDate: -1 });
 
         res.status(201).json({ result: find });
     } catch (error) {
@@ -329,12 +334,6 @@ export const CancelBookingResApi = async (req, res, next) => {
 
 export const EventDateCheckResApi = async (req, res, next) => {
     try {
-        // const dateString = req.body.date;
-        // const arr = req.body.time;
-        // console.log(arr);
-        // const dateObject = moment.utc(dateString).add(1, "days");
-        // const formattedISOString = dateObject.toISOString();
-        // const date = new Date(formattedISOString);
         let bookedSlots = [];
         // const formattedDate = date.toISOString().split("T")[0];
         console.log(req.body);
@@ -370,6 +369,136 @@ export const EventDateCheckResApi = async (req, res, next) => {
         }
         console.log(bookedSlots);
         res.status(202).json({ result: bookedSlots });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const EventSubmitResApi = async (req, res, next) => {
+    try {
+        console.log(req.body);
+        const dateString = req.body.date;
+        const dateObject = moment.utc(dateString).add(1, "days");
+        const formattedISOString = dateObject.toISOString();
+
+        const date = new Date(formattedISOString);
+        const formattedDate = date.toISOString().split("T")[0];
+
+        const { bookingData } = req.body;
+
+        const booking = await OfferModel.create({
+            client: req.user.id,
+            total: req.body.total,
+            paymentId: req.body.bookingId,
+            advance: req.body.advance,
+            bookDate: formattedDate,
+            sport: bookingData[0].sport,
+            event: bookingData[0].eventId,
+            offer: req.body.offer,
+            turf: bookingData[0].groundId,
+            time: req.body.time,
+        });
+        console.log(booking, "booking");
+        if (req.body.offer === "Week") {
+            for (let i = 1; i < 8; i++) {
+                const dateString = req.body.date;
+                const dateObject = moment.utc(dateString).add(i, "days");
+                const formattedISOString = dateObject.toISOString();
+
+                const date = new Date(formattedISOString);
+                const formattedDate = date.toISOString().split("T")[0];
+                const book = await bookingModel.create({
+                    client: req.user.id,
+                    total: req.body.total,
+                    paymentId: req.body.bookingId,
+                    advance: req.body.advance,
+                    bookDate: formattedDate,
+                    offerId: booking._id,
+                    sport: bookingData[0].sport,
+                    offer: true,
+                    event: bookingData[0].eventId,
+                    turf: bookingData[0].groundId,
+                    time: req.body.time,
+                });
+            }
+        } else {
+            for (let i = 1; i < 31; i++) {
+                const dateString = req.body.date;
+                const dateObject = moment.utc(dateString).add(i, "days");
+                const formattedISOString = dateObject.toISOString();
+                const date = new Date(formattedISOString);
+                const formattedDate = date.toISOString().split("T")[0];
+                const book = await bookingModel.create({
+                    client: req.user.id,
+                    total: req.body.total,
+                    paymentId: req.body.bookingId,
+                    advance: req.body.advance,
+                    bookDate: formattedDate,
+                    offer: true,
+                    offerId: booking._id,
+                    sport: bookingData[0].sport,
+                    event: bookingData[0].eventId,
+                    turf: bookingData[0].groundId,
+                    time: req.body.time,
+                });
+            }
+        }
+
+        res.status(201).json({ result: booking });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const UserEventBookingFetchResApi = async (req, res, next) => {
+    try {
+        const id = req.user.id;
+        const find = await OfferModel.find({ client: id }).populate("turf").populate("event").sort({ bookDate: -1 });
+        res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const UserEventBookingDetailFetchResApi = async (req, res, next) => {
+    try {
+        const id = req.user.id;
+        console.log(req.query.id);
+        const Booked = await bookingModel.find({ offerId: req.query.id });
+
+        const today = new Date(Date.now());
+
+        const dateObject = moment.utc(today).add(1, "days");
+        const formattedISOString = dateObject.toISOString();
+
+        const date = new Date(formattedISOString);
+        const formattedDate = date.toISOString().split("T")[0];
+        console.log(formattedDate, "date");
+        const find1 = await bookingModel.find({ client: id });
+
+        for (let i = 0; i < find1.length; i++) {
+            let dateString = new Date(find1[i].bookDate);
+            let DateStr = new Date(formattedDate);
+
+            if (dateString < DateStr) {
+                if (find1[i].payment === "Cancelled") {
+                    let update = { $set: { status: "Cancelled" } };
+                    let result = await bookingModel.updateOne(update);
+                    console.log(result);
+
+                    console.log(
+                        `${result.matchedCount} document(s) matched the filter, and ${result.modifiedCount} document(s) were updated.`
+                    );
+                }
+            } else {
+            }
+        }
+        const find = await OfferModel.find({ client: id }).populate("turf").populate("event").sort({ bookDate: -1 });
+
+        res.status(201).json({ result: find, events: Booked });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
