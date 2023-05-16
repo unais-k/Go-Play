@@ -8,6 +8,8 @@ import timeModel from "../../Model/Time.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
 import nodeMailer from "nodemailer";
 import notificationModel from "./../../Model/Notification.js";
+import bookingModel from "../../Model/Booking.js";
+import OfferModel from "../../Model/Offer.js";
 
 export const adminLogin = async (req, res, next) => {
     console.log(req.body);
@@ -261,6 +263,18 @@ export const ChatRequestResApi = async (req, res, next) => {
     try {
         const findDetail = await notificationModel.find().populate("sender");
         res.status(201).json({ result: findDetail });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const FetchAllBookingResApi = async (req, res, next) => {
+    try {
+        const find = await bookingModel.find({ offer: false });
+        const events = await OfferModel.find({});
+        console.log(find, events);
+        res.status(201).json({ result: find, event: events });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });

@@ -6,6 +6,7 @@ import { cloudinary } from "../../Utils/Cloudinary.js";
 import GroundModel from "./../../Model/Grounds.js";
 import eventModel from "../../Model/Events.js";
 import bookingModel from "./../../Model/Booking.js";
+import reviewModel from "../../Model/Review.js";
 
 export const addGroundReq = async (req, res, next) => {
     try {
@@ -391,9 +392,14 @@ export const BookingStatusSetResApi = async (req, res, next) => {
 
 export const FindReviewResApi = async (req, res, next) => {
     try {
-        const find = await GroundModel.find({ Owner: req.user.id });
-        console.log(find);
-        // res.status(201).json({ result: find });
+        let reviews = [];
+        const find = await GroundModel.find({ Owner: req.user.id }).populate("reviews");
+        for (let i = 0; i < find.length; i++) {
+            if (find[i].reviews.length > 0) {
+                reviews.push(find[i].reviews);
+            }
+        }
+        console.log(reviews);
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });

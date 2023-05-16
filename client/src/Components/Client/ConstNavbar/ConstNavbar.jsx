@@ -8,7 +8,7 @@ function ConstNavbar() {
     };
     let [open, setOpen] = useState(false);
     return (
-        <div className="">
+        <div className="border-t">
             <div className="w-full py-4 top-0 left-0">
                 <div className="md:flex items-center justify-center bg-white py-5 md:px-10 px-7">
                     <div

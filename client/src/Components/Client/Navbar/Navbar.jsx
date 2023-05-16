@@ -15,10 +15,10 @@ function NavbarPage(props) {
         navigate("/login");
     };
     const handleProfile = () => {
-       navigate('/profile')
+        navigate("/profile");
     };
     const handleBusiness = () => {
-        navigate("/turf-admin/register");
+        navigate("/business-intro");
     };
     const Location = useSelector((state) => state.userLogin.city);
 
@@ -64,8 +64,8 @@ function NavbarPage(props) {
                         ""
                     ) : (
                         <a className="text-lime-600" onClick={handleBusiness}>
-                        For Business
-                    </a>
+                            For Business
+                        </a>
                     )}
                     <a className="text-lime-600" onClick={() => setShowModal(true)}>
                         {city}

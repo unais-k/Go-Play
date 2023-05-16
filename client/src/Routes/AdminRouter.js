@@ -12,6 +12,7 @@ import GroundView from "../Pages/Admin/GroundView";
 import EventView from "../Pages/Admin/EventView";
 import Error from "../Pages/Admin/Error";
 import Chat from "../Pages/Admin/Chat";
+import Booking from "../Pages/Admin/Booking";
 function AdminRouter() {
     // const isAuth = true;
     const isAuth = useSelector((state) => state.adminLogin.token);
@@ -27,6 +28,7 @@ function AdminRouter() {
                 <Route path="/event-view/:id" element={isAuth ? <EventView /> : <Navigate to="/admin/" />} />
                 <Route path="/add-city" element={isAuth ? <City /> : <Navigate to="/admin/" />} />
                 <Route path="/owner-list" element={isAuth ? <OwnerList /> : <Navigate to="/admin/" />} />
+                <Route path="/booking-list" element={isAuth ? <Booking /> : <Navigate to="/admin/" />} />
                 <Route path="/client-list" element={isAuth ? <ClientList /> : <Navigate to="/admin/" />} />
                 <Route path="/chat" element={isAuth ? <Chat /> : <Navigate to="/admin/" />} />
                 <Route path="/error" element={<Error />} />

@@ -112,7 +112,6 @@ function PaymentComponent() {
                                             if (data.orderID) {
                                                 console.log(data.orderID, "data.orderId");
                                                 await handlePayment(data.orderID);
-                                                alert("its completed");
                                             } else {
                                             }
                                         });

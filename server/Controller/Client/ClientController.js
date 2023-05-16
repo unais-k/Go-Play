@@ -279,6 +279,7 @@ export const SubmitReviewResApi = async (req, res, next) => {
             { _id: req.body.id },
             { $set: { review: true } }
         );
+        const reviewAdd = await GroundModel.findOneAndUpdate({ _id: groundId }, { $push: { reviews: setReview._id } });
         const find = await reviewModel.find({ turf: req.body.id }).populate("client");
         console.log(setReview);
         res.status(201).json({ result: find });

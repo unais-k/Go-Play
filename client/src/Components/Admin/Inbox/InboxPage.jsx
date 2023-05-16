@@ -80,29 +80,47 @@ function InboxPage() {
             <div className="flex flex-wrap">
                 {list.map((res) => {
                     return (
-                        <div className="max-w-sm m-5 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                            <a href="#">
-                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                    {res.name}
-                                </h5>
-                            </a>
-                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Email : {res.email}</p>
-                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Phone : {res.phone}</p>
-                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Aadhar : {res.aadhar}</p>
-                            <div className="flex">
-                                <div
-                                    className="bg-green-600 text-white flex py-2 px-4 me-3 rounded"
-                                    onClick={() => handleApprove({ id: res._id })}
-                                >
-                                    <MdFileDownloadDone size={22} />
-                                    <button className="ms-3">Approve</button>
-                                </div>
-                                <div
-                                    className="bg-red-600 text-dark flex py-2 px-4 ms-3 rounded"
-                                    onClick={() => handleCancel({ id: res._id })}
-                                >
-                                    <MdOutlineCancelPresentation size={22} />
-                                    <button className="ms-3">Cancel</button>
+                        <div class="px-5 py-6 flex flex-col justify-center sm:py-12">
+                            <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+                                <div class="absolute inset-0 bg-gradient-to-r to-emerald-600 from-sky-400 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+                                <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+                                    <div class="max-w-md mx-auto">
+                                        <div class="divide-y divide-gray-200">
+                                            <a href="#">
+                                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                                    {res.name}
+                                                </h5>
+                                            </a>
+                                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                                Email : {res.email}
+                                            </p>
+                                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                                Phone : {res.phone}
+                                            </p>
+                                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                                Aadhar : {res.aadhar}
+                                            </p>
+                                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                                Pan : {res?.pan}
+                                            </p>
+                                            <div className="flex">
+                                                <div
+                                                    className="bg-lime-500 text-white flex py-2 px-4 me-3 rounded"
+                                                    onClick={() => handleApprove({ id: res._id })}
+                                                >
+                                                    <MdFileDownloadDone size={22} />
+                                                    <button className="ms-3">Approve</button>
+                                                </div>
+                                                <div
+                                                    className="bg-red-500 text-dark flex py-2 px-4 ms-3 rounded"
+                                                    onClick={() => handleCancel({ id: res._id })}
+                                                >
+                                                    <MdOutlineCancelPresentation size={22} />
+                                                    <button className="ms-3">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

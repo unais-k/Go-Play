@@ -54,11 +54,11 @@ function LoginPage() {
 
     return (
         <div className="">
-            <div className="bg-gray-300 h-screen">
+            <div className=" h-screen">
                 <div className="p-10 lg:w-1/2 mx-auto">
-                    <div className="bg-white rounded-t-lg p-8 mt-20">
+                    <div className="bg-lime-200 rounded-t-lg p-8">
                         <div>
-                            <p className="text-center text-xl text-gray-400 font-light">ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ɢᴏ-ᴘʟᴀʏ</p>
+                            <p className="text-center text-xl text-dark font-light">ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ɢᴏ-ᴘʟᴀʏ</p>
                         </div>
                     </div>
                     <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
@@ -124,7 +124,7 @@ function LoginPage() {
                             <p className="text-end text-sm text-gray-500 font-light">
                                 New to Go Play?
                                 <a className="text-green-400" onClick={handleRegister}>
-                                    Register
+                                    &nbsp;Register
                                 </a>
                             </p>
                         </div>

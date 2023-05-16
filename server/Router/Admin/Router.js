@@ -6,6 +6,7 @@ import {
     CancelTurfAdmin,
     ChatRequestResApi,
     EventDetailFetchResApi,
+    FetchAllBookingResApi,
     FindCity,
     GroundListAdminResApi,
     GroundViewResApi,
@@ -34,5 +35,6 @@ router.get("/owner-list", adminVerifyToken, OwnerListResApi);
 router.post("/time-save", adminVerifyToken, TimeSaveResApi);
 router.get("/chat-request", adminVerifyToken, ChatRequestResApi);
 router.get("/event-detail", adminVerifyToken, EventDetailFetchResApi);
+router.get("/fetch-all-booking", adminVerifyToken, FetchAllBookingResApi);
 
 export default router;

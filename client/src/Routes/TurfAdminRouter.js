@@ -6,7 +6,6 @@ import TurfRegisterPage from "../Pages/Turf-Admin/Register";
 import TurfAdminHome from "../Pages/Turf-Admin/Home";
 import GroundList from "../Pages/Turf-Admin/GroundList";
 import GroundAdd from "../Pages/Turf-Admin/GroundAdd";
-import RegSuccess from "../Pages/Turf-Admin/RegSuccess";
 import GroundView from "../Pages/Turf-Admin/GroundView";
 import AddEvent from "../Pages/Turf-Admin/AddEvent";
 import EditEvent from "../Pages/Turf-Admin/EditEvent";
@@ -25,7 +24,6 @@ function TurfAdminRouter() {
             <Routes>
                 <Route path="/login" element={<TurfAdminLogin />} />
                 <Route path="/register" element={<TurfRegisterPage />} />
-                <Route path="/regSuccess" element={<RegSuccess />} />
                 <Route path="/home" element={isAuth ? <TurfAdminHome /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/ground-list" element={isAuth ? <GroundList /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/ground-add" element={isAuth ? <GroundAdd /> : <Navigate to="/turf-admin/login" />} />

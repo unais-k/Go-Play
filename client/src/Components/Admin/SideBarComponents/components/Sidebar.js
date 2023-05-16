@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { BsArrowLeftCircle, BsChatDotsFill } from "react-icons/bs";
+import { BsArrowLeftCircle, BsBorderWidth, BsChatDotsFill } from "react-icons/bs";
 import { HiUsers } from "react-icons/hi";
 import { IoIosNotifications } from "react-icons/io";
 import { BiFootball } from "react-icons/bi";
@@ -9,6 +9,7 @@ import { MdAnalytics, MdAdminPanelSettings, MdSettings } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import HamburgerButton from "../HamburgerMenuButton/HamburgerButton";
 import { setLogout } from "../../../../Utils/Store/Slice/Admin";
+import { FaCity } from "react-icons/fa";
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -35,8 +36,9 @@ const Sidebar = () => {
             path: "/admin/chat",
             src: <BsChatDotsFill />,
         },
+        { title: "Bookings", path: "/admin/booking-list", src: <BsBorderWidth /> },
         { title: "customer", path: "/admin/client-list", src: <HiUsers /> },
-        { title: "Settings", path: "/admin/settings", src: <MdSettings /> },
+        { title: "Add City", path: "/admin/add-city", src: <FaCity /> },
     ];
     const handleLogout = () => {
         navigate("/admin");

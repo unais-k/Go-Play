@@ -68,7 +68,7 @@ const groundSchema = new mongoose.Schema(
         holiday: {
             type: Array,
         },
-        reviews: { type: Array },
+        reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "review" }],
         status: {
             type: Boolean,
             default: false,

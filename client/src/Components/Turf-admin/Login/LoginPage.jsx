@@ -55,9 +55,9 @@ function TurfLoginPage() {
 
     return (
         <div className="">
-            <div className="bg-gray-300 h-screen">
+            <div className=" h-screen">
                 <div className="p-10 lg:w-1/2 mx-auto">
-                    <div className="bg-white rounded-t-lg p-8 mt-20">
+                    <div className="bg-lime-200 rounded-t-lg p-8">
                         <div>
                             <p className="text-center text-xl text-gray-400 font-light">ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ɢᴏ-ᴘʟᴀʏ</p>
                         </div>

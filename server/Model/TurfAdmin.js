@@ -17,6 +17,7 @@ const turfAdminSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
+        profile: { type: String },
         ground: [
             {
                 groundId: {
@@ -29,11 +30,16 @@ const turfAdminSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+
         aadhar: {
             type: String,
             required: true,
-            unique: true,
         },
+        pan: {
+            type: String,
+            required: true,
+        },
+
         status: {
             type: Boolean,
             default: false,
