@@ -7,6 +7,7 @@ import GroundModel from "./../../Model/Grounds.js";
 import eventModel from "../../Model/Events.js";
 import bookingModel from "./../../Model/Booking.js";
 import reviewModel from "../../Model/Review.js";
+import moment from "moment";
 
 export const addGroundReq = async (req, res, next) => {
     try {
@@ -71,6 +72,7 @@ export const GroundViewResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
         const find = await GroundModel.findOne({ _id: id }).populate("Owner");
+        console.log(find);
         const events = await eventModel.find({ groundId: id });
         res.status(201).json({ result: find, event: events });
     } catch (error) {
@@ -121,14 +123,14 @@ export const RuleAddResApi = async (req, res, next) => {
     try {
         const id = req.body.data.id;
         const data = req.body.data;
-        console.log(data);
+
         const response = await GroundModel.updateOne(
             { _id: id },
             { $addToSet: { rules: { task: data.task, index: data.index } } }
         );
 
         const find = await GroundModel.find({ _id: id });
-        console.log(find);
+
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
@@ -238,9 +240,8 @@ export const GroundDetailSubmitResApi = async (req, res, next) => {
                 },
             }
         );
-        console.log(updateGroundDetail);
+
         const find = await GroundModel.findOne({ _id: id });
-        console.log(find);
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
@@ -263,7 +264,7 @@ export const AddEventResApi = async (req, res, next) => {
             slots: req.body.slots,
         });
         await find.save();
-        console.log(find);
+
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
@@ -287,7 +288,7 @@ export const EventDetailFetchResApi = async (req, res, next) => {
         console.log(req.body);
         const id = req.query.id;
         const findDetail = await eventModel.findOne({ _id: id }).populate("groundId");
-        console.log(findDetail);
+
         res.status(201).json({ result: findDetail });
     } catch (error) {
         console.log(error.message);
@@ -300,7 +301,7 @@ export const OwnerDataFetchResApi = async (req, res, next) => {
         const id = req.user.id;
         const find = await TurfAdminModel.findOne({ _id: id });
         const ground = await GroundModel.find({ Owner: id });
-        console.log(ground);
+
         res.status(201).json({ result: find, ground: ground });
     } catch (error) {
         console.log(error.message);
@@ -349,7 +350,6 @@ export const BookingListResApi = async (req, res, next) => {
             // console.log(response, "====================");
             if (response.length > 0) groundArray.push(response);
         }
-        console.log(groundArray, "''''''''''''''''''''''''''''''''''''''''''''''");
 
         res.status(201).json({ result: groundArray });
     } catch (error) {
@@ -366,7 +366,7 @@ export const PaymentStatusSetResApi = async (req, res, next) => {
             .populate("turf")
             .populate("event")
             .populate("client");
-        console.log(find, "find------");
+
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
@@ -382,7 +382,7 @@ export const BookingStatusSetResApi = async (req, res, next) => {
             .populate("turf")
             .populate("event")
             .populate("client");
-        console.log(find, "find------");
+
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
@@ -403,5 +403,154 @@ export const FindReviewResApi = async (req, res, next) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
+    }
+};
+
+export const AdminEditResApi = async (req, res, next) => {
+    try {
+        const { name, email, phone, aadhar, pan } = req.body;
+        const updateProfile = await TurfAdminModel.findOneAndUpdate(
+            { _id: req.user.id },
+            { $set: { name: name, email: email, phone: phone, aadhar: aadhar, pan: pan } }
+        );
+        res.status(201).json({ result: updateProfile });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const EditProfilePhotoResApi = async (req, res, next) => {
+    try {
+        const { photo } = req.body;
+        const Profile = "profile";
+        const result = await cloudinary.uploader
+            .upload(photo, {
+                folder: Profile,
+            })
+            .catch((err) => {
+                console.log(err.message);
+                console.log(err);
+            });
+        const updateProfile = await TurfAdminModel.findByIdAndUpdate(
+            { _id: req.user.id },
+            { $set: { profile: result.secure_url } }
+        );
+        res.status(201).json({ result: updateProfile });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+function multiIntersect(arr) {
+    let result = [];
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+            if (i !== j) {
+                continue;
+            }
+            result = result.concat(arr[i].filter((value) => arr[j].includes(value)));
+        }
+    }
+    return Array.from(new Set(result));
+}
+
+export const SelectTypeResApi = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        let event = [];
+        const find = await eventModel.find({ groundId: id });
+        for (let i = 0; i < find.length; i++) {
+            event.push(find[i].eventAvailable);
+        }
+        const concatArray = multiIntersect(event);
+
+        res.status(201).json({ result: concatArray });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const GroundFetchOnSelectResApi = async (req, res, next) => {
+    try {
+        const matchGround = await eventModel.aggregate([
+            {
+                $match: {
+                    groundId: new mongoose.Types.ObjectId(req.query.id),
+                    eventAvailable: req.query.data,
+                },
+            },
+        ]);
+
+        res.status(201).json({ result: matchGround });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const EventFetchOnSelectResApi = async (req, res, next) => {
+    try {
+        const findEvent = await eventModel.findOne({ _id: req.query.id });
+        const slotsAvailable = findEvent.slots;
+
+        const slow = await slotsAvailable.filter((e) => e.status === true);
+        res.status(201).json({ result: findEvent, slots: slow });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const OnDateBookedResApi = async (req, res, next) => {
+    try {
+        const date = new Date(req.query.date);
+        console.log(req.query.date);
+        const isoDate = date.toISOString().split("T")[0];
+        const selectedTime = [];
+        const find = await bookingModel.find({ event: req.query.id, bookDate: isoDate });
+
+        for (let i = 0; i < find.length; i++) {
+            selectedTime.push(find[i].time);
+        }
+        const combinedArray = selectedTime.reduce((acc, curr) => acc.concat(curr), []);
+        console.log(combinedArray);
+        res.status(201).json({ result: find, time: combinedArray });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const SubmitBookingAdminResApi = async (req, res, next) => {
+    try {
+        console.log(req.body);
+        const { price, eventId, groundId, sport, name, phone } = req.body;
+        const dateString = req.body.date;
+        const dateObject = moment.utc(dateString).add(1, "days");
+        const formattedISOString = dateObject.toISOString();
+
+        const date = new Date(formattedISOString);
+        const formattedDate = date.toISOString().split("T")[0];
+
+        const booking = await bookingModel.create({
+            name: name,
+            total: price,
+            phone: phone,
+            bookDate: formattedDate,
+            sport: sport,
+            bookingType: "Admin",
+            status: "Pending",
+            event: eventId,
+            turf: groundId,
+            time: req.body.time[0],
+        });
+        console.log(booking, "booking");
+        res.status(201).json({ result: booking });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
     }
 };

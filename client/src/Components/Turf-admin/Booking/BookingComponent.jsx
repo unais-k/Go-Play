@@ -4,9 +4,11 @@ import { BookingListReqApi, BookingStatusSetReqApi, PaymentStatusSetReqApi } fro
 import { GrView } from "react-icons/gr";
 import { TbLockOpen, TbLockOpenOff } from "react-icons/tb";
 import { BiAperture } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 function BookingComponent() {
     const token = useSelector((state) => state.turfAdminLogin.token);
+    const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [payment, setPayment] = useState("");
     const [booking, setBooking] = useState("");
@@ -41,6 +43,10 @@ function BookingComponent() {
         }
     };
 
+    const handleBook = async () => {
+        navigate("/turf-admin/add-booking");
+    };
+
     useEffect(() => {
         if (token) {
             bookingListData();
@@ -49,20 +55,19 @@ function BookingComponent() {
 
     return (
         <div className="p-10">
+            <div onClick={handleBook}>
+                <button className="ms-3 px-3 py-2 text-dark bg-amber-500 rounded text-sm font-bold uppercase">
+                    Add Booking
+                </button>
+            </div>
             {data.length > 0 ? (
                 data?.map((res) => {
                     return (
-                        <div key={res._id} className="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
-                            <div
-                                className="h-48 p-2 lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden"
-                                title="Mountain"
-                            >
-                                <img src={res.turf.images[0]} alt="" />
-                            </div>
+                        <div key={res?._id} className="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
                             <div className=" p-4 flex justify-between leading-normal">
                                 <div className="mb-8">
-                                    <div className="text-gray-900 font-bold text-xl mb-2">{res.turf.name}</div>
-                                    <div className="text-gray-900 font-normal text-md mb-2">{res.event.groundName}</div>
+                                    <div className="text-gray-900 font-bold text-xl mb-2">{res?.turf?.name}</div>
+                                    <div className="text-gray-900 font-normal text-md mb-2">{res?.event?.groundName}</div>
                                     <table className="min-w-max w-full table-auto">
                                         <thead>
                                             <tr className="text-gray-600 uppercase text-sm leading-normal">
@@ -81,14 +86,16 @@ function BookingComponent() {
                                                 <td className="py-3 px-6 text-left">
                                                     <div className="flex items-center">
                                                         <div className=" text-center">
-                                                            <span className="font-medium ">{res.client.name}</span>
+                                                            <span className="font-medium ">
+                                                                {res?.client?.name || res?.name}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center whitespace-nowrap">
                                                     <div className="text-center">
                                                         {res.time.map((response) => {
-                                                            return <div className="flex">{response.slots}</div>;
+                                                            return <div className="flex">{response?.slots}</div>;
                                                         })}
                                                     </div>
                                                 </td>
@@ -98,21 +105,21 @@ function BookingComponent() {
                                                     </div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center font-bold">
-                                                    <div className="items-center justify-center">{res.sport}</div>
+                                                    <div className="items-center justify-center">{res?.sport}</div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
                                                     <div className="text-center">
-                                                        <span className="font-medium text-xl">{res.total}</span>
+                                                        <span className="font-medium text-xl">{res?.total}</span>
                                                     </div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
                                                     <div className=" text-center">
-                                                        {res.payment ? (
-                                                            <span className="font-medium ">{res.payment}</span>
+                                                        {res?.payment ? (
+                                                            <span className="font-medium ">{res?.payment}</span>
                                                         ) : (
                                                             <select
                                                                 onClick={(e) =>
-                                                                    handlePayment({ id: res._id, value: e.target.value })
+                                                                    handlePayment({ id: res?._id, value: e.target.value })
                                                                 }
                                                                 className="rounded border-0"
                                                                 data-te-select-init
@@ -127,12 +134,12 @@ function BookingComponent() {
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
                                                     <div className=" text-center">
-                                                        {res.status ? (
-                                                            <span className="font-medium ">{res.status}</span>
+                                                        {res?.status ? (
+                                                            <span className="font-medium ">{res?.status}</span>
                                                         ) : (
                                                             <select
                                                                 onClick={(e) =>
-                                                                    handleBooking({ id: res._id, value: e.target.value })
+                                                                    handleBooking({ id: res?._id, value: e.target.value })
                                                                 }
                                                                 className="rounded border-0"
                                                                 data-te-select-init

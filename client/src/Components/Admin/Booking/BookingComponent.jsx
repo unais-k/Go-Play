@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { BiAperture } from "react-icons/bi";
 import { FetchAllBookingsReqApi } from "../../../API/Services/AdminRequest";
 import { useSelector } from "react-redux";
+import TableComponent from "./Components/TableComponent";
+import ListCard from "./Components/ListCard";
+import { useNavigate } from "react-router-dom";
 
 function BookingComponent() {
+    const navigate = useNavigate();
     const token = useSelector((state) => state.adminLogin.token);
     const [data, setData] = useState([]);
     const [event, setEvent] = useState([]);
@@ -15,7 +19,10 @@ function BookingComponent() {
             setEvent(response.data.event);
         }
     };
-    console.log(data, "data");
+    const handleView = (id) => {
+        console.log(id);
+        navigate("/admin/offer-view/" + id);
+    };
 
     useEffect(() => {
         if (token) {
@@ -23,70 +30,52 @@ function BookingComponent() {
         }
     }, [token]);
     return (
-        <div className="p-10">
-            <div className="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
-                <div className="h-48 p-2 lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden" title="Mountain">
-                    <img alt="" />
-                </div>
-                <div className=" p-4 flex justify-between leading-normal">
-                    <div className="mb-8">
-                        <div className="text-gray-900 font-bold text-xl mb-2"></div>
-                        <div className="text-gray-900 font-normal text-md mb-2"></div>
-                        <table className="min-w-max w-full table-auto">
-                            <thead>
-                                <tr className="text-gray-600 uppercase text-sm leading-normal">
-                                    <th className="py-3 px-6 text-left">Name</th>
-                                    <th className="py-3 px-6 text-center">Time</th>
-                                    <th className="py-3 px-6 text-center">Date</th>
-                                    <th className="py-3 px-6 text-center">Sport</th>
-                                    <th className="py-3 px-6 text-center">total</th>
-                                    <th className="py-3 px-6 text-center">Payment status</th>
-                                    <th className="py-3 px-6 text-center">Booking status</th>
-                                    <th className="py-3 px-6 text-center">View</th>
-                                </tr>
-                            </thead>
-                            <tbody className="text-gray-600 text-sm font-light">
-                                <tr className="border-b border-gray-200 hover:bg-gray-100">
-                                    <td className="py-3 px-6 text-left">
-                                        <div className="flex items-center">
-                                            <div className=" text-center">
-                                                <span className="font-medium "></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="py-3 px-6 text-center whitespace-nowrap">
-                                        <div className="text-center"></div>
-                                    </td>
-                                    <td className="py-3 px-6 text-center font-bold">
-                                        <div className="items-center justify-center"></div>
-                                    </td>
-                                    <td className="py-3 px-6 text-center font-bold">
-                                        <div className="items-center justify-center"></div>
-                                    </td>
-                                    <td className="py-3 px-6 text-center">
-                                        <div className="text-center">
-                                            <span className="font-medium text-xl"></span>
-                                        </div>
-                                    </td>
-                                    <td className="py-3 px-6 text-center">
-                                        <div className=" text-center"></div>
-                                    </td>
-                                    <td className="py-3 px-6 text-center">
-                                        <div className=" text-center"></div>
-                                    </td>
-                                    <td className="py-3 px-6 text-center">
-                                        <div className=" text-center">
-                                            <span className="font-medium ">
-                                                <BiAperture size={23} />
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <div className="px-10">
+            <div>
+                {event?.length > 0 ? (
+                    <>
+                        <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase mb-10">
+                            Offer Bookings
+                        </h1>
+                    </>
+                ) : (
+                    <></>
+                )}
             </div>
+            <div>
+                {event?.map((res) => {
+                    console.log(res);
+                    return (
+                        <div onClick={() => handleView(res.client._id)}>
+                            <ListCard event={res} />
+                        </div>
+                    );
+                })}
+            </div>
+            <div className="mt-16">
+                {data?.length > 0 ? (
+                    <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Bookings</h1>
+                ) : (
+                    <></>
+                )}
+            </div>
+            {data?.map((res) => {
+                return (
+                    <>
+                        <div className="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
+                            <div
+                                className="h-48 p-2 lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden"
+                                title="Mountain"
+                            >
+                                <img src={res.turf.images} alt="" />
+                            </div>
+                            <div className=" p-4 flex justify-between leading-normal">
+                                <TableComponent data={res} />
+                            </div>
+                        </div>
+                    </>
+                );
+            })}
         </div>
     );
 }

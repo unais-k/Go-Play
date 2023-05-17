@@ -10,8 +10,6 @@ function socketConnection(server) {
     let users = [];
 
     io.on("connection", (socket) => {
-        console.log(`socket connection : ${socket.id}`);
-
         socket.on("setup", (Id) => {
             // const id = Id?.toString()
             socket.join(123);

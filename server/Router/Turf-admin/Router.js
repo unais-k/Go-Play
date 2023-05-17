@@ -3,16 +3,21 @@ import { TurfAdminLogin, TurfAdminRegister } from "../../Controller/TurfAdmin/Au
 import {
     AddEventResApi,
     AddPhotoOnEventPostApi,
+    AdminEditResApi,
     AvailableStatusChangeResApi,
     BookingListResApi,
     BookingStatusSetResApi,
     CanceledTimeResApi,
+    EditProfilePhotoResApi,
     EventDetailFetchResApi,
+    EventFetchOnSelectResApi,
     FindCity,
     FindReviewResApi,
     GroundDetailSubmitResApi,
+    GroundFetchOnSelectResApi,
     GroundListResApi,
     GroundViewResApi,
+    OnDateBookedResApi,
     OwnerDataFetchResApi,
     PaymentStatusSetResApi,
     RuleAddResApi,
@@ -20,7 +25,9 @@ import {
     RuleFindResApi,
     RuleUpdateFindResApi,
     RuleUpdateResApi,
+    SelectTypeResApi,
     SelectedTimeResApi,
+    SubmitBookingAdminResApi,
     TimeSaveOnEventResApi,
     TimeSlotResApi,
     addGroundReq,
@@ -56,4 +63,12 @@ router.get("/booking-list", turfAdminVerifyToken, BookingListResApi);
 router.patch("/payment-status-set", turfAdminVerifyToken, PaymentStatusSetResApi);
 router.patch("/booking-status-set", turfAdminVerifyToken, BookingStatusSetResApi);
 router.get("/review-fetch", turfAdminVerifyToken, FindReviewResApi);
+router.post("/profile-edit", turfAdminVerifyToken, AdminEditResApi);
+router.get("/ground-sport-type", turfAdminVerifyToken, SelectTypeResApi);
+router.patch("/profile-photo-edit", turfAdminVerifyToken, EditProfilePhotoResApi);
+router.get("/selected-type", turfAdminVerifyToken, GroundFetchOnSelectResApi);
+router.get("/event-fetch", turfAdminVerifyToken, EventFetchOnSelectResApi);
+router.get("/date-event-fetch", turfAdminVerifyToken, OnDateBookedResApi);
+router.post("/handle-submit-admin", turfAdminVerifyToken, SubmitBookingAdminResApi);
+
 export default router;

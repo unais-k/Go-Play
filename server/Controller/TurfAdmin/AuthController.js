@@ -23,7 +23,7 @@ export const TurfAdminLogin = async (req, res, next) => {
 export const TurfAdminRegister = async (req, res, next) => {
     try {
         console.log(req.body);
-        const { name, email, phone, password, aadhar, pan, profile } = req.body;
+        const { name, email, phone, password, aadhar, pan, profile, place } = req.body;
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
         console.log(hashedPassword);
@@ -31,6 +31,7 @@ export const TurfAdminRegister = async (req, res, next) => {
             name,
             email,
             aadhar,
+            place,
             pan,
             profile,
             phone,

@@ -46,6 +46,11 @@ function GroundViewPage() {
         sport: "",
     });
 
+    const [step1, setStep1] = useState(true);
+    const [step2, setStep2] = useState(true);
+    const [step3, setStep3] = useState(true);
+    const [step4, setStep4] = useState(true);
+
     const [showDiv, setShowDiv] = useState(true);
     const [showDiv1, setShowDiv1] = useState(false);
     const [showDiv2, setShowDiv2] = useState(false);
@@ -88,7 +93,6 @@ function GroundViewPage() {
     const bookedFetchOnDate = async (date) => {
         const response = await OnDateBookedReqApi({ id: selectedEvent[0]._id, date: date });
         setBookedData(response.data.result);
-        console.log(response.data.time);
 
         let time2 = time.map((val) => {
             if (response.data.time[0]) {
@@ -154,6 +158,7 @@ function GroundViewPage() {
     maxDate.setDate(maxDate.getDate() + 5);
 
     const handleBooking = async (id) => {
+        console.log(id);
         const compare = await selectSlot.find((res) => JSON.stringify(res) === JSON.stringify(id));
         if (!compare) {
             setTime(
@@ -175,9 +180,8 @@ function GroundViewPage() {
                     return val;
                 })
             );
-            setSelectSlot(selectSlot.filter((val) => val.time != id.time));
-            setPrice(-price - -id.price);
-            message.warning("Already selected");
+            setSelectSlot(selectSlot.filter((val) => val.timeId !== id.timeId));
+            setPrice(price - id.price);
         }
         bookNow4();
     };
@@ -190,7 +194,6 @@ function GroundViewPage() {
     };
 
     const handleSelectedSport = async (id) => {
-        id.e.target.style.backgroundColor = "red";
         setSelectedSport(id.value);
         console.log(id, "value");
         const response = await GroundFetchOnSelectReqApi(id);
@@ -263,9 +266,14 @@ function GroundViewPage() {
                                 sport.map((res) => {
                                     return (
                                         <div
-                                            className="bg-gray-200 px-4 py-2 m-2 mb-10"
+                                            className={`${
+                                                step1 === res ? "bg-amber-500" : "bg-gray-200"
+                                            } px-4 py-2 m-2 mb-10`}
                                             key={Math.floor(Math.random) * 0.2351 + 124}
-                                            onClick={(e) => handleSelectedSport({ value: res, groundId: state._id, e: e })}
+                                            onClick={() => {
+                                                setStep1(res);
+                                                handleSelectedSport({ value: res, groundId: state._id });
+                                            }}
                                         >
                                             {res}
                                         </div>
@@ -283,8 +291,14 @@ function GroundViewPage() {
                                 {ground?.map((res) => {
                                     return (
                                         <div
-                                            className="flex flex-col w-fit bg-gray-200 m-3 p-5"
-                                            onClick={() => handleSelectGround(res._id)}
+                                            key={res._id}
+                                            className={`flex flex-col w-fit m-3 p-5 ${
+                                                step2 === res._id ? "bg-amber-500" : "bg-gray-200"
+                                            } `}
+                                            onClick={() => {
+                                                setStep2(res._id);
+                                                handleSelectGround(res._id);
+                                            }}
                                         >
                                             <div className="mb-3">{res.groundName}</div>
                                             <div>-{res.type}</div>
@@ -332,7 +346,7 @@ function GroundViewPage() {
                                                         ) : (
                                                             <div
                                                                 className={` ${
-                                                                    res.onBooking ? "bg-orange-400" : "bg-gray-200"
+                                                                    res.onBooking ? "bg-amber-500" : "bg-gray-200"
                                                                 } h-fit py-2 ps-3 w-24 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100`}
                                                                 onClick={() =>
                                                                     handleBooking({
@@ -358,7 +372,7 @@ function GroundViewPage() {
                                                         ) : (
                                                             <div
                                                                 className={` ${
-                                                                    res.onBooking ? "bg-orange-400" : "bg-gray-200"
+                                                                    res.onBooking ? "bg-amber-500" : "bg-gray-200"
                                                                 } h-fit py-2 ps-3 w-24 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100`}
                                                                 onClick={() =>
                                                                     handleBooking({

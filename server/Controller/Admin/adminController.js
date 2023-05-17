@@ -10,6 +10,8 @@ import nodeMailer from "nodemailer";
 import notificationModel from "./../../Model/Notification.js";
 import bookingModel from "../../Model/Booking.js";
 import OfferModel from "../../Model/Offer.js";
+import moment from "moment";
+import mongoose from "mongoose";
 
 export const adminLogin = async (req, res, next) => {
     console.log(req.body);
@@ -271,10 +273,54 @@ export const ChatRequestResApi = async (req, res, next) => {
 
 export const FetchAllBookingResApi = async (req, res, next) => {
     try {
-        const find = await bookingModel.find({ offer: false });
-        const events = await OfferModel.find({});
+        const find = await bookingModel.find({ offer: false }).populate("turf").populate("client");
+        const events = await OfferModel.find({}).populate("turf").populate("client");
         console.log(find, events);
         res.status(201).json({ result: find, event: events });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const UserEventBookingDetailFetchResApi = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        console.log(req.query.id);
+        const find = await OfferModel.findOne({ client: id }).populate("turf").populate("event").sort({ bookDate: -1 });
+        const Booked = await bookingModel.find({ offerId: find._id });
+
+        const today = new Date(Date.now());
+
+        const dateObject = moment.utc(today).add(1, "days");
+        const formattedISOString = dateObject.toISOString();
+
+        const date = new Date(formattedISOString);
+        const formattedDate = date.toISOString().split("T")[0];
+        console.log(formattedDate, "date");
+        const find1 = await bookingModel.find({ client: id });
+
+        for (let i = 0; i < find1.length; i++) {
+            let dateString = new Date(find1[i].bookDate);
+            let DateStr = new Date(formattedDate);
+
+            if (dateString < DateStr) {
+                if (find1[i].payment === "Cancelled") {
+                    let update = { $set: { status: "Cancelled" } };
+                    let result = await bookingModel.updateOne(update);
+                    console.log(result);
+
+                    console.log(
+                        `${result.matchedCount} document(s) matched the filter, and ${result.modifiedCount} document(s) were updated.`
+                    );
+                }
+            } else {
+            }
+        }
+
+        console.log(find, "-------------------");
+
+        res.status(201).json({ result: find, events: Booked });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });

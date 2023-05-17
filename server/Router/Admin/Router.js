@@ -16,6 +16,7 @@ import {
     adminLogin,
     notificationReqApi,
     userListReqApi,
+    UserEventBookingDetailFetchResApi,
 } from "../../Controller/Admin/adminController.js";
 import { adminVerifyToken } from "../../Middleware/AuthVerify.js";
 const router = express.Router();
@@ -36,5 +37,6 @@ router.post("/time-save", adminVerifyToken, TimeSaveResApi);
 router.get("/chat-request", adminVerifyToken, ChatRequestResApi);
 router.get("/event-detail", adminVerifyToken, EventDetailFetchResApi);
 router.get("/fetch-all-booking", adminVerifyToken, FetchAllBookingResApi);
+router.get("/event-booking-detail-view", adminVerifyToken, UserEventBookingDetailFetchResApi);
 
 export default router;

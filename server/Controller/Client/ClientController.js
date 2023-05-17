@@ -167,6 +167,8 @@ export const BookingSubmitResApi = async (req, res, next) => {
             advance: req.body.advance[0],
             bookDate: formattedDate,
             sport: bookingData[0].sport,
+            status: "Pending",
+            bookingType: "Online",
             event: bookingData[0].eventId,
             turf: bookingData[0].groundId,
             time: req.body.time[0],

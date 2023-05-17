@@ -18,6 +18,7 @@ const turfAdminSchema = new mongoose.Schema(
             unique: true,
         },
         profile: { type: String },
+        place: { type: String },
         ground: [
             {
                 groundId: {

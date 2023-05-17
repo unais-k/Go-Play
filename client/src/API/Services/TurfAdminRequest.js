@@ -229,7 +229,7 @@ export const EventDetailFetchReqApi = async (data, token) => {
     }
 };
 
-export const OwnerDataFetcReqApi = async (token) => {
+export const OwnerDataFetchReqApi = async (token) => {
     try {
         const response = AxiosTurfAdmin.get("/owner-data", {
             headers: { Authorization: "Bearer " + token },
@@ -293,5 +293,89 @@ export const FindReviewReqApi = async (token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+    }
+};
+
+export const AdminEditReqApi = (data, token) => {
+    console.log(data);
+    try {
+        const response = AxiosTurfAdmin.post("/profile-edit", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const EditProfilePhotoReqApi = (data, token) => {
+    try {
+        const response = AxiosTurfAdmin.patch("/profile-photo-edit", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const SelectTypeOfReqApi = async (data, token) => {
+    try {
+        const response = AxiosTurfAdmin.get(`/ground-sport-type?id=${data}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const GroundFetchOnSelectReqApi = async (data, token) => {
+    try {
+        const response = AxiosTurfAdmin.get(`/selected-type?id=${data.groundId}&data=${data.value}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const EventFetchOnSelectReqApi = async (data, token) => {
+    try {
+        const response = AxiosTurfAdmin.get(`/event-fetch?id=${data}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const OnDateBookedReqApi = async (data, token) => {
+    console.log(data);
+    try {
+        const response = AxiosTurfAdmin.get(`/date-event-fetch?id=${data.id}&date=${data.date}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const SubmitBookingAdminReqApi = async (data, token) => {
+    try {
+        const response = AxiosTurfAdmin.post("/handle-submit-admin", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
     }
 };

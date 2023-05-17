@@ -177,3 +177,15 @@ export const FetchAllBookingsReqApi = async (token) => {
         console.log(error.message);
     }
 };
+
+export const EventBookingDetailViewReqApi = async (data, token) => {
+    try {
+        const response = AxiosAdmin.get(`/event-booking-detail-view?id=${data}`, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};

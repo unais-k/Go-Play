@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaPhoneAlt, FaUserAlt } from "react-icons/fa";
+import { FaCity, FaPhoneAlt, FaUserAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { BsViewList } from "react-icons/bs";
 import { AiFillIdcard, AiOutlineIdcard } from "react-icons/ai";
@@ -23,8 +23,9 @@ function TurfAdminRegisterPage() {
         email: "",
         phone: "",
         aadhar: "",
+        place: "",
         pan: "",
-        profile: photo,
+        profile: "",
         password: "",
     });
     const regexp = /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/;
@@ -40,6 +41,7 @@ function TurfAdminRegisterPage() {
         reader.readAsDataURL(img.target.files[0]);
         reader.onload = () => {
             setPhoto(reader.result);
+            setFormData({ profile: reader.result });
         };
         reader.onerror = (error) => {
             console.log("Error: ", error);
@@ -64,6 +66,8 @@ function TurfAdminRegisterPage() {
             formData.email === "" ||
             formData.phone === "" ||
             formData.aadhar === "" ||
+            formData.place === "" ||
+            formData.profile === "" ||
             formData.pan === "" ||
             formData.password === ""
         ) {
@@ -110,7 +114,7 @@ function TurfAdminRegisterPage() {
                                         onChange={base64}
                                         acceptedFiles=".jpg,.jpeg,.png"
                                         type="file"
-                                        name="image"
+                                        name="profile"
                                     />
                                 </div>
                                 <div className="w-40">
@@ -172,6 +176,21 @@ function TurfAdminRegisterPage() {
 
                                     <div className="absolute ms-4 inset-y-0 flex items-center">
                                         <FaPhoneAlt size={15} color="gray" />
+                                    </div>
+                                </div>
+                                {/* place */}
+                                <div className="relative mt-3">
+                                    <input
+                                        className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+                                        id="username"
+                                        type="text"
+                                        onChange={handleInputChange}
+                                        name="place"
+                                        placeholder="Enter your Place"
+                                    />
+
+                                    <div className="absolute ms-4 inset-y-0 flex items-center">
+                                        <FaCity size={15} color="gray" />
                                     </div>
                                 </div>
                                 {/* Aadhar */}
