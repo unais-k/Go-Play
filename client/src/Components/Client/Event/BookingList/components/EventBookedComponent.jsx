@@ -14,7 +14,6 @@ function EventBookedComponent() {
 
     const data = async () => {
         const response = await EventBookingDetailsReqApi(token);
-        // console.log(response.data)
         if (response.status === 201) {
             console.log(response.data.result);
             setBookings(response.data.result);
@@ -32,14 +31,14 @@ function EventBookedComponent() {
                 <div class="">
                     <div class="overflow-x-auto">
                         <div class="min-w-screen  rounded ps-5 justify-center  font-sans overflow-hidden">
-                            <div class="w-full">
+                            <div class="w-full pt-16">
                                 {bookings.length > 0 ? (
-                                    <div class="p-10">
+                                    <div class="p-10" className="grid grid-cols-2">
                                         {bookings.map((res) => {
                                             return (
-                                                <>
+                                                <div key={res._id}>
                                                     <ListCard booking={res} />
-                                                </>
+                                                </div>
                                             );
                                         })}
                                     </div>

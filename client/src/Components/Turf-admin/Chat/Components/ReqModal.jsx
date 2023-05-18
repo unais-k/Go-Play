@@ -14,8 +14,8 @@ export default function RequestModal({ setReqModal }) {
                                 className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                 onClick={() => setReqModal((state) => !state)}
                             >
-                                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                    ×
+                                <span className="bg-transparent text-dark h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                    X
                                 </span>
                             </button>
                         </div>

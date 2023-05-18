@@ -42,16 +42,14 @@ export const GetAdminPermissionResApi = async (req, res, next) => {
         const find = await TurfAdminModel.findOne({ _id: req.user.id });
         const findUser = await notificationModel.findOne({ sender: req.user.id, status: true });
         if (!findUser) {
-            res.status(203).json({ result: findUser, status: true });
-        } else if (findUser) {
-            res.status(202).json({ status: "OK" });
-        } else {
             const notifiCation = await notificationModel.create({
                 sender: req.user.id,
                 name: find.name,
                 status: false,
             });
             res.status(201).json({ result: notifiCation });
+        } else if (findUser) {
+            res.status(202).json({ status: "OK" });
         }
     } catch (error) {
         console.log(error.message);

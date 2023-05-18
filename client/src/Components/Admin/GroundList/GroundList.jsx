@@ -62,27 +62,27 @@ function GroundListPageAdmin() {
                                     </tr>
                                 </thead>
                                 <tbody className="text-gray-600 text-sm font-light">
-                                    {state.map((res) => {
+                                    {state?.map((res) => {
                                         return (
                                             <tr className="border-b border-gray-200 hover:bg-gray-100">
                                                 <td className="py-3 px-6 text-left">
                                                     <div className="flex items-center">
                                                         <div className="mr-2">
-                                                            <img className="w-6 h-6 rounded-full" src={res.images} />
+                                                            <img className="w-6 h-6 rounded-full" src={res?.images} />
                                                         </div>
                                                         <span></span>
                                                     </div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center whitespace-nowrap">
                                                     <div className=" text-center">
-                                                        <span className="font-medium ">{res.name}</span>
+                                                        <span className="font-medium ">{res?.name}</span>
                                                     </div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center font-bold">
-                                                    <div className="items-center justify-center">{res.Owner.name}</div>
+                                                    <div className="items-center justify-center">{res?.Owner?.name}</div>
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
-                                                    {res.status ? (
+                                                    {res?.status ? (
                                                         <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
                                                             Blocked
                                                         </span>
@@ -94,17 +94,17 @@ function GroundListPageAdmin() {
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
                                                     <div className="flex item-center justify-center">
-                                                        {res.status ? (
+                                                        {res?.status ? (
                                                             <div
                                                                 className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                                                                onClick={() => handleUnBlock(res._id)}
+                                                                onClick={() => handleUnBlock(res?._id)}
                                                             >
                                                                 <TbLockOpenOff size={20} />
                                                             </div>
                                                         ) : (
                                                             <div
                                                                 className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                                                                onClick={() => handleBlock(res._id)}
+                                                                onClick={() => handleBlock(res?._id)}
                                                             >
                                                                 <TbLockOpen size={20} />
                                                             </div>
@@ -114,7 +114,7 @@ function GroundListPageAdmin() {
                                                 <td className="py-3 px-6 text-center">
                                                     <div className="flex item-center justify-center">
                                                         <div
-                                                            onClick={() => handleGroundView(res._id)}
+                                                            onClick={() => handleGroundView(res?._id)}
                                                             className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                                                         >
                                                             <GrView size={20} />

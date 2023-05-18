@@ -6,14 +6,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AddEventReqApi, GroundViewReqApi, TimeSaveOnEventReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
 import { message } from "antd";
-import LabelCheckbox from "./LabelCheckbox";
+import LabelCheckbox from "./Components/LabelCheckbox";
+import FormComponent from "./Components/FormComponent";
 
 function AddEventComponent() {
     const navigate = useNavigate();
     const token = useSelector((state) => state.turfAdminLogin.token);
     const params = useParams();
+
     const [viewData, setViewData] = useState([]);
     const [time, setTime] = useState([]);
+    const [addEvent, setAddEvent] = useState(true);
+    const [showTime, setShowTime] = useState(false);
     const [eventData, setEventData] = useState([]);
     const [sport, setSport] = useState([]);
 
@@ -26,6 +30,7 @@ function AddEventComponent() {
         priceAtNight: "",
     });
     const groundId = params.id;
+    console.log(groundId);
 
     const groundDetails = async () => {
         const response = await GroundViewReqApi(groundId, token);
@@ -125,6 +130,8 @@ function AddEventComponent() {
             message.success("Event added");
             setEventData(response.data.result);
             setTime(response.data.result.slots);
+            setShowTime(true);
+            setAddEvent(false);
             console.log(time);
             move();
         }
@@ -149,86 +156,18 @@ function AddEventComponent() {
                 <div class="max-w-2xl bg-white py-10 px-5 m-auto w-full mt-10">
                     <div class="text-3xl mb-6 text-center ">Ready to build your Dream?</div>
 
-                    <form onSubmit={handleSubmit}>
-                        <div class="grid gap-4 max-w-xl m-auto">
-                            <div className="col-span-2">
-                                <input
-                                    type="groundName"
-                                    name="groundName"
-                                    onChange={handleInputChange}
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    placeholder="Ground name"
-                                />
-                            </div>
-                            <LabelCheckbox handleCheckboxSport={handleCheckboxSport} />
-
-                            <div class="col-span-2">
-                                <select
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="password"
-                                    type="text"
-                                    onChange={handleInputChange}
-                                    name="type"
-                                >
-                                    <option value="">Choose type</option>
-                                    {type.map((obj, index) => {
-                                        return (
-                                            <option key={index + Math.round(Math.random) * 124} value={obj.name}>
-                                                {obj.name}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
-
-                            <div class="col-span-2">
-                                <select
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="password"
-                                    type="text"
-                                    onChange={handleInputChange}
-                                    name="size"
-                                >
-                                    <option value="">Choose size</option>
-                                    {size.map((obj, index) => {
-                                        return (
-                                            <option key={index + Math.round(Math.random) * 124} value={obj.name}>
-                                                {obj.name}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
-                            <div className="col-span-2 lg:col-span-1">
-                                <input
-                                    type="price"
-                                    name="price"
-                                    onChange={handleInputChange}
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    placeholder="Price"
-                                />
-                            </div>
-                            <div className="col-span-2 lg:col-span-1">
-                                <input
-                                    type="priceAtNight"
-                                    onChange={handleInputChange}
-                                    name="priceAtNight"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    placeholder="Price at night"
-                                />
-                            </div>
-                            <div className="text-lime-500 text-sm">Submit for Time manage</div>
-
-                            <div class="col-span-2 text-right">
-                                <button class="py-3 px-6 bg-green-500 text-white font-bold w-full sm:w-32" type="submit">
-                                    Submit
-                                </button>
-                            </div>
-                            <div className="">
-                                <TimeSlot mDiv={movingDiv} eventData={eventData} time={time} />
-                            </div>
+                    {addEvent && (
+                        <FormComponent
+                            handleCheckboxSport={handleCheckboxSport}
+                            handleInputChange={handleInputChange}
+                            handleSubmit={handleSubmit}
+                        />
+                    )}
+                    {showTime && (
+                        <div className="">
+                            <TimeSlot mDiv={movingDiv} eventData={eventData} />
                         </div>
-                    </form>
+                    )}
                 </div>
             </div>
         </div>

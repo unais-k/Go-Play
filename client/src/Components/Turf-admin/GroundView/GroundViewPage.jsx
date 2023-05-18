@@ -3,13 +3,11 @@ import React, { useEffect, useState } from "react";
 import { HiHome } from "react-icons/hi";
 import ProfileCard from "./Components/ProfileCard";
 import AboutComponent from "./Components/AboutComponent";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { GroundViewReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
 import { message } from "antd";
-import TimeSlot from "./Components/TimeSlot";
-import DetailsComponent from "./Components/DetailsComponent";
 import TodoApp from "./Components/Todo/Todo";
 import ListEvent from "./Components/ListEvent";
 
@@ -21,9 +19,6 @@ function GroundViewPage() {
     const objId = useParams();
     const data = objId.id;
 
-    useEffect(() => {
-        groundView();
-    }, [""]);
     const groundView = async () => {
         const response = await GroundViewReqApi(data, token);
         if (response.status === 201) {
@@ -33,6 +28,10 @@ function GroundViewPage() {
             message.error("Something went wrong");
         }
     };
+
+    useEffect(() => {
+        token && groundView();
+    }, [token]);
 
     const handleAddEvent = (id) => {
         navigate("/turf-admin/add-event/" + id);

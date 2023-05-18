@@ -2,7 +2,6 @@ import { AxiosTurfAdmin } from "../AxiosInstance";
 import AddEvent from "./../../Pages/Turf-Admin/AddEvent";
 
 export const addGroundReqApi = async (data, token) => {
-    console.log(data, "data", token, "token");
     try {
         const response = AxiosTurfAdmin.post("/ground-add", data, {
             headers: { Authorization: "Bearer " + token },
@@ -38,7 +37,6 @@ export const GroundListReqApi = async (token) => {
 };
 
 export const GroundViewReqApi = async (data, token) => {
-    console.log(data, "data", token, "token");
     try {
         const response = AxiosTurfAdmin.get(`/ground-view?id=${data}`, {
             headers: { Authorization: "Bearer " + token },
@@ -117,8 +115,6 @@ export const RuleAddReqApi = (data, token) => {
 };
 
 export const RuleDeleteReqApi = (data, token) => {
-    console.log(data, "data", token, "token");
-
     try {
         const response = AxiosTurfAdmin.delete(`/rule-delete?index=${data.deleteId}&id=${data.id}`, {
             headers: { Authorization: "Bearer " + token },
@@ -131,7 +127,6 @@ export const RuleDeleteReqApi = (data, token) => {
 };
 
 export const RuleUpdateFindReqApi = (data, token) => {
-    console.log(data, "data", token, "token");
     try {
         const response = AxiosTurfAdmin.get(`/rule-update-find?id=${data.id}&index=${data.index}`, {
             headers: { Authorization: "Bearer " + token },
@@ -157,7 +152,6 @@ export const RuleUpdateReqApi = (data, token) => {
 
 export const SelectedTimeReqApi = async (data, token) => {
     try {
-        console.log(data, "data", token, "token");
         const response = AxiosTurfAdmin.post(`/selected-time-slot`, data, {
             headers: { Authorization: "Bearer " + token },
         });
@@ -170,7 +164,6 @@ export const SelectedTimeReqApi = async (data, token) => {
 
 export const CancelTimeReqApi = async (data, token) => {
     try {
-        console.log(data, "data", token, "token");
         const response = AxiosTurfAdmin.post(`/canceled-time-slot`, data, {
             headers: { Authorization: "Bearer " + token },
         });
@@ -182,8 +175,6 @@ export const CancelTimeReqApi = async (data, token) => {
 };
 
 export const GroundDetailSubmitReqApi = async (data, id, token) => {
-    console.log(id);
-    console.log(data, "data", token, "token");
     try {
         const response = AxiosTurfAdmin.post(`/ground-detail-form-submit?id=${id}`, data, {
             headers: { Authorization: "Bearer " + token },
@@ -195,7 +186,6 @@ export const GroundDetailSubmitReqApi = async (data, id, token) => {
 };
 
 export const AddEventReqApi = async (data, token) => {
-    console.log(data, "data", token, "token");
     try {
         const response = AxiosTurfAdmin.post(`/add-event`, data, {
             headers: { Authorization: "Bearer " + token },

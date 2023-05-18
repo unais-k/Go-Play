@@ -52,6 +52,12 @@ const groundSchema = new mongoose.Schema(
         description: {
             type: String,
         },
+        events: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "event",
+            },
+        ],
         nearCity: {
             type: String,
         },

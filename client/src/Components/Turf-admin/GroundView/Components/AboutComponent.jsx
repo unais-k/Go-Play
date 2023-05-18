@@ -50,144 +50,50 @@ function AboutComponent({ viewData }) {
                 <span class="tracking-wide">About</span>
             </div>
             <div class="text-gray-700">
-                {viewData.length === 0 ? (
-                    <div class="grid md:grid-cols-2 text-sm">
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Owner name</div>
-                            <div class="px-4 py-2">Manual</div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Venue Name</div>
-                            <div class="px-4 py-2">Soccer club</div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Gender</div>
-                            <div class="px-4 py-2">Female</div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Contact No.</div>
-                            <div class="px-4 py-2">+917594022964</div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Current Address</div>
-                            <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Permanant Address</div>
-                            <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Email.</div>
-                            <div class="px-4 py-2">
-                                <a class="text-blue-800" href="mailto:jane@example.com">
-                                    jane@example.com
-                                </a>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Birthday</div>
-                            <div class="px-4 py-2">Feb 06, 1998</div>
-                        </div>
-                    </div>
-                ) : (
-                    <div class="grid md:grid-cols-2 text-sm">
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Owner name</div>
-                            <div class="px-4 py-2">{viewData.Owner.name}</div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Venue Name</div>
-                            <div class="px-4 py-2">{viewData.name}</div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Contact No.</div>
-                            <div class="px-4 py-2">+91{viewData.phone}</div>
-                        </div>
-
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Available Status</div>
-                            <div class="px-4 py-2">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        value={viewData.status}
-                                        onClick={handleToggle}
-                                        class="sr-only peer"
-                                        checked={toggle}
-                                    />
-                                    <div class="w-11 h-6 bg-blue-600 peer-focus:outline-none dark:peer-focus:ring-blue-800  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gray-200"></div>
-                                </label>
-                                {/* ) : (
-                                    <label class="relative inline-flex items-center cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            value={toggle}
-                                            onClick={handleToggle}
-                                            checked={toggle}
-                                            class="sr-only peer"
-                                        />
-                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-blue-800  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                    </label>
-                                )} */}
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Email.</div>
-                            <div class="px-4 py-2">
-                                <a class="" href={`mailto:${viewData.email}`}>
-                                    {viewData.email}
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Created At</div>
-                            <div class="px-4 py-2">{date}</div>
-                        </div>
-                    </div>
-                )}
-                {/* <div class="grid md:grid-cols-2 text-sm">
+                <div class="grid md:grid-cols-2 text-sm">
                     <div class="grid grid-cols-2">
                         <div class="px-4 py-2 font-semibold">Owner name</div>
-                        <div class="px-4 py-2">{viewData.Owner.name}</div>
+                        <div class="px-4 py-2">{viewData?.Owner?.name}</div>
                     </div>
                     <div class="grid grid-cols-2">
                         <div class="px-4 py-2 font-semibold">Venue Name</div>
-                        <div class="px-4 py-2">{viewData.name}</div>
-                    </div>
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Gender</div>
-                        <div class="px-4 py-2">Female</div>
+                        <div class="px-4 py-2">{viewData?.name}</div>
                     </div>
                     <div class="grid grid-cols-2">
                         <div class="px-4 py-2 font-semibold">Contact No.</div>
-                        <div class="px-4 py-2">+91{viewData.phone}</div>
+                        <div class="px-4 py-2">+91{viewData?.phone}</div>
                     </div>
+
                     <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Current Address</div>
-                        <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
-                    </div>
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Permanant Address</div>
-                        <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>
+                        <div class="px-4 py-2 font-semibold">Available Status</div>
+                        <div class="px-4 py-2">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value={viewData?.status}
+                                    onClick={handleToggle}
+                                    class="sr-only peer"
+                                    checked={toggle}
+                                />
+                                <div class="w-11 h-6 bg-blue-600 peer-focus:outline-none dark:peer-focus:ring-blue-800  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gray-200"></div>
+                            </label>
+                        </div>
                     </div>
                     <div class="grid grid-cols-2">
                         <div class="px-4 py-2 font-semibold">Email.</div>
                         <div class="px-4 py-2">
-                            <a class="text-blue-800" href="mailto:jane@example.com">
-                                jane@example.com
+                            <a class="" href={`mailto:${viewData?.email}`}>
+                                {viewData?.email}
                             </a>
                         </div>
                     </div>
+
                     <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Birthday</div>
-                        <div class="px-4 py-2">Feb 06, 1998</div>
+                        <div class="px-4 py-2 font-semibold">Created At</div>
+                        <div class="px-4 py-2">{date}</div>
                     </div>
-                </div> */}
+                </div>
             </div>
-            {/* <button class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
-                Show Full Information
-            </button> */}
         </div>
     );
 }

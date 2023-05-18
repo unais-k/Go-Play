@@ -56,6 +56,7 @@ const Sidebar = () => {
                     {Menus.map((menu, index) => (
                         <Link to={menu.path} key={index}>
                             <li
+                                key={index + Math.round(Math.random) * 124}
                                 className={`flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700
                         ${menu.gap ? "mt-9" : "mt-2"} ${location.pathname === menu.path && "bg-gray-200 dark:bg-gray-700"}`}
                             >
@@ -90,6 +91,7 @@ const Sidebar = () => {
                     {Menus.map((menu, index) => (
                         <Link to={menu.path} key={index} onClick={() => setMobileMenu(false)}>
                             <span
+                                key={index + Math.round(Math.random) * 124}
                                 className={` ${
                                     location.pathname === menu.path && "bg-gray-200 dark:bg-gray-700"
                                 } p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700`}

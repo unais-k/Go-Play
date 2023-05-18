@@ -2,17 +2,22 @@ import React from "react";
 import { AiFillStar } from "react-icons/ai";
 import { FaMapPin } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-function    ClientCard({ res }) {
+function ClientCard({ res }) {
     const navigate = useNavigate();
     const handleView = (id) => {
-        navigate(`/ground-view/${res._id}`);
+        if (res.events.length) {
+            navigate(`/ground-view/${res._id}`);
+        } else {
+            toast.warning("Ground is under Maintenance");
+        }
     };
     return (
         <div>
             <div className="flex w-full my-3" onClick={() => handleView(res._id)}>
                 <div className="me-3 w-3/6">
-                    <img className="h-44 mx-3 px-3" src={res.images} alt="" />
+                    <img className="h-44 mx-3 w-72 px-3" src={res.images} alt="" />
                 </div>
                 <div className="w-3/5 ms-4">
                     <div>

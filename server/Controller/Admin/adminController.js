@@ -149,6 +149,7 @@ export const FindCity = async (req, res, next) => {
 export const GroundListAdminResApi = async (req, res, next) => {
     try {
         const groundList = await GroundModel.find({}).populate("Owner");
+        console.log(groundList);
         res.status(200).json({ result: groundList });
     } catch (error) {
         console.log(error, "error");

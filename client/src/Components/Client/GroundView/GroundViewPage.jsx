@@ -188,7 +188,7 @@ function GroundViewPage() {
 
     const handleBookNow = async (id) => {
         const response = await SelectTypeOfReqApi(id);
-        console.log(response.data.result);
+        console.log(response.data.result, "result");
         setSport(response.data.result);
         bookNow();
     };

@@ -34,6 +34,7 @@ const offerSchema = new mongoose.Schema(
         advance: { type: String },
         sport: { type: String },
         advance: { type: String },
+        bookingStatus: { type: Boolean },
         total: { type: String },
         paymentId: { type: String },
         status: { type: String },

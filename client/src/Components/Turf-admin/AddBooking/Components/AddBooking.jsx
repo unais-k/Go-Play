@@ -9,10 +9,10 @@ import {
     OnDateBookedReqApi,
     SelectTypeOfReqApi,
 } from "../../../../API/Services/TurfAdminRequest";
-import { message } from "antd";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import TimeComponent from "./TimeComponent";
+import { toast } from "react-toastify";
 
 function AddBookingViewComponent() {
     const token = useSelector((state) => state.turfAdminLogin.token);
@@ -36,14 +36,11 @@ function AddBookingViewComponent() {
     const [sport, setSport] = useState([]);
     const [selectedSport, setSelectedSport] = useState("");
     const [time, setTime] = useState([]);
-    const [event, setEvent] = useState([]);
     const [selectSlot, setSelectSlot] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState([]);
     const [eventOnTime, setEventOnTime] = useState([]);
     const [date, setDate] = useState(new Date());
     const [price, setPrice] = useState(0);
-    const [bookedData, setBookedData] = useState([]);
-    const [bookedTime, setBookedTime] = useState([]);
     const [ground, setGround] = useState([]);
     const [bookingData, setBookingData] = useState({
         name: "",
@@ -61,7 +58,7 @@ function AddBookingViewComponent() {
         if (response.status === 201) {
             setState(response.data.result);
         } else {
-            message.error("Something went wrong");
+            toast.error("Something went wrong");
         }
     };
 
@@ -115,8 +112,6 @@ function AddBookingViewComponent() {
 
     const bookedFetchOnDate = async (date) => {
         const response = await OnDateBookedReqApi({ id: selectedEvent[0]._id, date: date }, token);
-        console.log(response.data);
-        setBookedData(response.data.result);
 
         let time2 = time.map((val) => {
             if (response.data.time[0]) {
@@ -135,8 +130,6 @@ function AddBookingViewComponent() {
             return val;
         });
         setTime(time2);
-
-        setBookedTime(response.data.time);
     };
 
     const handleDateChange = async (date) => {
@@ -160,7 +153,6 @@ function AddBookingViewComponent() {
 
     // selecting time slots
     const handleBooking = async (id) => {
-        console.log(id);
         const compare = await selectSlot.find((res) => JSON.stringify(res) === JSON.stringify(id));
 
         if (!compare) {
@@ -186,7 +178,6 @@ function AddBookingViewComponent() {
             setSelectSlot(selectSlot.filter((val) => val.timeId !== id.timeId));
             setPrice(price - id.price);
         }
-        // bookNow4();
         setShowDiv3(true);
     };
 
@@ -209,8 +200,6 @@ function AddBookingViewComponent() {
         setSelectSlot([]);
         setShowDiv3(false);
     };
-
-    console.log(bookingData, "data");
 
     return (
         <div>

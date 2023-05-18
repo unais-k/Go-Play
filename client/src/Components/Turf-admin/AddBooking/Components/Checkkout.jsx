@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { SubmitBookingAdminReqApi } from "../../../../API/Services/TurfAdminRequest";
 import { useNavigate } from "react-router-dom";
-import { message } from "antd";
 import { toast } from "react-toastify";
 
 function CheckOutComponent({ bookingData, setBookingData, movingDiv, handleOnchange }) {

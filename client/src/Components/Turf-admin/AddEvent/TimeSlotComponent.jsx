@@ -58,6 +58,7 @@ function TimeSlotComponent({ eventData, time }) {
                 ) : (
                     <div className="grid grid-cols-4 content-center gap-3">
                         {slots?.map((res) => {
+                            console.log(res.status, "------==");
                             return (
                                 <>
                                     {res.status === true ? (
@@ -70,7 +71,7 @@ function TimeSlotComponent({ eventData, time }) {
                                         </div>
                                     ) : (
                                         <div
-                                            className="bg-gray-100 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
+                                            className=" bg-gray-100 py-1 w-fit px-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100 "
                                             key={res.index}
                                             onClick={() => handleSelect(res._id)}
                                         >

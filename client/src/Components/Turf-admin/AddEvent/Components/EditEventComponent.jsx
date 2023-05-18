@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import { EventDetailFetchReqApi } from "../../../API/Services/TurfAdminRequest";
-import TimeSlotComponent from "./TimeSlotComponent";
-import EditLabelComponent from "./EditLabelComponent";
+import { EventDetailFetchReqApi } from "../../../../API/Services/TurfAdminRequest";
+import EditLabelComponent from "../Components/EditLabelComponent";
+import TimeSlotComponent from "../TimeSlotComponent";
 
 function EditEventComponent() {
     const params = useParams();
@@ -20,6 +20,7 @@ function EditEventComponent() {
         const response = await EventDetailFetchReqApi(eventId, token);
         setEventData(response.data.result);
         setTime(response.data.result.slots);
+        setSport(response.data.result.eventAvailable);
     };
 
     const size = [
@@ -30,20 +31,13 @@ function EditEventComponent() {
         { name: "10 * 10" },
         { name: "11 * 11" },
     ];
-    const title = [
-        { titles: "Football" },
-        { titles: "Cricket" },
-        { titles: "Tennis" },
-        { titles: "Basket Ball" },
-        { titles: "Volley Ball" },
-        { titles: "Badminton" },
-    ];
+
     const type = [{ name: "Turf" }, { name: "Soapy" }, { name: "Grass" }, { name: "Sand" }, { name: "Court" }];
     useEffect(() => {
         if (params) {
             eventDetail();
         }
-    }, [""]);
+    }, [params]);
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("submit");
@@ -56,6 +50,7 @@ function EditEventComponent() {
             setSport(sport.filter((e) => e !== value));
         }
     };
+    console.log(sport);
 
     return (
         <div>
@@ -85,10 +80,7 @@ function EditEventComponent() {
                                     />
                                 </div>
                                 <div class="col-span-2 ">
-                                    <EditLabelComponent
-                                        eventAvailable={eventData.eventAvailable}
-                                        handleCheckboxSport={handleCheckboxSport}
-                                    />
+                                    <EditLabelComponent sport={sport} handleCheckboxSport={handleCheckboxSport} />
                                 </div>
 
                                 <div class="col-span-2">
@@ -99,7 +91,7 @@ function EditEventComponent() {
                                         // onChange={handleInputChange}
                                         name="type"
                                     >
-                                        <option value="">Choose type</option>
+                                        <option value="">{eventData.type}</option>
                                         {type.map((obj, index) => {
                                             return <option key={index + Math.round(Math.random) * 124}>{obj.name}</option>;
                                         })}
@@ -114,7 +106,7 @@ function EditEventComponent() {
                                         // onChange={handleInputChange}
                                         name="size"
                                     >
-                                        <option value="">Choose size</option>
+                                        <option value="">{eventData.size}</option>
                                         {size.map((obj, index) => {
                                             return <option key={index + Math.round(Math.random) * 124}>{obj.name}</option>;
                                         })}

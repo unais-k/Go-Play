@@ -1,43 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { otpVerify, userRegister } from "../../../API/Services/authReq";
-import { message } from "antd";
-import { toast } from "react-toastify";
+import React, { useRef, useState } from "react";
 
-function OtpPage() {
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    const [formData, setFormData] = useState({
-        phone: "",
-        name: "",
-        email: "",
-        password: "",
-    });
-    const [otp, setOtp] = useState({
-        otp1: "",
-        otp2: "",
-        otp3: "",
-        otp4: "",
-        otp5: "",
-        otp6: "",
-    });
-
+function OtpComponent({ handleOTP, otp, setOtp }) {
     const input1Ref = useRef(null);
     const input2Ref = useRef(null);
     const input3Ref = useRef(null);
     const input4Ref = useRef(null);
     const input5Ref = useRef(null);
     const input6Ref = useRef(null);
-
-    useEffect(() => {
-        setFormData({
-            email: location.state.email,
-            name: location.state.name,
-            phone: location.state.phone,
-            password: location.state.password,
-        });
-    }, []);
 
     const handleChange = (e) => {
         setOtp({ ...otp, [e.target.name]: e.target.value });
@@ -93,30 +62,15 @@ function OtpPage() {
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const values = Object.values(otp);
-        const otpValue = values.join("");
-        const phone = formData.phone;
-        const response = otpVerify({ otpValue, phone }).then(async (res) => {
-            if (res.status === 200) {
-                const data = await userRegister(formData);
-                if (data.status === 201) navigate("/login");
-                else if (data.status === 500) toast.warning(data.data.error);
-            } else if (res.status === 400) message.warning("Something went wrong");
-            else if (res.status === 500) toast.warning(res.data.error);
-        });
-    };
-
     return (
         <div className="">
-            <div className="bg-gray-300 h-screen">
+            <div className="h-screen">
                 <div className="p-10 lg:w-1/2 mx-auto">
-                    <div className="bg-gray-100 rounded-lg py-12 px-4 lg:px-24 mt-20">
+                    <div className="bg-gray-100 rounded-lg py-12 px-4 lg:px-24">
                         <p className="text-center text-sm text-gray-500 font-light">
                             <b>O T P</b> Validation
                         </p>
-                        <form className="mt-6 flex flex-col" onSubmit={handleSubmit}>
+                        <form className="mt-6 flex flex-col" onSubmit={(e) => handleOTP(e)}>
                             <div className="mt-3 flex justify-center">
                                 <input
                                     name="otp1"
@@ -203,4 +157,4 @@ function OtpPage() {
     );
 }
 
-export default OtpPage;
+export default OtpComponent;

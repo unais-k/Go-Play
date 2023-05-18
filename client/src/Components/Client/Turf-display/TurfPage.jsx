@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, Sidebar } from "flowbite-react";
-import { AiFillStar } from "react-icons/ai";
-import { HiArrowSmRight, HiChartPie, HiHome, HiInbox, HiShoppingBag, HiTable, HiUser } from "react-icons/hi";
-import Filter from "./Filter";
+import { Breadcrumb } from "flowbite-react";
+import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 
 import { GroundListReqApi, SearchGroundReqApi } from "../../../API/Services/ClientRequest";
-import { Skeleton, message } from "antd";
-import { FaMapPin } from "react-icons/fa";
+import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import ClientCard from "../Layout/ClientCard";
 
 function TurfPage() {
     const navigate = useNavigate();
-    const [searchValue, setSearchValue] = useState("");
     const [state, setState] = useState([]);
+    const [click, setClick] = useState(null);
     useEffect(() => {
         groundList();
     }, []);
@@ -26,9 +23,8 @@ function TurfPage() {
             message.error("Something went wrong");
         }
     };
-    const handleView = async (id) => {
-        navigate("/ground-view", { state: { data: id } });
-    };
+    console.log(state);
+
     const APIcall = async (id) => {
         const response = await SearchGroundReqApi(id);
         if (response.status === 201) {
@@ -53,11 +49,8 @@ function TurfPage() {
                     <Breadcrumb.Item href="#">Mumbai</Breadcrumb.Item>
                     <Breadcrumb.Item>Football</Breadcrumb.Item>
                 </Breadcrumb>
-                <div className="flex">
-                    <div className="list-none ">
-                        <Filter />
-                    </div>
-                    <div className="listing w-full">
+                <div className="flex justify-center">
+                    <div className="listing w-10/12">
                         <div className="search-bar justify-center items-center flex flex-col pt-3">
                             <p className="text-lime-600 text-sm font-bold">
                                 Search for the best turf grounds, indoor courts grounds in your city
@@ -82,7 +75,7 @@ function TurfPage() {
 
                         <div className="card-list">
                             {state
-                                ? state.map((res) => {
+                                ? state?.map((res) => {
                                       return <ClientCard res={res} />;
                                   })
                                 : "Not found any"}

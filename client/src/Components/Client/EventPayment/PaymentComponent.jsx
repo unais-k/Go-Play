@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
 import { EventSubmitReqApi } from "../../../API/Services/ClientRequest";
-import { message } from "antd";
 import { toast } from "react-toastify";
 
 function PaymentComponent() {
@@ -29,10 +28,8 @@ function PaymentComponent() {
             setTotal(location.state.total);
             setSelectedType(location.state.offer);
             setAdvance(location.state.advance);
-        } else {
-            console.log(11);
         }
-    }, [""]);
+    }, [location.state]);
 
     const handlePayment = async (id) => {
         const response = await EventSubmitReqApi(
@@ -101,12 +98,25 @@ function PaymentComponent() {
                                     Offer that beyond your imagination
                                 </p>
                                 <div class="mb-7">
-                                    <p class="mb-1 text-base leading-loose text-body-color"></p>
-                                    <p class="mb-1 text-base leading-loose text-body-color">All UI components</p>
-                                    <p class="mb-1 text-base leading-loose text-body-color">Lifetime access</p>
-                                    <p class="mb-1 text-base leading-loose text-body-color">Free updates</p>
-                                    <p class="mb-1 text-base leading-loose text-body-color">Use on 1 (one) project</p>
-                                    <p class="mb-1 text-base leading-loose text-body-color">3 Months support</p>
+                                    <p class="mb-1 text-base leading-loose text-body-color">
+                                        Time:{" "}
+                                        {time?.map((res) => {
+                                            return <span>{res.slots}</span>;
+                                        })}
+                                    </p>
+                                    <p class="mb-1 text-base leading-loose text-body-color">
+                                        Starting Date: {new Date(date ? date : "").toDateString()}
+                                    </p>
+                                    <p class="mb-1 text-base leading-loose text-body-color">
+                                        Ending Date:{" "}
+                                        {new Date(
+                                            date ? new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000) : ""
+                                        ).toDateString()}
+                                    </p>
+                                    <p class="mb-1 text-base leading-loose text-body-color">Total Amount: {total}</p>
+                                    <p class="mb-1 text-base leading-loose text-body-color">
+                                        Sport : {bookingData[0].sport}
+                                    </p>
                                 </div>
                             </>
                         )}
@@ -134,7 +144,6 @@ function PaymentComponent() {
                                     if (data.orderID) {
                                         console.log(data.orderID, "data.orderId");
                                         await handlePayment(data.orderID);
-                                        alert("its completed");
                                     } else {
                                     }
                                 });

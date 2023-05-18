@@ -21,6 +21,7 @@ function ListCard({ res }) {
                 </h1>
                 <p class="text-grey-darker text-sm">{res.place}</p>
             </header>
+            <div className="text-center">{res?.events?.length > 0 ? <></> : <>Add Grounds to host</>}</div>
 
             <footer class="flex items-center justify-between leading-none p-2 md:p-4">
                 <a class="flex items-center no-underline hover:underline text-black" href="#">

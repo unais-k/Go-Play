@@ -17,10 +17,11 @@ import EventCardComponent from "./EventCardComponent";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import SuccessModal from "./SucessModal";
+import TimeComponent from "./TimeComponent";
 
 function EventMainComponent({ state }) {
     const navigate = useNavigate();
-    console.log(state);
+
     const token = useSelector((state) => state.userLogin.token);
 
     const [groundData, setGroundData] = useState([]);
@@ -56,7 +57,7 @@ function EventMainComponent({ state }) {
     const movingDiv4 = useRef(null);
 
     const GroundData = async () => {
-        const response = await GroundViewReqApi(state.groundDetail._id);
+        const response = await GroundViewReqApi(state?.groundDetail?._id);
 
         if (response.status === 200) {
             setEvent(response.data.events);
@@ -128,10 +129,10 @@ function EventMainComponent({ state }) {
     const bookedFetchOnDate = async (date) => {
         const response = await OnDateBookedReqApi({ id: selectedEvent[0]._id, date: date });
         setBookedData(response.data.result);
-        console.log(response.data.time);
+        console.log(response.data);
 
         let time2 = time.map((val) => {
-            if (response.data.time[0]) {
+            if (response.data.time) {
                 for (let i = 0; i < response.data.time.length; i++) {
                     if (val.booked) {
                         val["booked"] = false;
@@ -151,8 +152,9 @@ function EventMainComponent({ state }) {
         setBookedTime(response.data.time);
     };
 
+    console.log(time, "tim");
+
     const handleDateChange = async (date) => {
-        console.log(date, "date");
         setDate(date);
         await bookedFetchOnDate(date);
     };
@@ -200,6 +202,7 @@ function EventMainComponent({ state }) {
                 groundId: state.groundDetail._id,
                 time: selectSlot,
                 price: price,
+                advance: price / 15,
                 sport: selectedSport,
             });
 
@@ -209,7 +212,6 @@ function EventMainComponent({ state }) {
                     token
                 );
                 if (response.data.result) {
-                    console.log(response.data.result);
                     const details = response.data.result;
                     const res = response.data.result;
                     if (res.length == 0) {
@@ -271,7 +273,6 @@ function EventMainComponent({ state }) {
         },
     ];
 
-    console.log(sport);
     return (
         <div className="px-10">
             <section class="relative z-10 p-10 overflow-hidden bg-white lg:py-[40px]">
@@ -280,6 +281,7 @@ function EventMainComponent({ state }) {
                         {cardTitle.map((res) => {
                             return (
                                 <div
+                                    key={res.id}
                                     onClick={() => {
                                         setStates(res.id);
                                         setSelectedType(res.title);
@@ -329,6 +331,7 @@ function EventMainComponent({ state }) {
                                             {ground?.map((res) => {
                                                 return (
                                                     <div
+                                                        key={res._id}
                                                         className="flex flex-col w-36 h-36 items-center bg-gray-200 m-3 p-5"
                                                         onClick={() => handleSelectGround(res._id)}
                                                     >
@@ -374,45 +377,13 @@ function EventMainComponent({ state }) {
                                 {time?.length > 0 &&
                                     time?.map((res, index) => {
                                         return (
-                                            <div className="m-2">
-                                                {parseInt(res.index) > 17 || parseInt(res.index) < 6 ? (
-                                                    <>
-                                                        <div
-                                                            className={` ${
-                                                                res.onBooking ? "bg-orange-400" : "bg-gray-200"
-                                                            } h-fit py-2 ps-3 w-24 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100`}
-                                                            onClick={() =>
-                                                                handleBooking({
-                                                                    timeId: res._id,
-                                                                    slots: res.time,
-                                                                    price: eventOnTime.priceAtNight,
-                                                                    sport: selectedSport,
-                                                                })
-                                                            }
-                                                        >
-                                                            {res.time}
-                                                        </div>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <div
-                                                            className={` ${
-                                                                res.onBooking ? "bg-orange-400" : "bg-gray-200"
-                                                            } h-fit py-2 ps-3 w-24 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gary-200 duration-100`}
-                                                            onClick={() =>
-                                                                handleBooking({
-                                                                    timeId: res._id,
-                                                                    slots: res.time,
-                                                                    price: eventOnTime.price,
-                                                                    sport: selectedSport,
-                                                                })
-                                                            }
-                                                        >
-                                                            {res.time}
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </div>
+                                            <TimeComponent
+                                                key={res._id}
+                                                handleBooking={handleBooking}
+                                                time={res}
+                                                eventOnTime={eventOnTime}
+                                                selectedSport={selectedSport}
+                                            />
                                         );
                                     })}
                             </div>

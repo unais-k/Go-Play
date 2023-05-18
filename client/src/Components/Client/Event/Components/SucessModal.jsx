@@ -9,6 +9,7 @@ export default function SuccessModal({ bookingData, selectedType, setModal1 }) {
     const token = useSelector((state) => state.userLogin.token);
     const navigate = useNavigate();
     const [time, setTime] = useState([]);
+    const [advance, setAdvance] = useState(null);
     const [date, setDate] = useState(new Date(Date.now()));
     const [price, setPrice] = useState(null);
     const [groundId, setGroundId] = useState(null);
@@ -17,11 +18,16 @@ export default function SuccessModal({ bookingData, selectedType, setModal1 }) {
     useEffect(() => {
         if (bookingData) {
             if (selectedType === "Week") {
-                setPrice(bookingData.price * 7);
+                setPrice(bookingData?.price * 7);
+                setAdvance(bookingData?.advance);
             }
-            setTime(bookingData.time);
-            setDate(bookingData.date);
-            setGroundId(bookingData.groundId);
+            if (selectedType === "Month") {
+                setPrice(bookingData?.price * 30);
+                setAdvance(bookingData?.advance);
+            }
+            setTime(bookingData?.time);
+            setDate(bookingData?.date);
+            setGroundId(bookingData?.groundId);
         }
     }, [bookingData, time]);
 
@@ -33,11 +39,11 @@ export default function SuccessModal({ bookingData, selectedType, setModal1 }) {
                     time: time,
                     date: date,
                     offer: selectedType,
-                    sport: bookingData.sport,
+                    sport: bookingData?.sport,
                     groundId: groundId,
-                    eventId: bookingData.eventId,
+                    eventId: bookingData?.eventId,
                     total: price,
-                    advance: Math.round(price / 13),
+                    advance: Math.round(advance),
                 },
             });
             setModal1(false);

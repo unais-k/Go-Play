@@ -15,13 +15,13 @@ function CardComponents({ data, setShowModal }) {
                     <PopoverRender setShowModal={setShowModal} />
                 </div>
                 <div class="mt-6 w-fit mx-auto">
-                    <img src={data.profile} class="rounded-full w-28 " alt="profile picture" srcset="" />
+                    <img src={data?.profile} class="rounded-full w-28 " alt="profile picture" srcset="" />
                 </div>
                 <div class="mt-8 ">
-                    <h2 class="text-white font-bold text-2xl tracking-wide">{data.name}</h2>
+                    <h2 class="text-white font-bold text-2xl tracking-wide">{data?.name}</h2>
                 </div>
                 <p class="text-emerald-400 font-semibold mt-2.5">Place</p>
-                <p class="text-emerald-400 font-semibold mt-2.5">{data.place}</p>
+                <p class="text-emerald-400 font-semibold mt-2.5">{data?.place}</p>
             </section>
         </>
     );

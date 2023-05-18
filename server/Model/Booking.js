@@ -41,6 +41,7 @@ const bookingSchema = new mongoose.Schema(
         name: { type: String },
         bookingType: { type: String },
         phone: { type: String },
+        bookingStatus: { type: Boolean },
         paymentId: { type: String },
         status: { type: String },
         review: { type: Boolean, default: false },

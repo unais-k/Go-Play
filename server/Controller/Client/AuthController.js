@@ -72,3 +72,47 @@ export const otpVerify = async (req, res, next) => {
         return res.status(500).json({ error: "Internal Server Error !" });
     }
 };
+
+export const FPEmailResApi = async (req, res, next) => {
+    try {
+        const email = req.body.email;
+        const find = await UserModel.findOne({ email: email });
+        console.log(find);
+        // sendOtp(find.phone);
+        res.status(201).json({ result: find, msg: "OTP Send" });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const FPOtpResApi = async (req, res, next) => {
+    try {
+        console.log(req.body);
+        const { otpValue, phoneNum } = req.body;
+        // const response = await verifyOtp(phoneNum, otpValue);
+        // if (response.status == "approved") {
+        const find = await UserModel.findOne({ phone: phoneNum });
+        //     res.status(201).json({ result: find });
+        // } else {
+        //     res.status(203).json({ msg: "OTP error" });
+        // }
+        res.status(201).json({ result: find });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const FPSetResApi = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(password.password, salt);
+        const set = await UserModel.findOneAndUpdate({ email: email }, { $set: { password: hashedPassword } });
+        res.status(201).json({ result: set, msg: "Success" });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};

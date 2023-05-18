@@ -28,7 +28,6 @@ export const FootballListReqApi = async () => {
 };
 
 export const GroundViewReqApi = async (id) => {
-    console.log(id, "id");
     try {
         const response = AxiosClient.get(`/ground-view?id=${id}`);
         return response;
@@ -68,7 +67,6 @@ export const GroundFetchOnSelectReqApi = async (data) => {
 };
 
 export const EventFetchOnSelectReqApi = async (data) => {
-    console.log(data, "event");
     try {
         const response = AxiosClient.get(`/event-fetch?id=${data}`);
         return response;
@@ -79,7 +77,6 @@ export const EventFetchOnSelectReqApi = async (data) => {
 };
 
 export const OnDateBookedReqApi = async (data) => {
-    console.log(data);
     try {
         const response = AxiosClient.get(`/date-event-fetch?id=${data.id}&date=${data.date}`);
         return response;
@@ -247,6 +244,36 @@ export const EventBookingDetailViewReqApi = async (data, token) => {
         const response = AxiosClient.get(`/event-booking-detail-view?id=${data}`, {
             headers: { Authorization: "Bearer " + token },
         });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const FPEmailReqApi = async (data) => {
+    try {
+        const response = AxiosClient.patch(`/email-check`, data);
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const FPOtpReqApi = async (data) => {
+    try {
+        const response = AxiosClient.patch(`/otp-check`, data);
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const FPSetResApi = async (data) => {
+    try {
+        const response = AxiosClient.patch(`/forget-password-submit`, data);
         return response;
     } catch (error) {
         console.log(error.message);

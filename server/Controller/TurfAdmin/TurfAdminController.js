@@ -14,6 +14,7 @@ export const addGroundReq = async (req, res, next) => {
         console.log(req.body);
         const { state, place, nearCity, address, phone, email, pinCode, picturePath, name } = req.body;
         const id = req.user.id;
+        console.log(id);
         const Profile = "profile";
         const result = await cloudinary.uploader
             .upload(picturePath, {
@@ -85,8 +86,6 @@ export const TimeSlotResApi = async (req, res, next) => {
     try {
         console.log(req.body);
         console.log(req.query);
-        // const find = await GroundModel.find({});
-        // res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
@@ -196,11 +195,13 @@ export const RuleUpdateResApi = async (req, res, next) => {
 export const SelectedTimeResApi = async (req, res, next) => {
     try {
         const { id, groundId } = req.body;
+
         const findGround = await eventModel.findOneAndUpdate(
             { _id: groundId, "slots._id": id },
             { $set: { "slots.$.status": true } },
             { new: true }
         );
+        console.log(findGround);
 
         res.status(200).json({ result: findGround.slots });
     } catch (error) {
@@ -259,11 +260,13 @@ export const AddEventResApi = async (req, res, next) => {
             price: data.price,
             priceAtNight: data.priceAtNight,
             size: data.size,
+            eventStatus: false,
             type: data.type,
             groundName: data.groundName,
             slots: req.body.slots,
         });
         await find.save();
+        const eventAdd = await GroundModel.findOneAndUpdate({ _id: groundId }, { $push: { events: find._id } });
 
         res.status(201).json({ result: find });
     } catch (error) {

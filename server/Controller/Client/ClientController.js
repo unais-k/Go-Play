@@ -143,6 +143,8 @@ export const OnDateBookedResApi = async (req, res, next) => {
             selectedTime.push(find[i].time);
         }
         const combinedArray = selectedTime.reduce((acc, curr) => acc.concat(curr), []);
+        console.log(combinedArray);
+
         res.status(201).json({ result: find, time: combinedArray });
     } catch (error) {
         console.log(error);
@@ -258,7 +260,7 @@ export const BookingDetailViewResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
         const find = await bookingModel.findOne({ _id: id }).populate("turf").populate("event");
-        console.log(find);
+
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
@@ -314,7 +316,7 @@ export const SearchGroundResApi = async (req, res, next) => {
                 },
             },
         ]);
-        console.log(find);
+
         res.status(201).json({ result: find });
     } catch (error) {
         console.log(error.message);
@@ -413,9 +415,9 @@ export const EventSubmitResApi = async (req, res, next) => {
                 const formattedDate = date.toISOString().split("T")[0];
                 const book = await bookingModel.create({
                     client: req.user.id,
-                    total: req.body.total,
+                    total: req.body.total / 7,
                     paymentId: req.body.bookingId,
-                    advance: req.body.advance,
+                    advance: req.body.advance / 7,
                     bookDate: formattedDate,
                     offerId: booking._id,
                     sport: bookingData[0].sport,
@@ -434,9 +436,9 @@ export const EventSubmitResApi = async (req, res, next) => {
                 const formattedDate = date.toISOString().split("T")[0];
                 const book = await bookingModel.create({
                     client: req.user.id,
-                    total: req.body.total,
+                    total: req.body.total / 30,
                     paymentId: req.body.bookingId,
-                    advance: req.body.advance,
+                    advance: req.body.advance / 30,
                     bookDate: formattedDate,
                     offer: true,
                     offerId: booking._id,
@@ -447,7 +449,6 @@ export const EventSubmitResApi = async (req, res, next) => {
                 });
             }
         }
-
         res.status(201).json({ result: booking });
     } catch (error) {
         console.log(error.message);
