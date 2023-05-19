@@ -5,7 +5,7 @@ import { PieGraph } from "../Graph/PieGraphComponent";
 
 function DashboardPageAdmin() {
     return (
-        <div>
+        <div className="h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-green-400 scrollbar-slate-700">
             <DashCardComponent />
             <div className="mt-12">
                 <div className=" grid gap-10 grid-cols-1 lg:grid-cols-2">

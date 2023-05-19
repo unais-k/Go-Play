@@ -42,7 +42,7 @@ function TurfGroundListPage() {
             </Breadcrumb>
             <button
                 onClick={handleAddGround}
-                className="text-dark bg-amber-500 rounded text-sm font-bold uppercase m-3 px-4 py-2"
+                className="text-dark mx-5 bg-amber-500 rounded text-sm font-bold uppercase my-3 px-4 py-2"
             >
                 Add Ground
             </button>

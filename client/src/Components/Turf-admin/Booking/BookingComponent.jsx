@@ -56,7 +56,7 @@ function BookingComponent() {
     }, [token]);
 
     return (
-        <div>
+        <div className="h-screen">
             <Breadcrumb aria-label="Solid background breadcrumb example" className="bg-gray-50 py-3 px-5 dark:bg-gray-900">
                 <Breadcrumb.Item href="#" icon={HiHome}>
                     Home
@@ -64,19 +64,19 @@ function BookingComponent() {
                 <Breadcrumb.Item href="#">Venue</Breadcrumb.Item>
                 <Breadcrumb.Item>Bookings</Breadcrumb.Item>
             </Breadcrumb>
-            <div className="pt-5">
+            <div className=" h-fit overflow-y-auto scrollbar-thin scrollbar-thumb-green-400 scrollbar-slate-700">
                 {loader && <Loader />}
                 <div onClick={handleBook}>
-                    <button className="ms-3 px-3 py-2 text-dark bg-amber-500 rounded text-sm font-bold uppercase">
+                    <button className="mx-3 mt-5 px-3 py-2 text-dark bg-amber-500 rounded text-sm font-bold uppercase">
                         Add Booking
                     </button>
                 </div>
                 {data?.length > 0 ? (
                     data?.map((res) => {
                         return (
-                            <div key={res?._id} className="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
+                            <div key={res?._id} className="bg-gray-100 rounded w-fit lg:max-w-full lg:flex m-3">
                                 <div className=" p-4 flex justify-between leading-normal">
-                                    <div className="mb-8">
+                                    <div className="">
                                         <div className="text-gray-900 font-bold text-xl mb-2">{res?.turf?.name}</div>
                                         <div className="text-gray-900 font-normal text-md mb-2">
                                             {res?.event?.groundName}

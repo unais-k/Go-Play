@@ -6,20 +6,24 @@ import ProfileCardComponent from "./Components/ProfileCardComponent";
 import { message } from "antd";
 import AboutCardComponent from "./Components/AboutCardComponent";
 import ListEventComponent from "./Components/ListEventComponent";
+import Loader from "../Layout/Loader";
 
 function GroundViewComponent() {
     const navigate = useNavigate();
     const token = useSelector((state) => state.adminLogin.token);
     const [viewData, setViewData] = useState([]);
     const [event, setEvent] = useState([]);
+    const [loader, setLoader] = useState(false);
     const objId = useParams();
     const data = objId.id;
 
     const groundView = async () => {
+        setLoader(true);
         const response = await GroundViewReqApi(data, token);
         if (response.status === 201) {
             setViewData(response.data.result);
             setEvent(response.data.event);
+            setLoader(false);
         } else {
             message.error("Something went wrong");
         }
@@ -37,6 +41,7 @@ function GroundViewComponent() {
                         <AboutCardComponent viewData={viewData} />
 
                         <div className="my-4"></div>
+                        {loader && <Loader />}
                         <div className="bg-white p-3 shadow-sm rounded-sm">
                             <div className="grid ms:grid-cols-1 ">
                                 {/* <TimeSlot viewData={viewData} />

@@ -4,6 +4,7 @@ import { ChatRequestReqApi, notificationReqApi, turfAdminApproveReq } from "../.
 import { message } from "antd";
 import InboxPage from "./Components/InboxPage";
 import ChatReqComponent from "./Components/ChatReqComponent";
+import Loader from "../Layout/Loader";
 
 function InboxMain() {
     const [loader, setLoader] = useState(false);
@@ -59,8 +60,9 @@ function InboxMain() {
         }
     };
     return (
-        <div>
+        <div className="h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-green-400 scrollbar-slate-700">
             <div>
+                {loader && <Loader />}
                 <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Notification</h1>
             </div>
 
@@ -76,8 +78,8 @@ function InboxMain() {
             </div>
             {data?.map((res) => {
                 return (
-                    <div key={res._id}>
-                        <ChatReqComponent data={res} />;
+                    <div className="mb-32" key={res._id}>
+                        <ChatReqComponent data={res} />
                     </div>
                 );
             })}

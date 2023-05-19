@@ -369,3 +369,17 @@ export const SubmitBookingAdminReqApi = async (data, token) => {
         return error?.response;
     }
 };
+
+export const AdminHomePageReqApi = async (token) => {
+    try {
+        const response = AxiosTurfAdmin.get("/admin-home-page", {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};
+
+// this is pending ............

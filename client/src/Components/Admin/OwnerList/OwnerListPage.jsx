@@ -4,23 +4,27 @@ import { useSelector } from "react-redux";
 import { message } from "antd";
 import { TbLockOpen, TbLockOpenOff } from "react-icons/tb";
 import { GrView } from "react-icons/gr";
+import Loader from "../Layout/Loader";
 
 function OwnerListPage() {
     const [state, setState] = useState([]);
+    const [loader, setLoader] = useState(false);
     const token = useSelector((state) => state.adminLogin.token);
 
-    useEffect(() => {
-        getOwnerList();
-    }, []);
-
     const getOwnerList = async () => {
+        setLoader(true);
         const response = await OwnerListReqApi(token);
         if (response.status === 201) {
             setState(response.data.result);
+            setLoader(false);
         } else {
             message.error("Something wrong try again later");
         }
     };
+
+    useEffect(() => {
+        getOwnerList();
+    }, []);
     return (
         <div>
             <div className="">
@@ -28,6 +32,7 @@ function OwnerListPage() {
                     <h1 className="w-full ms-4 my-3 font-normal text-2xl font-heading uppercase">Owner-List</h1>
                 </div>
                 <div className="">
+                    {loader && <Loader />}
                     <div className="min-w-screen flex items-center justify-center font-sans overflow-hidden">
                         <div className="w-full lg:w-5/6">
                             <div className="bg-white shadow-md rounded my-6">

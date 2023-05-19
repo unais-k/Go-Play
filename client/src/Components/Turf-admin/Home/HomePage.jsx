@@ -3,11 +3,13 @@ import { StackedGraph } from "../Graph/StackedComponent";
 import DashCardComponent from "./Components/DashCardComponent";
 import { DonutGraph } from "../Graph/DonutComponent";
 import Loader from "../Layout/Loader";
+import { useSelector } from "react-redux";
 
 function TurfHomePage() {
+    const token = useSelector((state) => state.turfAdminLogin.token);
     const [loader, setLoader] = useState(false);
     return (
-        <div>
+        <div className="m-5">
             <DashCardComponent />
             {loader && <Loader />}
             <div className="mt-12">

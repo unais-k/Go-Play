@@ -69,6 +69,7 @@ router.patch("/profile-photo-edit", turfAdminVerifyToken, EditProfilePhotoResApi
 router.get("/selected-type", turfAdminVerifyToken, GroundFetchOnSelectResApi);
 router.get("/event-fetch", turfAdminVerifyToken, EventFetchOnSelectResApi);
 router.get("/date-event-fetch", turfAdminVerifyToken, OnDateBookedResApi);
+router.get("/admin-home-page", turfAdminVerifyToken);
 router.post("/handle-submit-admin", turfAdminVerifyToken, SubmitBookingAdminResApi);
 
 export default router;

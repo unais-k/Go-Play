@@ -5,20 +5,21 @@ import { BlockGroundReqApi, UnblockGroundReqApi, groundListAdminReqApi } from ".
 import { message } from "antd";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Layout/Loader";
 
 function GroundListPageAdmin() {
     const token = useSelector((state) => state.adminLogin.token);
     const navigate = useNavigate();
     const [state, setState] = useState([]);
-    useEffect(() => {
-        groundList();
-    }, [""]);
+    const [loader, setLoader] = useState(false);
 
     const groundList = async () => {
+        setLoader(true);
         const response = await groundListAdminReqApi(token);
         console.log(response);
         if (response.status === 200) {
             setState(response.data.result);
+            setLoader(false);
         } else {
             message.error("Something went wrong");
         }
@@ -37,6 +38,10 @@ function GroundListPageAdmin() {
         console.log("Unblock");
     };
 
+    useEffect(() => {
+        groundList();
+    }, [""]);
+
     const handleGroundView = async (id) => {
         navigate("/admin/ground-view/" + id);
     };
@@ -47,8 +52,9 @@ function GroundListPageAdmin() {
                 <h1 className="w-full ms-4 my-3 font-normal text-2xl font-heading uppercase">Ground-List</h1>
             </div>
             <div className="">
-                <div className="min-w-screen  bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
-                    <div className="w-full lg:w-5/6">
+                <div className="min-w-screen flex items-center justify-center font-sans">
+                    <div className="">
+                        {loader && <Loader />}
                         <div className="bg-white shadow-md rounded my-6">
                             <table className="min-w-max w-full table-auto">
                                 <thead>

@@ -10,7 +10,6 @@ function ReviewComponent() {
     const [loader, setLoader] = useState(false);
     const findReview = async () => {
         setLoader(true);
-
         const response = await FindReviewReqApi(token);
         if (response.status === 201) {
             setReviewFetch(response.data.result);
@@ -27,7 +26,7 @@ function ReviewComponent() {
     return (
         <div className="w-11/12">
             {loader && <Loader />}
-            <div className="text-2xl font-bold text-lime-600 mt-10 mb-5">Reviews</div>
+            <div className="text-2xl font-bold text-lime-600 mt-10 ms-10 mb-5">Reviews</div>
             <div className="grid grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1">
                 {reviewFetch?.map((res) => {
                     return (

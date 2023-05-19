@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 import CityModel from "../../Model/City.js";
-import timeModel from "../../Model/Time.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
 import { cloudinary } from "../../Utils/Cloudinary.js";
 import GroundModel from "./../../Model/Grounds.js";
 import eventModel from "../../Model/Events.js";
 import bookingModel from "./../../Model/Booking.js";
 import reviewModel from "../../Model/Review.js";
+import UserModel from "./../../Model/Client.js";
 import moment from "moment";
 
 export const addGroundReq = async (req, res, next) => {
@@ -565,6 +565,16 @@ export const SubmitBookingAdminResApi = async (req, res, next) => {
         });
         console.log(booking, "booking");
         res.status(201).json({ result: booking });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+    }
+};
+
+export const AdminHomePageResApi = async (req, res, next) => {
+    try {
+        const findBooking = await bookingModel.find({});
+        const findClient = await UserModel.find({});
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error });

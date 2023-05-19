@@ -6,6 +6,7 @@ function ContactComponent({ handleStartChat, conversation, socket, setCurrentCha
     return (
         <>
             {conversation?.map((res, i) => {
+                console.log(res);
                 return (
                     <>
                         {res?.users[0]?.members[1] === res._id ? (
@@ -20,11 +21,7 @@ function ContactComponent({ handleStartChat, conversation, socket, setCurrentCha
                                 }`}
                             >
                                 <div class="w-1/4">
-                                    <img
-                                        src="https://source.unsplash.com/L2cxSuKWbpo/600x600"
-                                        class="object-cover h-12 w-12 rounded-full"
-                                        alt=""
-                                    />
+                                    <img src={res?.profile} class="object-cover h-12 w-12 rounded-full" alt="" />
                                 </div>
                                 <div class="w-full">
                                     <div class="text-lg font-semibold">{res.name}</div>
@@ -37,11 +34,7 @@ function ContactComponent({ handleStartChat, conversation, socket, setCurrentCha
                                 class="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400"
                             >
                                 <div class="w-1/4">
-                                    <img
-                                        src="https://source.unsplash.com/L2cxSuKWbpo/600x600"
-                                        class="object-cover h-12 w-12 rounded-full"
-                                        alt=""
-                                    />
+                                    <img src={res?.profile} class="object-cover h-12 w-12 rounded-full" alt="" />
                                 </div>
                                 <div class="w-full">
                                     <div class="text-lg font-semibold">{res.name}</div>

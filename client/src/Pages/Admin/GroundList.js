@@ -11,9 +11,7 @@ function GroundList() {
         //     </div>
         // </div>
         <Layout>
-            <div className="overflow-y-auto">
-                <GroundListPageAdmin />
-            </div>
+            <GroundListPageAdmin />
         </Layout>
     );
 }
