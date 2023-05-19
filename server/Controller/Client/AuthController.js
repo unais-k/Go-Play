@@ -116,3 +116,15 @@ export const FPSetResApi = async (req, res, next) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const ChangePasswordResApi = async (req, res, next) => {
+    try {
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        const set = await UserModel.findOneAndUpdate({ _id: req.user.id }, { $set: { password: hashedPassword } });
+        res.status(201).json({ result: set, msg: "Success" });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};

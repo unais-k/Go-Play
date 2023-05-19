@@ -10,20 +10,24 @@ import { useSelector } from "react-redux";
 import { message } from "antd";
 import TodoApp from "./Components/Todo/Todo";
 import ListEvent from "./Components/ListEvent";
+import Loader from "../Layout/Loader";
 
 function GroundViewPage() {
     const navigate = useNavigate();
     const token = useSelector((state) => state.turfAdminLogin.token);
     const [viewData, setViewData] = useState([]);
+    const [loader, setLoader] = useState(false);
     const [event, setEvent] = useState([]);
     const objId = useParams();
     const data = objId.id;
 
     const groundView = async () => {
+        setLoader(true);
         const response = await GroundViewReqApi(data, token);
         if (response.status === 201) {
             setViewData(response.data.result);
             setEvent(response.data.event);
+            setLoader(false);
         } else {
             message.error("Something went wrong");
         }
@@ -49,6 +53,7 @@ function GroundViewPage() {
             <div>
                 <div>
                     <div className="">
+                        {loader && <Loader />}
                         <div className="container mx-auto my-5 p-5">
                             <div className="md:flex no-wrap md:-mx-2 ">
                                 <ProfileCard viewData={viewData} />

@@ -5,18 +5,22 @@ import { useSelector } from "react-redux";
 import TableComponent from "./Components/TableComponent";
 import ListCard from "./Components/ListCard";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Layout/Loader";
 
 function BookingComponent() {
     const navigate = useNavigate();
     const token = useSelector((state) => state.adminLogin.token);
     const [data, setData] = useState([]);
     const [event, setEvent] = useState([]);
+    const [loader, setLoader] = useState(false);
 
     const fullData = async () => {
+        setLoader(true);
         const response = await FetchAllBookingsReqApi(token);
         if (response.status === 201) {
             setData(response.data.result);
             setEvent(response.data.event);
+            setLoader(false);
         }
     };
     const handleView = (id) => {
@@ -53,6 +57,7 @@ function BookingComponent() {
                 })}
             </div>
             <div className="mt-16">
+                {loader && <Loader />}
                 {data?.length > 0 ? (
                     <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Bookings</h1>
                 ) : (

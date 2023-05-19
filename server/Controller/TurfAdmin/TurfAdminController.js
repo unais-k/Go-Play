@@ -395,14 +395,27 @@ export const BookingStatusSetResApi = async (req, res, next) => {
 
 export const FindReviewResApi = async (req, res, next) => {
     try {
-        let reviews = [];
-        const find = await GroundModel.find({ Owner: req.user.id }).populate("reviews");
+        let turfId = [];
+        const find = await GroundModel.find({ Owner: req.user.id });
         for (let i = 0; i < find.length; i++) {
-            if (find[i].reviews.length > 0) {
-                reviews.push(find[i].reviews);
-            }
+            turfId.push(find[i]._id);
         }
-        console.log(reviews);
+        const agg = await reviewModel.aggregate([
+            {
+                $match: {
+                    turf: {
+                        $in: turfId,
+                    },
+                },
+            },
+        ]);
+        let reviewId = [];
+        for (let i = 0; i < agg.length; i++) {
+            const finding = await reviewModel.findOne({ _id: agg[i]._id }).populate("turf").populate("client");
+            reviewId.push(finding);
+        }
+        console.log(reviewId);
+        res.status(201).json({ result: reviewId });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });

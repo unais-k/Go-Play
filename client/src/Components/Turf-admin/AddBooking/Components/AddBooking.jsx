@@ -198,13 +198,17 @@ function AddBookingViewComponent() {
         bookNow3();
         setPrice(0);
         setSelectSlot([]);
+        setStep1(null);
+        setStep2(null);
         setShowDiv3(false);
+        setShowDiv1(false);
+        setShowDiv2(false);
     };
 
     return (
-        <div>
-            <div class="min-w-screen min-h-screen bg-gray-50 py-5">
-                <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-10 text-gray-800">
+        <div className="overflow-y-auto h-screen">
+            <div class="min-w-screen min-h-screen">
+                <div class="w-11/12 m-auto bg- pt-20 border-t p-5 text-gray-800">
                     <div class="w-full">
                         <div class="-mx-3 md:flex items-start">
                             <div class="px-3 md:w-7/12 lg:pr-10">
@@ -333,18 +337,6 @@ function AddBookingViewComponent() {
                                 />
                             )}
                         </div>
-                    </div>
-                </div>
-                <div class="p-5">
-                    <div class="text-center text-gray-400 text-sm">
-                        <a
-                            href="https://www.buymeacoffee.com/scottwindon"
-                            target="_blank"
-                            class="focus:outline-none underline text-gray-400"
-                        >
-                            <i class="mdi mdi-beer-outline"></i>Buy me a beer
-                        </a>{" "}
-                        and help support open-resource
                     </div>
                 </div>
             </div>

@@ -57,43 +57,43 @@ function BookingList() {
                                                 </tr>
                                             </thead>
                                             <tbody class="text-gray-600 text-sm font-light">
-                                                {bookings.length > 0 &&
-                                                    bookings.map((state) => {
+                                                {bookings?.length > 0 &&
+                                                    bookings?.map((state) => {
                                                         return (
                                                             <>
                                                                 <tr class="border-b rounded border-gray-200 hover:bg-gray-100">
                                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                                         <div class="flex items-center">
                                                                             <span class="font-medium">
-                                                                                {state.turf.name}
+                                                                                {state?.turf?.name}
                                                                             </span>
                                                                         </div>
                                                                     </td>
                                                                     <td class="py-3 px-6 text-left">
                                                                         <div class="flex font-medium items-center">
                                                                             <div class="mr-2"></div>
-                                                                            <span>{state.sport}</span>
+                                                                            <span>{state?.sport}</span>
                                                                         </div>
                                                                     </td>
                                                                     <td class="py-3 px-6 text-center">
                                                                         <div class="flex items-center justify-center">
-                                                                            {new Date(state.bookDate).toDateString()}
+                                                                            {new Date(state?.bookDate).toDateString()}
                                                                         </div>
                                                                     </td>
                                                                     <td class="py-3 px-6 text-center">
                                                                         <div class="font-medium items-center">
-                                                                            {state.time.map((res) => {
+                                                                            {state?.time?.map((res) => {
                                                                                 return (
                                                                                     <>
                                                                                         <div className="flex flex-col">
-                                                                                            {res.slots}
+                                                                                            {res?.slots}
                                                                                         </div>
                                                                                     </>
                                                                                 );
                                                                             })}
                                                                         </div>
                                                                     </td>
-                                                                    <td class="py-3 px-6 text-center">
+                                                                    <td class=" text-center">
                                                                         <div
                                                                             onClick={() => handleSelectView(state._id)}
                                                                             class="flex item-center justify-center"
@@ -101,20 +101,20 @@ function BookingList() {
                                                                             <AiFillFolderOpen size={23} />
                                                                         </div>
                                                                     </td>
-                                                                    <td class="py-3 px-6 text-left">
-                                                                        {state.status ? (
-                                                                            <div class="flex font-medium items-center">
-                                                                                <div class="mr-2"></div>
-                                                                                <span>{state.status}</span>
-                                                                            </div>
-                                                                        ) : (
+                                                                    <td class="py-3 px-6 text-center">
+                                                                        {state?.bookingStatus ? (
                                                                             <div
                                                                                 onClick={() =>
                                                                                     handleCancel({ id: state._id })
                                                                                 }
-                                                                                class="flex bg-red-500 text-white font-medium items-center"
+                                                                                class=" font-medium px-3 py-2 bg-red-500 items-center"
                                                                             >
-                                                                                <div class="px-3 py-2 ms-2">Cancel</div>
+                                                                                <span className="">Cancel</span>
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div class=" font-medium items-center">
+                                                                                <div class="mr-2"></div>
+                                                                                <span>{state?.status}</span>
                                                                             </div>
                                                                         )}
                                                                     </td>

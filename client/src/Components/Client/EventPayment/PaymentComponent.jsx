@@ -58,18 +58,19 @@ function PaymentComponent() {
                         <span class="mb-4 block text-lg font-semibold text-primary">Over view</span>
                         {selectedType === "Week" ? (
                             <>
-                                <h2 class="mb-5 text-[42px] font-bold text-dark">
-                                    {Math.round(advance / 7)}
+                                <h2 class=" text-[42px] font-bold text-dark">
+                                    {Math.round(advance)}
                                     <span class="text-base font-medium text-body-color">/ day</span>
                                 </h2>
-                                <p class="mb-8 border-b border-[#F2F2F2] pb-8 text-base text-body-color">
+                                <span className="text-sm font-slim">Advance</span>
+                                <p class="mb-8 mt-5 border-b border-[#F2F2F2] pb-8 text-base text-body-color">
                                     Offer that beyond your imagination
                                 </p>
                                 <div class="mb-7">
                                     <p class="mb-1 text-base leading-loose text-body-color">
                                         Time:{" "}
                                         {time?.map((res) => {
-                                            return <span>{res.slots}</span>;
+                                            return <span>{res?.slots}</span>;
                                         })}
                                     </p>
                                     <p class="mb-1 text-base leading-loose text-body-color">
@@ -83,25 +84,26 @@ function PaymentComponent() {
                                     </p>
                                     <p class="mb-1 text-base leading-loose text-body-color">Total Amount: {total}</p>
                                     <p class="mb-1 text-base leading-loose text-body-color">
-                                        Sport : {bookingData[0].sport}
+                                        Sport : {bookingData[0]?.sport}
                                     </p>
                                     {/* <p class="mb-1 text-base leading-loose text-body-color">3 Months support</p> */}
                                 </div>
                             </>
                         ) : (
                             <>
-                                <h2 class="mb-5 text-[42px] font-bold text-dark">
-                                    {Math.round(advance / 30)}
+                                <h2 class=" text-[42px] font-bold text-dark">
+                                    {Math.round(advance)}
                                     <span class="text-base font-medium text-body-color">/ day</span>
                                 </h2>
-                                <p class="mb-8 border-b border-[#F2F2F2] pb-8 text-base text-body-color">
+                                <span className="my-5 text-sm font-extralight">Advance</span>
+                                <p class="mb-8 mt-5 border-b border-[#F2F2F2] pb-8 text-base text-body-color">
                                     Offer that beyond your imagination
                                 </p>
                                 <div class="mb-7">
                                     <p class="mb-1 text-base leading-loose text-body-color">
                                         Time:{" "}
                                         {time?.map((res) => {
-                                            return <span>{res.slots}</span>;
+                                            return <span>{res?.slots}</span>;
                                         })}
                                     </p>
                                     <p class="mb-1 text-base leading-loose text-body-color">
@@ -115,7 +117,7 @@ function PaymentComponent() {
                                     </p>
                                     <p class="mb-1 text-base leading-loose text-body-color">Total Amount: {total}</p>
                                     <p class="mb-1 text-base leading-loose text-body-color">
-                                        Sport : {bookingData[0].sport}
+                                        Sport : {bookingData[0]?.sport}
                                     </p>
                                 </div>
                             </>

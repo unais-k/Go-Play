@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    ChangePasswordResApi,
     FPEmailResApi,
     FPOtpResApi,
     FPSetResApi,
@@ -41,6 +42,7 @@ router.post("/otp-verify", otpVerify);
 router.patch("/email-check", FPEmailResApi);
 router.patch("/otp-check", FPOtpResApi);
 router.patch("/forget-password-submit", FPSetResApi);
+router.post("/change-password", clientVerifyToken, ChangePasswordResApi);
 router.get("/city-list", CityListResApi);
 router.get("/ground-list", GroundListResApi);
 router.get("/football-ground-list", FootballGroundResApi);

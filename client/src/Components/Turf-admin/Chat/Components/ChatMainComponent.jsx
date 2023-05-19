@@ -17,6 +17,7 @@ function ChatMainComponent() {
     const [socketId, setSocketId] = useState(false);
     const [message, setMessage] = useState([]);
     const [isEmojiPickerVisible, setIsEmojiPickerVisible] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     const scrollRef = useRef();
     const PORT = "http://localhost:4001";

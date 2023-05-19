@@ -3,28 +3,36 @@ import { AdminPermissionReqApi, GetAdminListReqApi } from "../../../../API/Servi
 import { useSelector } from "react-redux";
 import { message } from "antd";
 import RequestModal from "./ReqModal";
+import Loader from "../../Layout/Loader";
 
 function ContactComponent({ setCurrentChat, socket }) {
     const id = useSelector((state) => state.turfAdminLogin.id);
     const token = useSelector((state) => state.turfAdminLogin.token);
     const [conversation, setConversation] = useState([]);
     const [reqModal, setReqModal] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     const conversationList = async () => {
+        setLoader(true);
         const response = await GetAdminListReqApi(token);
         setConversation([response.data.result]);
+        setLoader(false);
     };
 
     const handleStartChat = async (id) => {
+        setLoader(true);
         const response = await AdminPermissionReqApi(token);
         if (response.status === 201) {
             message.success("Request send");
+            setLoader(false);
         }
         if (response.status === 203) {
+            setLoader(false);
             setReqModal((state) => !state);
         }
         if (response.status === 202) {
             setCurrentChat(id);
+            setLoader(false);
         }
     };
 
@@ -52,6 +60,7 @@ function ContactComponent({ setCurrentChat, socket }) {
                                         alt=""
                                     />
                                 </div>
+                                {loader && <Loader />}
                                 <div class="w-full">
                                     <div class="text-lg font-semibold">Admin</div>
                                     <span class="text-gray-500 text-xs"></span>

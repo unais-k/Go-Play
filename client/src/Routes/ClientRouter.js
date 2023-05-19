@@ -18,6 +18,7 @@ import EventPayment from "../Pages/Client/EventPayment";
 import EventBook from "../Pages/Client/EventBook";
 import EventBookingView from "../Pages/Client/EventBookingView";
 import BusinessIntro from "../Pages/Layouts/BusinessIntro";
+import ChangePassword from "../Pages/Client/ChangePassword";
 function ClientRouter() {
     const isAuth = useSelector((state) => state.userLogin.token);
     console.log(isAuth, "Client Token");
@@ -36,6 +37,7 @@ function ClientRouter() {
                 <Route path="/payment" element={isAuth ? <Payment /> : <Navigate to="/login" />} />
                 <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/login" />} />
                 <Route path="/booking" element={isAuth ? <Booking /> : <Navigate to="/login" />} />
+                <Route path="/change-password" element={isAuth ? <ChangePassword /> : <Navigate to="/login" />} />
                 <Route path="/event-booking" element={isAuth ? <EventBook /> : <Navigate to="/login" />} />
                 <Route path="/event-payment" element={isAuth ? <EventPayment /> : <Navigate to="/login" />} />
                 <Route path="/event-booking-view/:id" element={isAuth ? <EventBookingView /> : <Navigate to="/login" />} />

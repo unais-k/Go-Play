@@ -1,6 +1,6 @@
 import React from "react";
-import InboxPage from "../../Components/Admin/Inbox/InboxPage";
 import Layout from "../../Components/Admin/SideBarComponents/components/Layout";
+import InboxMain from "../../Components/Admin/Inbox/InboxMain";
 
 function Inbox() {
     return (
@@ -11,7 +11,7 @@ function Inbox() {
         //     </div>
         // </div>
         <Layout>
-            <InboxPage/>
+            <InboxMain />
         </Layout>
     );
 }

@@ -10,8 +10,7 @@ function SidebarComponent() {
         { title: "Profile", path: "/profile" },
         { title: "Booking", path: "/booking" },
         { title: "Event Booked", path: "/event-booking" },
-        { title: "Review", path: "/review" },
-        { title: "Change Password", path: "/change-passsword" },
+        { title: "Change Password", path: "/change-password" },
     ];
     const handleLogout = () => {
         dispatch(setLogout());

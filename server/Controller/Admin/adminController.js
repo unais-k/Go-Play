@@ -265,6 +265,7 @@ export const EventDetailFetchResApi = async (req, res, next) => {
 export const ChatRequestResApi = async (req, res, next) => {
     try {
         const findDetail = await notificationModel.find().populate("sender");
+        console.log(findDetail);
         res.status(201).json({ result: findDetail });
     } catch (error) {
         console.log(error.message);

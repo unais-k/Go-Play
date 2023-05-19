@@ -169,6 +169,7 @@ export const BookingSubmitResApi = async (req, res, next) => {
             advance: req.body.advance[0],
             bookDate: formattedDate,
             sport: bookingData[0].sport,
+            bookingStatus: true,
             status: "Pending",
             bookingType: "Online",
             event: bookingData[0].eventId,
@@ -328,7 +329,10 @@ export const CancelBookingResApi = async (req, res, next) => {
     try {
         console.log(req.body);
         const id = req.user.id;
-        const findAndUpdate = await bookingModel.findOneAndUpdate({ _id: req.body.id }, { $set: { status: "Cancelled" } });
+        const findAndUpdate = await bookingModel.findOneAndUpdate(
+            { _id: req.body.id },
+            { $set: { status: "Cancelled", bookingStatus: false } }
+        );
         const find = await bookingModel.find({ client: id }).populate("turf").populate("event");
         res.status(201).json({ result: find });
     } catch (error) {
@@ -417,8 +421,9 @@ export const EventSubmitResApi = async (req, res, next) => {
                     client: req.user.id,
                     total: req.body.total / 7,
                     paymentId: req.body.bookingId,
-                    advance: req.body.advance / 7,
+                    advance: req.body.advance,
                     bookDate: formattedDate,
+                    bookingType: "Online",
                     offerId: booking._id,
                     sport: bookingData[0].sport,
                     offer: true,
@@ -438,7 +443,7 @@ export const EventSubmitResApi = async (req, res, next) => {
                     client: req.user.id,
                     total: req.body.total / 30,
                     paymentId: req.body.bookingId,
-                    advance: req.body.advance / 30,
+                    advance: req.body.advance,
                     bookDate: formattedDate,
                     offer: true,
                     offerId: booking._id,

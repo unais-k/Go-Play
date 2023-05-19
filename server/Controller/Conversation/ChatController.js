@@ -40,7 +40,10 @@ export const AddMessageResApi = async (req, res, next) => {
 export const GetAdminPermissionResApi = async (req, res, next) => {
     try {
         const find = await TurfAdminModel.findOne({ _id: req.user.id });
-        const findUser = await notificationModel.findOne({ sender: req.user.id, status: true });
+        const findUser = await notificationModel.findOne({ sender: req.user.id });
+        const findUser1 = await notificationModel.findOne({ sender: req.user.id, status: true });
+        if (findUser1) res.status(202).json({ result: findUser1 });
+
         if (!findUser) {
             const notifiCation = await notificationModel.create({
                 sender: req.user.id,
@@ -49,7 +52,7 @@ export const GetAdminPermissionResApi = async (req, res, next) => {
             });
             res.status(201).json({ result: notifiCation });
         } else if (findUser) {
-            res.status(202).json({ status: "OK" });
+            res.status(203).json({ status: "OK" });
         }
     } catch (error) {
         console.log(error.message);

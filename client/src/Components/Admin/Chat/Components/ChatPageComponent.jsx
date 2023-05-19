@@ -12,8 +12,8 @@ import {
     NewConversationReqApi,
 } from "../../../../API/Services/ConversationRequest";
 import MessageComponent from "./MessageComponent";
-import { message } from "antd";
 import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 var socket;
 function ChatPageComponent() {
@@ -25,14 +25,19 @@ function ChatPageComponent() {
     const [currentChat, setCurrentChat] = useState(null);
     const [socketId, setSocketId] = useState(false);
     const [newMessage, setNewMessage] = useState("");
+    const [loader, setLoader] = useState(false);
     const [message, setMessage] = useState([]);
     const [isEmojiPickerVisible, setIsEmojiPickerVisible] = useState(false);
 
     const scrollRef = useRef();
 
     const conversationList = async () => {
+        setLoader(true);
         const response = await GetConversationListReqApi(token);
-        setConversation(response.data.result);
+        if (response.status === 201) {
+            setLoader(false);
+            setConversation(response.data.result);
+        }
     };
 
     const getChat = async () => {
@@ -100,6 +105,9 @@ function ChatPageComponent() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!currentChat) {
+            toast.warning("Select a Person to start");
+        }
         if (newMessage.length > 0) {
             const msg = {
                 sender: id,
@@ -132,12 +140,18 @@ function ChatPageComponent() {
                                 className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
                             />
                         </div>
-                        <ContactComponent
-                            setCurrentChat={setCurrentChat}
-                            socket={socket}
-                            conversation={conversation}
-                            handleStartChat={handleStartChat}
-                        />
+                        {loader ? (
+                            <div className="flex items-center justify-center">
+                                <Loader />
+                            </div>
+                        ) : (
+                            <ContactComponent
+                                setCurrentChat={setCurrentChat}
+                                socket={socket}
+                                conversation={conversation}
+                                handleStartChat={handleStartChat}
+                            />
+                        )}
                     </div>
 
                     <div className="flex flex-col w-full flex-auto h-full p-6">

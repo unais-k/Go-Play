@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BookingListReqApi, BookingStatusSetReqApi, PaymentStatusSetReqApi } from "../../../API/Services/TurfAdminRequest";
-import { GrView } from "react-icons/gr";
-import { TbLockOpen, TbLockOpenOff } from "react-icons/tb";
-import { BiAperture } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
+import Loader from "../Layout/Loader";
 
 function BookingComponent() {
     const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
     const [data, setData] = useState([]);
-    const [payment, setPayment] = useState("");
-    const [booking, setBooking] = useState("");
+    const [loader, setLoader] = useState(false);
+
     const bookingListData = async () => {
+        setLoader(true);
         const response = await BookingListReqApi(token);
         if (response.data.result) {
             setData(response.data.result[0]);
+            setLoader(false);
         }
     };
 
@@ -65,6 +65,7 @@ function BookingComponent() {
                 <Breadcrumb.Item>Bookings</Breadcrumb.Item>
             </Breadcrumb>
             <div className="pt-5">
+                {loader && <Loader />}
                 <div onClick={handleBook}>
                     <button className="ms-3 px-3 py-2 text-dark bg-amber-500 rounded text-sm font-bold uppercase">
                         Add Booking
@@ -88,9 +89,9 @@ function BookingComponent() {
                                                     <th className="py-3 px-6 text-center">Date</th>
                                                     <th className="py-3 px-6 text-center">Sport</th>
                                                     <th className="py-3 px-6 text-center">total</th>
+                                                    <th className="py-3 px-6 text-center">Booking Model</th>
                                                     <th className="py-3 px-6 text-center">Payment status</th>
                                                     <th className="py-3 px-6 text-center">Booking status</th>
-                                                    <th className="py-3 px-6 text-center">View</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="text-gray-600 text-sm font-light">
@@ -104,24 +105,29 @@ function BookingComponent() {
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td className="py-3 px-6 text-center whitespace-nowrap">
+                                                    <td className="py-3 px-6 text-center font-semibold">
                                                         <div className="text-center">
                                                             {res.time.map((response) => {
                                                                 return <div className="flex">{response?.slots}</div>;
                                                             })}
                                                         </div>
                                                     </td>
-                                                    <td className="py-3 px-6 text-center font-bold">
+                                                    <td className="py-3 px-6 text-center font-semibold">
                                                         <div className="items-center justify-center">
                                                             {new Date(res.bookDate).toDateString()}
                                                         </div>
                                                     </td>
-                                                    <td className="py-3 px-6 text-center font-bold">
+                                                    <td className="py-3 px-6 text-center font-semibold">
                                                         <div className="items-center justify-center">{res?.sport}</div>
                                                     </td>
                                                     <td className="py-3 px-6 text-center">
                                                         <div className="text-center">
-                                                            <span className="font-medium text-xl">{res?.total}</span>
+                                                            <span className="font-medium text-lg">{res?.total}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3 px-6 text-center">
+                                                        <div className="text-center">
+                                                            <span className="font-medium text-md">{res?.bookingType}</span>
                                                         </div>
                                                     </td>
                                                     <td className="py-3 px-6 text-center">
@@ -168,13 +174,6 @@ function BookingComponent() {
                                                                     <option value="Cancelled">Cancelled</option>
                                                                 </select>
                                                             )}
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-3 px-6 text-center">
-                                                        <div className=" text-center">
-                                                            <span className="font-medium ">
-                                                                <BiAperture size={23} />
-                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tr>

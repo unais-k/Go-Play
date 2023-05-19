@@ -24,7 +24,7 @@ function TurfAdminRouter() {
     return (
         <div>
             <Routes>
-                <Route path="/login" element={<TurfAdminLogin />} />
+                <Route path="/login" element={isAuth ? <TurfAdminHome /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/register" element={<TurfRegisterPage />} />
                 <Route path="/home" element={isAuth ? <TurfAdminHome /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/ground-list" element={isAuth ? <GroundList /> : <Navigate to="/turf-admin/login" />} />

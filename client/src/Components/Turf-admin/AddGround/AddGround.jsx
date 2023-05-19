@@ -7,11 +7,14 @@ import { useSelector } from "react-redux";
 import { findCityReqApi } from "../../../API/Services/TurfAdminRequest";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
+import Loader from "../Layout/Loader";
 
 function AddGroundPage() {
     const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
     const [list, setList] = useState([]);
+
+    const [loader, setLoader] = useState(false);
 
     const [formData, setFormData] = useState({
         picturePath: "",
@@ -79,6 +82,7 @@ function AddGroundPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoader(true);
         if (
             formData.picturePath === "" ||
             formData.name === "" ||
@@ -103,7 +107,9 @@ function AddGroundPage() {
 
         const response = await addGroundReqApi(formData, token);
         if (response.status === 200) {
+            setLoader(false);
             navigate("/turf-admin/ground-list");
+
             message.success("New Ground added");
         } else {
             message.error("Something went wrong");
@@ -256,9 +262,13 @@ function AddGroundPage() {
                     </div>
 
                     <div>
-                        <button className="bg-black text-white rounded py-2 px-4 m-3" type="submit">
-                            Submit
-                        </button>
+                        {loader ? (
+                            <Loader />
+                        ) : (
+                            <button className="bg-black text-white rounded py-2 px-4 m-3" type="submit">
+                                Submit
+                            </button>
+                        )}
                     </div>
                 </form>
             </div>

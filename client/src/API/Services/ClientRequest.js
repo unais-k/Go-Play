@@ -280,3 +280,15 @@ export const FPSetResApi = async (data) => {
         return error?.response;
     }
 };
+
+export const ChangePasswordReqApi = async (data, token) => {
+    try {
+        const response = AxiosClient.post(`/change-password`, data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
+    }
+};

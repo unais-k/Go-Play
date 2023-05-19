@@ -5,8 +5,10 @@ import { FaPlus } from "react-icons/fa";
 import { GroundListReqApi, SearchGroundReqApi } from "../../../API/Services/ClientRequest";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function HomePage() {
+    const token = useSelector((state) => state.userLogin.token);
     const navigate = useNavigate();
     const truncate = (string, n) => {
         return string?.length > n ? string.substr(0, n - 1) + "..." : string;
@@ -136,21 +138,27 @@ function HomePage() {
                         </h4>
                         <div className="mt-4 w-4/5 flex justify-evenly">
                             <div className=" w-1/5 h-1/5">
-                                <img src="" alt="ph" />
+                                <img className="w-20 h-16" src="/checkmark.png" alt="ph" />
                                 <p className="text-xs">CONFIRMED BOOKINGS</p>
                             </div>
                             <div className=" w-1/5 h-1/5">
-                                <img src="" alt="ph" />
+                                <img className="w-20 h-16" src="/project.png" alt="ph" />
                                 <p className="text-xs">CONVENIENT PROCESS</p>
                             </div>
                             <div className=" w-1/5 h-1/5">
-                                <img src="" alt="ph" />
+                                <img className="w-20 h-16" src="/buyer.png" alt="ph" />
                                 <p className="text-xs">CASHLESS PAYMENTS</p>
                             </div>
                         </div>
                         <p className="mt-8">With Go-Play, you enjoy the process of ground booking as much as you</p>
                         <p>enjoy the game</p>
-                        <button className="text-white bg-amber-500 px-10 py-2 mt-3">SIGN IN</button>
+                        {token ? (
+                            <></>
+                        ) : (
+                            <button onClick={() => navigate("/login")} className="text-white bg-amber-500 px-10 py-2 mt-3">
+                                SIGN IN
+                            </button>
+                        )}
                     </div>
                     <div>
                         <img src="./football-photo.jpg" alt="" />
