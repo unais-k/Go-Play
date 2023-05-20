@@ -9,17 +9,47 @@ function ClientListComponent() {
     const token = useSelector((state) => state.adminLogin.token);
     const [loader, setLoader] = useState(false);
     const [state, setState] = useState([]);
+    const [book, setBook] = useState([]);
 
     const getOwnerList = async () => {
         setLoader(true);
         const response = await clientListReqApi(token);
         if (response.status === 200) {
             setState(response.data.result);
+            setBook(response.data.book);
             setLoader(false);
         } else {
             message.error("Something wrong try again later");
         }
     };
+
+    // const compare = state?.find((res) => JSON.stringify(res) === JSON.stringify(id));
+    //     if (!compare) {
+    //         setTime(
+    //             time.map((val) => {
+    //                 if (val._id == id.timeId) {
+    //                     val["onBooking"] = true;
+    //                 }
+    //                 return val;
+    //             })
+    //         );
+    //         setSelectSlot([...selectSlot, id]);
+    //         setPrice(+price + +id.price);
+    //     } else {
+    //         setTime(
+    //             time.map((val) => {
+    //                 if (val._id == id.timeId) {
+    //                     val["onBooking"] = false;
+    //                 }
+    //                 return val;
+    //             })
+    //         );
+    //         setSelectSlot(selectSlot.filter((val) => val.timeId !== id.timeId));
+    //         setPrice(price - id.price);
+    //     }
+    //     bookNow4();
+    // };
+    // setTime(time2);
 
     useEffect(() => {
         token && getOwnerList();
@@ -27,7 +57,6 @@ function ClientListComponent() {
 
     return (
         <div>
-            {" "}
             <div className="">
                 <div>
                     <h1 className="w-full ms-4 my-3 font-normal text-2xl font-heading uppercase">Client-List</h1>
@@ -46,25 +75,29 @@ function ClientListComponent() {
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-600 text-sm font-light">
-                                        {state.map((res) => {
-                                            return (
-                                                <tr className="border-b border-gray-200 hover:bg-gray-100">
-                                                    <td className="py-3 px-6 text-left">
-                                                        <div className=" text-center">
-                                                            <span className="font-medium ">{res.name}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-3 px-6 text-center whitespace-nowrap">
-                                                        <div className=" text-center">
-                                                            <span className="font-medium ">{res.phone}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-3 px-6 text-center">
-                                                        <div className="items-center justify-center">0</div>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                        {state?.length &&
+                                            state?.map((res) => {
+                                                return (
+                                                    <tr
+                                                        key={res._id}
+                                                        className="border-b border-gray-200 hover:bg-gray-100"
+                                                    >
+                                                        <td className="py-3 px-6 text-left">
+                                                            <div className=" text-center">
+                                                                <span className="font-medium ">{res?.name}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="py-3 px-6 text-center whitespace-nowrap">
+                                                            <div className=" text-center">
+                                                                <span className="font-medium ">{res?.phone}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="py-3 px-6 text-center">
+                                                            <div className="items-center justify-center">0</div>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                     </tbody>
                                 </table>
                             </div>

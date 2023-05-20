@@ -1,8 +1,6 @@
 import React from "react";
-import { BiAperture } from "react-icons/bi";
 
 function TableComponent({ data }) {
-    console.log(data);
     return (
         <div className="mb-8">
             <div className="text-gray-900 font-bold text-xl mb-2"></div>
@@ -25,14 +23,14 @@ function TableComponent({ data }) {
                         <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
                                 <div className=" text-center">
-                                    <span className="font-medium ">{data.client.name}</span>
+                                    <span className="font-medium ">{data?.client?.name}</span>
                                 </div>
                             </div>
                         </td>
                         <td className="py-3 px-6 text-center whitespace-nowrap">
                             <div className="text-center">
-                                {data.time.map((res) => {
-                                    return <>{res.slots}</>;
+                                {data?.time?.map((res) => {
+                                    return <span key={res._id}>{res?.slots}</span>;
                                 })}
                             </div>
                         </td>
@@ -40,20 +38,20 @@ function TableComponent({ data }) {
                             <div className="items-center justify-center">{new Date(data.bookDate).toDateString()}</div>
                         </td>
                         <td className="py-3 px-6 text-center font-bold">
-                            <div className="items-center justify-center">{data.sport}</div>
+                            <div className="items-center justify-center">{data?.sport}</div>
                         </td>
                         <td className="py-3 px-6 text-center">
                             <div className="text-center">
-                                <span className="font-medium text-xl">{data.advance}</span>
+                                <span className="font-medium text-xl">{data?.advance}</span>
                             </div>
                         </td>
                         <td className="py-3 px-6 text-center">
                             <div className="text-center">
-                                <span className="font-medium text-xl">{data.total}</span>
+                                <span className="font-medium text-xl">{data?.total}</span>
                             </div>
                         </td>
                         <td className="py-3 px-6 text-center">
-                            <div className=" text-center">{data.status ? data.status : "Pending"}</div>
+                            <div className=" text-center">{data?.status}</div>
                         </td>
                     </tr>
                 </tbody>

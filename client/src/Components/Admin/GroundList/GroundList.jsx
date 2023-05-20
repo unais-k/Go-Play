@@ -16,7 +16,7 @@ function GroundListPageAdmin() {
     const groundList = async () => {
         setLoader(true);
         const response = await groundListAdminReqApi(token);
-        console.log(response);
+
         if (response.status === 200) {
             setState(response.data.result);
             setLoader(false);
@@ -28,14 +28,10 @@ function GroundListPageAdmin() {
     const handleBlock = async (id) => {
         const response = await BlockGroundReqApi(id, token);
         await groundList();
-        console.log(response);
-        console.log("block");
     };
     const handleUnBlock = async (id) => {
         const response = await UnblockGroundReqApi(id, token);
         await groundList();
-        console.log(response);
-        console.log("Unblock");
     };
 
     useEffect(() => {
@@ -70,7 +66,7 @@ function GroundListPageAdmin() {
                                 <tbody className="text-gray-600 text-sm font-light">
                                     {state?.map((res) => {
                                         return (
-                                            <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                            <tr key={res._id} className="border-b border-gray-200 hover:bg-gray-100">
                                                 <td className="py-3 px-6 text-left">
                                                     <div className="flex items-center">
                                                         <div className="mr-2">

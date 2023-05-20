@@ -30,8 +30,8 @@ function ReviewComponent() {
             <div className="grid grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1">
                 {reviewFetch?.map((res) => {
                     return (
-                        <div key={res?._id}>
-                            <CardComponent reviewFetch={res} />
+                        <div className="p-10" key={res?._id}>
+                            <CardComponent key={res._id} reviewFetch={res} />
                         </div>
                     );
                 })}

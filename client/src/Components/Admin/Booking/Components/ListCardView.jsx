@@ -67,33 +67,36 @@ function ListCardView() {
                         </div>
                     </div>
                 </div>
-                <div class="w-full ">
+                <div className="w-full ">
                     {events?.length > 0 ? (
-                        <div class="bg-white shadow-md rounded my-6 h-96 overflow-auto ">
-                            <table class="relative min-w-max w-full table-auto">
+                        <div className="bg-white shadow-md rounded my-6 h-96 overflow-auto ">
+                            <table className="relative min-w-max w-full table-auto">
                                 <thead className="">
-                                    <tr class="bg-gray-200 rounded text-gray-600 uppercase text-sm leading-normal">
-                                        {/* <th class="py-3 px-6 text-left">Turf Name</th> */}
-                                        {/* <th class="py-3 px-6 text-center">Sport Selected</th> */}
-                                        <th class="py-3 px-6 text-center">Date</th>
-                                        <th class="py-3 px-6 text-center">Time</th>
-                                        <th class="py-3 px-6 text-center">View</th>
-                                        <th class="py-3 px-6 text-center">Status</th>
+                                    <tr className="bg-gray-200 rounded text-gray-600 uppercase text-sm leading-normal">
+                                        {/* <th className="py-3 px-6 text-left">Turf Name</th> */}
+                                        {/* <th className="py-3 px-6 text-center">Sport Selected</th> */}
+                                        <th className="py-3 px-6 text-center">Date</th>
+                                        <th className="py-3 px-6 text-center">Time</th>
+                                        <th className="py-3 px-6 text-center">View</th>
+                                        <th className="py-3 px-6 text-center">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-gray-600 text-sm font-light">
+                                <tbody className="text-gray-600 text-sm font-light">
                                     {events?.length > 0 &&
                                         events?.map((state) => {
                                             return (
                                                 <>
-                                                    <tr class="border-b rounded border-gray-200 hover:bg-gray-100">
-                                                        <td class="py-3 px-6 text-center">
-                                                            <div class="flex items-center justify-center">
-                                                                {new Date(state.bookDate).toDateString()}
+                                                    <tr
+                                                        key={state._id}
+                                                        className="border-b rounded border-gray-200 hover:bg-gray-100"
+                                                    >
+                                                        <td className="py-3 px-6 text-center">
+                                                            <div className="flex items-center justify-center">
+                                                                {new Date(state?.bookDate).toDateString()}
                                                             </div>
                                                         </td>
-                                                        <td class="py-3 px-6 text-center">
-                                                            <div class="font-medium items-center">
+                                                        <td className="py-3 px-6 text-center">
+                                                            <div className="font-medium items-center">
                                                                 {state.time.map((res) => {
                                                                     return (
                                                                         <>
@@ -103,27 +106,27 @@ function ListCardView() {
                                                                 })}
                                                             </div>
                                                         </td>
-                                                        <td class="py-3 px-6 text-center">
+                                                        <td className="py-3 px-6 text-center">
                                                             <div
-                                                                onClick={() => handleSelectView(state._id)}
-                                                                class="flex item-center justify-center"
+                                                                onClick={() => handleSelectView(state?._id)}
+                                                                className="flex item-center justify-center"
                                                             >
                                                                 <AiFillFolderOpen size={23} />
                                                             </div>
                                                         </td>
-                                                        <td class="py-3 px-6 text-center">
-                                                            {state.status ? (
-                                                                <div class=" font-medium">
-                                                                    <span>{state.status}</span>
+                                                        <td className="py-3 px-6 text-center">
+                                                            {state?.status ? (
+                                                                <div className=" font-medium">
+                                                                    <span>{state?.status}</span>
                                                                 </div>
                                                             ) : (
                                                                 <div
                                                                     // onClick={() =>
                                                                     //     handleCancel({ id: state._id })
                                                                     // }
-                                                                    class="font-medium"
+                                                                    className="font-medium"
                                                                 >
-                                                                    <div class="px-3 py-2">Pending</div>
+                                                                    <div className="px-3 py-2">Pending</div>
                                                                 </div>
                                                             )}
                                                         </td>

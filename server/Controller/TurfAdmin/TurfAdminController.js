@@ -341,20 +341,35 @@ export const BookingListResApi = async (req, res, next) => {
     try {
         const groundArray = [];
         const id = req.user.id;
+        let groundId = [];
         const find = await GroundModel.find({ Owner: id });
-        console.log(find[0]._id);
-
         for (let i = 0; i < find.length; i++) {
-            const response = await bookingModel
-                .find({ turf: new mongoose.Types.ObjectId(find[i]._id) })
-                .populate("turf")
-                .populate("event")
-                .populate("client");
-            // console.log(response, "====================");
-            if (response.length > 0) groundArray.push(response);
+            groundId.push(find[i]._id);
         }
+        let AllBooking = [];
+        const inBook = await bookingModel
+            .aggregate([
+                {
+                    $match: {
+                        turf: {
+                            $in: groundId,
+                        },
+                    },
+                },
+            ])
+            .sort({ _id: -1 });
+        await bookingModel.populate(inBook, {
+            path: "turf",
+        });
+        await bookingModel.populate(inBook, {
+            path: "event",
+        });
+        await bookingModel.populate(inBook, {
+            path: "client",
+        });
+        console.log(inBook);
 
-        res.status(201).json({ result: groundArray });
+        res.status(201).json({ result: inBook });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
@@ -411,7 +426,11 @@ export const FindReviewResApi = async (req, res, next) => {
         ]);
         let reviewId = [];
         for (let i = 0; i < agg.length; i++) {
-            const finding = await reviewModel.findOne({ _id: agg[i]._id }).populate("turf").populate("client");
+            const finding = await reviewModel
+                .findOne({ _id: agg[i]._id })
+                .populate("turf")
+                .populate("client")
+                .populate("bookingId");
             reviewId.push(finding);
         }
         console.log(reviewId);

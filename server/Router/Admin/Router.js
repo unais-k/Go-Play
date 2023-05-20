@@ -11,7 +11,6 @@ import {
     GroundListAdminResApi,
     GroundViewResApi,
     OwnerListResApi,
-    TimeSaveResApi,
     UnblockGroundResApi,
     adminLogin,
     notificationReqApi,
@@ -33,7 +32,6 @@ router.get("/ground-view", adminVerifyToken, GroundViewResApi);
 router.patch("/block-ground", adminVerifyToken, BlockGroundResApi);
 router.patch("/unblock-ground", adminVerifyToken, UnblockGroundResApi);
 router.get("/owner-list", adminVerifyToken, OwnerListResApi);
-router.post("/time-save", adminVerifyToken, TimeSaveResApi);
 router.get("/chat-request", adminVerifyToken, ChatRequestResApi);
 router.get("/event-detail", adminVerifyToken, EventDetailFetchResApi);
 router.get("/fetch-all-booking", adminVerifyToken, FetchAllBookingResApi);

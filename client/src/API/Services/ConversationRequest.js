@@ -1,7 +1,6 @@
 import { AxiosChat, AxiosConversation } from "../AxiosInstance";
 
 export const NewConversationReqApi = async (data, token) => {
-    console.log(data, token);
     try {
         const response = await AxiosConversation.post("/add-conversation", data, {
             headers: { Authorization: "Bearer " + token },
@@ -14,7 +13,6 @@ export const NewConversationReqApi = async (data, token) => {
 };
 
 export const GetConversationReqApi = async (data, token) => {
-    console.log(data);
     try {
         const response = await AxiosConversation.get(`/get-conversation/${data}`, {
             headers: { Authorization: "Bearer " + token },
@@ -51,7 +49,6 @@ export const GetOwnerListReqApi = async (token) => {
 };
 
 export const GetConversationListReqApi = async (token) => {
-    console.log(token, "list ");
     try {
         const response = await AxiosConversation.get(`/get-conversation-list`, {
             headers: { Authorization: "Bearer " + token },
@@ -92,7 +89,6 @@ export const GetFullMessagesReqApi = async (data, token) => {
 };
 
 export const AddMessageReqApi = async (data, token) => {
-    console.log(data);
     try {
         const response = await AxiosChat.post(`/message/`, data, {
             headers: { Authorization: "Bearer " + token },

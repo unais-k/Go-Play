@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb } from "flowbite-react";
-import { HiHome } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { GroundListReqApi } from "../../../API/Services/TurfAdminRequest";
 import { message } from "antd";
@@ -32,32 +30,22 @@ function TurfGroundListPage() {
     };
 
     return (
-        <div>
-            <Breadcrumb aria-label="Solid background breadcrumb example" className="bg-gray-50 py-3 px-5 dark:bg-gray-900">
-                <Breadcrumb.Item href="#" icon={HiHome}>
-                    Home
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="#">Venue</Breadcrumb.Item>
-                <Breadcrumb.Item>Ground</Breadcrumb.Item>
-            </Breadcrumb>
+        <div className="pt-20">
             <button
                 onClick={handleAddGround}
-                className="text-dark mx-5 bg-amber-500 rounded text-sm font-bold uppercase my-3 px-4 py-2"
+                className="text-dark ms-5 bg-amber-500 rounded text-sm font-bold uppercase px-4 py-2"
             >
                 Add Ground
             </button>
             <div className="">
                 {loader && <Loader />}
-                <div class="container my-12 mx-auto px-4 md:px-12">
-                    <div class="flex flex-wrap -mx-1 lg:-mx-4">
-                        {state.length > 0 ? (
+                <div className="container mt-5 mb-12 mx-auto px-4 md:px-12">
+                    <div className="flex flex-wrap -mx-1 lg:-mx-4">
+                        {state?.length > 0 ? (
                             <>
-                                {state.map((res, index) => {
+                                {state?.map((res, index) => {
                                     return (
-                                        <div
-                                            key={index + Math.round(Math.random) + index * 124 * 2}
-                                            class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                                        >
+                                        <div key={res._id} className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                                             <ListCard res={res} />
                                         </div>
                                     );
@@ -65,18 +53,18 @@ function TurfGroundListPage() {
                             </>
                         ) : (
                             <>
-                                <div class="w-fit h-fit flex items-center">
-                                    <div class="container flex flex-col md:flex-row items-center justify-center px-5 text-gray-700">
-                                        <div class="max-w-md pr-20">
-                                            <p class="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text text-3xl font-bold uppercase">
+                                <div className="w-fit h-fit flex items-center">
+                                    <div className="container flex flex-col md:flex-row items-center justify-center px-5 text-gray-700">
+                                        <div className="max-w-md pr-20">
+                                            <p className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text text-3xl font-bold uppercase">
                                                 No Plot added yet
                                             </p>
                                         </div>
-                                        <div class="max-w-lg">
+                                        <div className="max-w-lg">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 512 512"
-                                                class="w-40 h-40 dark:text-gray-600"
+                                                className="w-40 h-40 dark:text-gray-600"
                                             >
                                                 <path
                                                     fill="currentColor"

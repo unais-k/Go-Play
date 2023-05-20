@@ -13,13 +13,12 @@ import OfferModel from "../../Model/Offer.js";
 import moment from "moment";
 import mongoose from "mongoose";
 
-export const adminLogin = async (req, res, next) => {
+export const adminLogin = async (req, res) => {
     console.log(req.body);
     try {
-        const kiran = "git check";
         const { email, password } = req.body;
         const Check = await AdminModel.findOne({ email: email, password: password });
-        console.log(Check);
+
         if (!Check) res.status(401).json({ message: "Email is not valid" });
         if (Check) {
             const token = generateToken({ role: "adminLogin", id: Check._id });
@@ -30,17 +29,45 @@ export const adminLogin = async (req, res, next) => {
     }
 };
 
-export const userListReqApi = async (req, res, next) => {
+export const userListReqApi = async (req, res) => {
     try {
-        const getUser = await UserModel.find({});
-        console.log(getUser);
-        res.status(200).json({ result: getUser });
+        let ClientId = [];
+        const find = await UserModel.find({});
+        for (let i = 0; i < find.length; i++) {
+            ClientId.push(find[i]._id);
+        }
+        const agg = await bookingModel.aggregate([
+            {
+                $match: {
+                    client: {
+                        $in: ClientId,
+                    },
+                },
+            },
+        ]);
+
+        // const suj = await bookingModel.aggregate([
+        //     {
+        //         $group: {
+        //             _id: "$client",
+        //             count: { $sum: 1 },
+        //         },
+        //     },
+        //     {
+        //         $match: {
+        //             count: { $gt: 0 },
+        //         },
+        //     },
+        // ]);
+        // console.log(suj);
+
+        res.status(200).json({ result: find, book: agg });
     } catch (error) {
         res.status(500).json({ message: error });
     }
 };
 
-export const notificationReqApi = async (req, res, next) => {
+export const notificationReqApi = async (req, res) => {
     try {
         const getTurfAdminRequest = await TurfAdminModel.aggregate([{ $match: { status: false } }]);
         res.status(200).json({ result: getTurfAdminRequest });
@@ -49,7 +76,7 @@ export const notificationReqApi = async (req, res, next) => {
     }
 };
 
-export const ApproveTurfAdmin = async (req, res, next) => {
+export const ApproveTurfAdmin = async (req, res) => {
     try {
         const { id } = req.body;
         const find = await TurfAdminModel.findOne({ _id: id });
@@ -82,7 +109,7 @@ export const ApproveTurfAdmin = async (req, res, next) => {
     }
 };
 
-export const CancelTurfAdmin = async (req, res, next) => {
+export const CancelTurfAdmin = async (req, res) => {
     try {
         const { id } = req.body;
         const find = await TurfAdminModel.findById(id);
@@ -114,7 +141,7 @@ export const CancelTurfAdmin = async (req, res, next) => {
     }
 };
 
-export const AddCity = async (req, res, next) => {
+export const AddCity = async (req, res) => {
     try {
         const { data } = req.body;
 
@@ -124,7 +151,7 @@ export const AddCity = async (req, res, next) => {
         } else {
             await CityModel.create({
                 City: data,
-            }).then(async (data) => {
+            }).then(async () => {
                 const list = await CityModel.find({});
                 res.status(201).json({ message: "Created", result: list });
             });
@@ -135,8 +162,7 @@ export const AddCity = async (req, res, next) => {
     }
 };
 
-export const FindCity = async (req, res, next) => {
-    console.log(444444444444444);
+export const FindCity = async (req, res) => {
     try {
         const find = await CityModel.find({});
         console.log(find);
@@ -146,7 +172,7 @@ export const FindCity = async (req, res, next) => {
     }
 };
 
-export const GroundListAdminResApi = async (req, res, next) => {
+export const GroundListAdminResApi = async (req, res) => {
     try {
         const groundList = await GroundModel.find({}).populate("Owner");
         console.log(groundList);
@@ -157,13 +183,11 @@ export const GroundListAdminResApi = async (req, res, next) => {
     }
 };
 
-export const GroundViewResApi = async (req, res, next) => {
+export const GroundViewResApi = async (req, res) => {
     try {
         const id = req.query.id;
         const find = await GroundModel.findOne({ _id: id }).populate("Owner");
         const events = await eventModel.find({ groundId: id });
-        console.log(find, "----------------------------------");
-        console.log(events, "==================================");
         res.status(201).json({ result: find, event: events });
     } catch (error) {
         console.log(error.message);
@@ -171,7 +195,7 @@ export const GroundViewResApi = async (req, res, next) => {
     }
 };
 
-export const BlockGroundResApi = async (req, res, next) => {
+export const BlockGroundResApi = async (req, res) => {
     console.log(req.body);
     try {
         const id = req.body.data;
@@ -185,7 +209,7 @@ export const BlockGroundResApi = async (req, res, next) => {
     }
 };
 
-export const UnblockGroundResApi = async (req, res, next) => {
+export const UnblockGroundResApi = async (req, res) => {
     console.log(req.body);
     try {
         const id = req.body.data;
@@ -199,7 +223,7 @@ export const UnblockGroundResApi = async (req, res, next) => {
     }
 };
 
-export const OwnerListResApi = async (req, res, next) => {
+export const OwnerListResApi = async (req, res) => {
     try {
         const find = await TurfAdminModel.find({});
 
@@ -210,48 +234,7 @@ export const OwnerListResApi = async (req, res, next) => {
     }
 };
 
-export const TimeSaveResApi = async (req, res, next) => {
-    try {
-        const data = req.body;
-
-        // for (let i = 0; i < data.length; i++) {
-        //     const createTime = new timeModel({
-        //         time: data[i].time,
-        //         index: data[i].index,
-        //         status: false,
-        //         isSelected: false,
-        //     });
-        //     await createTime.save();
-        //     console.log(createTime);
-        // }
-        const find = await timeModel.find();
-        console.log(find);
-        // const deleted = await timeModel.aggregate([
-        //     {
-        //         $group: {
-        //             _id: { time: "$time" },
-        //             uniqueIds: { $addToSet: "$id" },
-        //             count: { $sum: 1 },
-        //         },
-        //     },
-        //     {
-        //         $match: {
-        //             count: { $gt: 1 },
-        //         },
-        //     },
-        // ]);
-        // console.log(deleted);
-        // deleted.forEach(async (doc) => {
-        //     doc.uniqueIds.shift();
-        //     await timeModel.deleteMany({ _id: { $in: doc.uniqueIds } });
-        // });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: error });
-    }
-};
-
-export const EventDetailFetchResApi = async (req, res, next) => {
+export const EventDetailFetchResApi = async (req, res) => {
     try {
         const id = req.query.id;
         const findDetail = await eventModel.findOne({ _id: id }).populate("groundId");
@@ -262,7 +245,7 @@ export const EventDetailFetchResApi = async (req, res, next) => {
     }
 };
 
-export const ChatRequestResApi = async (req, res, next) => {
+export const ChatRequestResApi = async (req, res) => {
     try {
         const findDetail = await notificationModel.find().populate("sender");
         console.log(findDetail);
@@ -273,7 +256,7 @@ export const ChatRequestResApi = async (req, res, next) => {
     }
 };
 
-export const FetchAllBookingResApi = async (req, res, next) => {
+export const FetchAllBookingResApi = async (req, res) => {
     try {
         const find = await bookingModel.find({ offer: false }).populate("turf").populate("client");
         const events = await OfferModel.find({}).populate("turf").populate("client");
@@ -285,7 +268,7 @@ export const FetchAllBookingResApi = async (req, res, next) => {
     }
 };
 
-export const UserEventBookingDetailFetchResApi = async (req, res, next) => {
+export const UserEventBookingDetailFetchResApi = async (req, res) => {
     try {
         const id = req.query.id;
         console.log(req.query.id);

@@ -89,7 +89,6 @@ export const ChatRequestReqApi = async (token) => {
 };
 
 export const BlockGroundReqApi = async (data, token) => {
-    console.log(data);
     try {
         const response = AxiosAdmin.patch(
             "/block-ground",
@@ -105,7 +104,6 @@ export const BlockGroundReqApi = async (data, token) => {
 };
 
 export const UnblockGroundReqApi = async (data, token) => {
-    console.log(data);
     try {
         const response = AxiosAdmin.patch(
             "/unblock-ground",
@@ -143,7 +141,6 @@ export const TimeSaveReqApi = async (data, token) => {
 };
 
 export const GroundViewReqApi = async (data, token) => {
-    console.log(data, "data", token, "token");
     try {
         const response = AxiosAdmin.get(`/ground-view?id=${data}`, {
             headers: { Authorization: "Bearer " + token },
@@ -156,7 +153,6 @@ export const GroundViewReqApi = async (data, token) => {
 };
 
 export const EventDetailFetchReqApi = async (data, token) => {
-    console.log(data, "data");
     try {
         const response = AxiosAdmin.get(`/event-detail?id=${data}`, {
             headers: { Authorization: "Bearer " + token },

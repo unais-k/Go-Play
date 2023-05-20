@@ -5,8 +5,11 @@ import { message } from "antd";
 import InboxPage from "./Components/InboxPage";
 import ChatReqComponent from "./Components/ChatReqComponent";
 import Loader from "../Layout/Loader";
+import { NewConversationReqApi } from "../../../API/Services/ConversationRequest";
+import { useNavigate } from "react-router-dom";
 
 function InboxMain() {
+    const navigate = useNavigate();
     const [loader, setLoader] = useState(false);
     const [list, setList] = useState([]);
     const token = useSelector((state) => state.adminLogin.token);
@@ -59,17 +62,27 @@ function InboxMain() {
             message.error("Something went wrong");
         }
     };
+
+    const handleApproveChat = async (e) => {
+        const response = await NewConversationReqApi(e, token);
+        if (response.status === 201) navigate("/admin/chat");
+    };
+
     return (
         <div className="h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-green-400 scrollbar-slate-700">
             <div>
                 {loader && <Loader />}
-                <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Notification</h1>
+                {list?.length > 0 ? (
+                    <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Notification</h1>
+                ) : (
+                    <></>
+                )}
             </div>
 
             {list?.map((res) => {
                 return (
                     <div key={res._id}>
-                        <InboxPage handleApprove={handleApprove} handleCancel={handleCancel} list={res} setList={setList} />
+                        <InboxPage handleApprove={handleApprove} handleCancel={handleCancel} list={res} />
                     </div>
                 );
             })}
@@ -79,7 +92,7 @@ function InboxMain() {
             {data?.map((res) => {
                 return (
                     <div className="mb-32" key={res._id}>
-                        <ChatReqComponent data={res} />
+                        <ChatReqComponent handleApproveChat={handleApproveChat} han data={res} />
                     </div>
                 );
             })}

@@ -3,8 +3,8 @@ import { MdSpeakerNotes } from "react-icons/md";
 
 function CardComponent({ reviewFetch }) {
     return (
-        <div class="p-10 grid gap-5">
-            <div class="relative bg-gradient-to-r from-violet-500 to-fuchsia-500 mt-6 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+        <div class=" gap-5">
+            <div class="relative bg-gradient-to-r from-[#8aff00] to-[#e4ff00] mt-6 flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
                 <div class="p-6">
                     <MdSpeakerNotes size={40} />
                     <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased"></h5>
@@ -27,7 +27,7 @@ function CardComponent({ reviewFetch }) {
                                         <svg
                                             aria-hidden="true"
                                             class={`w-5 h-5  ${
-                                                index < reviewFetch?.rating ? "text-yellow-400" : "text-gray-400"
+                                                index < reviewFetch?.rating ? "text-[#FF0800]" : "text-gray-400"
                                             }`}
                                             fill="currentColor"
                                             viewBox="0 0 20 20"

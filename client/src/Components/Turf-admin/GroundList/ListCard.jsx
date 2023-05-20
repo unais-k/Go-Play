@@ -8,26 +8,26 @@ function ListCard({ res }) {
         navigate("/turf-admin/ground-view/" + id);
     };
     return (
-        <article class="overflow-hidden rounded-lg shadow-lg">
+        <article className="overflow-hidden rounded-lg shadow-lg">
             <a href="#">
-                <img alt="Placeholder" class="block h-auto w-full" src={res.images} />
+                <img alt="Placeholder" className="block h-auto w-full" src={res.images} />
             </a>
 
-            <header class="flex items-center justify-between leading-tight p-2 md:p-4">
-                <h1 class="text-lg">
-                    <a class="no-underline hover:underline text-black" href="#">
+            <header className="flex items-center justify-between leading-tight p-2 md:p-4">
+                <h1 className="text-lg">
+                    <a className="no-underline hover:underline text-black" href="#">
                         {res.name}
                     </a>
                 </h1>
-                <p class="text-grey-darker text-sm">{res.place}</p>
+                <p className="text-grey-darker text-sm">{res.place}</p>
             </header>
             <div className="text-center">{res?.events?.length > 0 ? <></> : <>Add Grounds to host</>}</div>
 
-            <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-                <a class="flex items-center no-underline hover:underline text-black" href="#">
-                    <p class="ml-2 text-sm">{res.nearCity}</p>
+            <footer className="flex items-center justify-between leading-none p-2 md:p-4">
+                <a className="flex items-center no-underline hover:underline text-black" href="#">
+                    <p className="ml-2 text-sm">{res.nearCity}</p>
                 </a>
-                <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
+                <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
                     <div
                         className=" flex bg-black w-fit  text-white m-2 py-3 px-4 rounded"
                         onClick={() => handleView(res._id)}

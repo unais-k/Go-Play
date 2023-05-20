@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BookingListReqApi, BookingStatusSetReqApi, PaymentStatusSetReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useNavigate } from "react-router-dom";
-import { Breadcrumb } from "flowbite-react";
-import { HiHome } from "react-icons/hi";
 import Loader from "../Layout/Loader";
 
 function BookingComponent() {
@@ -12,14 +10,15 @@ function BookingComponent() {
     const [data, setData] = useState([]);
     const [loader, setLoader] = useState(false);
 
-    const bookingListData = async () => {
+    const bookingListData = useCallback(async () => {
         setLoader(true);
         const response = await BookingListReqApi(token);
+
         if (response.data.result) {
-            setData(response.data.result[0]);
+            setData(response.data.result);
             setLoader(false);
         }
-    };
+    }, [token]);
 
     const handlePayment = async (id) => {
         if (id.value === "Pending") {
@@ -53,28 +52,22 @@ function BookingComponent() {
         if (token) {
             bookingListData();
         }
-    }, [token]);
+    }, [token, bookingListData]);
 
     return (
-        <div className="h-screen">
-            <Breadcrumb aria-label="Solid background breadcrumb example" className="bg-gray-50 py-3 px-5 dark:bg-gray-900">
-                <Breadcrumb.Item href="#" icon={HiHome}>
-                    Home
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="#">Venue</Breadcrumb.Item>
-                <Breadcrumb.Item>Bookings</Breadcrumb.Item>
-            </Breadcrumb>
-            <div className=" h-fit overflow-y-auto scrollbar-thin scrollbar-thumb-green-400 scrollbar-slate-700">
+        <div className="">
+            <div className="h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-green-400 scrollbar-slate-700">
                 {loader && <Loader />}
-                <div onClick={handleBook}>
+                <div className="mt-16" onClick={handleBook}>
                     <button className="mx-3 mt-5 px-3 py-2 text-dark bg-amber-500 rounded text-sm font-bold uppercase">
                         Add Booking
                     </button>
                 </div>
+
                 {data?.length > 0 ? (
                     data?.map((res) => {
                         return (
-                            <div key={res?._id} className="bg-gray-100 rounded w-fit lg:max-w-full lg:flex m-3">
+                            <div key={res._id} className="bg-gray-100 rounded w-fit lg:max-w-full lg:flex m-3">
                                 <div className=" p-4 flex justify-between leading-normal">
                                     <div className="">
                                         <div className="text-gray-900 font-bold text-xl mb-2">{res?.turf?.name}</div>
@@ -108,7 +101,11 @@ function BookingComponent() {
                                                     <td className="py-3 px-6 text-center font-semibold">
                                                         <div className="text-center">
                                                             {res.time.map((response) => {
-                                                                return <div className="flex">{response?.slots}</div>;
+                                                                return (
+                                                                    <div key={response._id} className="flex">
+                                                                        {response?.slots}
+                                                                    </div>
+                                                                );
                                                             })}
                                                         </div>
                                                     </td>
@@ -186,12 +183,12 @@ function BookingComponent() {
                     })
                 ) : (
                     <div>
-                        <section class="flex items-center h-full sm:p-16 dark:bg-gray-900 dark:text-gray-100">
-                            <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8 space-y-8 text-center sm:max-w-md">
+                        <section className="flex items-center h-full sm:p-16 dark:bg-gray-900 dark:text-gray-100">
+                            <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8 space-y-8 text-center sm:max-w-md">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 512 512"
-                                    class="w-40 h-40 dark:text-gray-600"
+                                    className="w-40 h-40 dark:text-gray-600"
                                 >
                                     <path
                                         fill="currentColor"
@@ -207,7 +204,7 @@ function BookingComponent() {
                                         points="383.958 182.63 360.042 161.37 338.671 185.412 314.63 164.042 293.37 187.958 317.412 209.329 296.042 233.37 319.958 254.63 341.329 230.588 365.37 251.958 386.63 228.042 362.588 206.671 383.958 182.63"
                                     ></polygon>
                                 </svg>
-                                <p class="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text text-3xl font-bold uppercase">
+                                <p className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text text-3xl font-bold uppercase">
                                     Looks like no one ordered yet
                                 </p>
                             </div>

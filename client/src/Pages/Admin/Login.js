@@ -3,7 +3,7 @@ import AdminLoginPage from "../../Components/Admin/Login/LoginPage";
 
 function adminLogin() {
     return (
-        <div>
+        <div className=" ">
             <AdminLoginPage />
         </div>
     );

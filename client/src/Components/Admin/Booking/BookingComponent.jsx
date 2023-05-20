@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BiAperture } from "react-icons/bi";
 import { FetchAllBookingsReqApi } from "../../../API/Services/AdminRequest";
 import { useSelector } from "react-redux";
 import TableComponent from "./Components/TableComponent";
@@ -48,15 +47,14 @@ function BookingComponent() {
             </div>
             <div>
                 {event?.map((res) => {
-                    console.log(res);
                     return (
-                        <div onClick={() => handleView(res.client._id)}>
+                        <div key={res.client._id} onClick={() => handleView(res.client._id)}>
                             <ListCard event={res} />
                         </div>
                     );
                 })}
             </div>
-            <div className="mt-16">
+            <div className="">
                 {loader && <Loader />}
                 {data?.length > 0 ? (
                     <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Bookings</h1>
@@ -67,12 +65,12 @@ function BookingComponent() {
             {data?.map((res) => {
                 return (
                     <>
-                        <div className="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
+                        <div key={res.turf?._id} className="bg-gray-100 rounded w-full lg:max-w-full lg:flex m-3">
                             <div
                                 className="h-48 p-2 lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden"
                                 title="Mountain"
                             >
-                                <img src={res.turf.images} alt="" />
+                                <img src={res?.turf?.images} alt="" />
                             </div>
                             <div className=" p-4 flex justify-between leading-normal">
                                 <TableComponent data={res} />

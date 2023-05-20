@@ -48,7 +48,6 @@ function ChatPageComponent() {
     const PORT = "http://localhost:4001";
 
     const getMessages = async () => {
-        console.log(4);
         const response = await GetFullMessagesReqApi(currentChat, token);
         setMessage(response.data.result);
     };
@@ -65,10 +64,10 @@ function ChatPageComponent() {
     useEffect(() => {
         socket?.emit("setup", currentChat);
         socket?.on("connection", () => {
-            setSocketId(true);
+            // setSocketId(true);
         });
         socket?.on("connected", () => {
-            setSocketId(true);
+            // setSocketId(true);
         });
     }, [currentChat]);
 
@@ -79,12 +78,10 @@ function ChatPageComponent() {
     useEffect(() => {
         if (currentChat) getMessages();
     }, [currentChat]);
-    console.log(currentChat, "current");
+
     useEffect(() => {
         socket.on("receive_message", (data) => {
             if (data?.conversationId === currentChat) {
-                // const mess = [...message, data];
-                // setMessage(mess);
                 getMessages();
             }
         });
@@ -116,7 +113,7 @@ function ChatPageComponent() {
             };
 
             const response = await AddMessageReqApi(msg, token);
-            console.log(response);
+
             if (response.status === 201) {
                 setMessage([...message, response.data.result]);
                 setNewMessage("");
@@ -162,7 +159,7 @@ function ChatPageComponent() {
                                         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
                                             {message?.map((res) => {
                                                 return (
-                                                    <div ref={scrollRef}>
+                                                    <div key={res._id} ref={scrollRef}>
                                                         <MessageComponent message={res} own={res.sender === id} />
                                                     </div>
                                                 );
@@ -263,19 +260,6 @@ function ChatPageComponent() {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="ps-10">
-                            <div className="w-3/5 justify-center fixed bottom-1 p-10 flex">
-                                <input
-                                    className="w-full bg-gray-300 py-5 px-3 rounded-xl"
-                                    type="text"
-                                    placeholder="type your message here..."
-                                />
-
-                                <button className="ms-10 rounded uppercase text-xs font-bold bg-blue-500 px-5 py-2">
-                                    Send
-                                </button>
-                            </div>
-                        </div> */}
                 </div>
             </div>
         </div>

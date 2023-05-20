@@ -49,10 +49,6 @@ function GroundViewComponent() {
                                 <ListEventComponent event={event} />
                             </div>
                         </div>
-                        <div className="mt-3 ">
-                            <div className="text-teal-600 text-sm">Rules</div>
-                            {/* ------------------------------------------todo----------------------------- */}
-                        </div>
                     </div>
                 </div>
             </div>

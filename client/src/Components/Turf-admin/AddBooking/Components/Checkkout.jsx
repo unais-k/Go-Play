@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { SubmitBookingAdminReqApi } from "../../../../API/Services/TurfAdminRequest";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "../../Layout/Loader";
 
 function CheckOutComponent({ bookingData, setBookingData, movingDiv, handleOnchange }) {
     const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
+    const [loader, setLoader] = useState(false);
     const handlePayment = async () => {
+        setLoader(true);
         const response = await SubmitBookingAdminReqApi(bookingData, token);
+
         if (response.status === 201) {
             toast.success("Booking Success");
+            setLoader(false);
+            navigate("/turf-admin/booking");
         }
-        navigate("/turf-admin/booking");
     };
     return (
         <div ref={movingDiv} class="px-3 md:w-5/12">
             <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-3 text-gray-800 font-light mb-6">
                 <div class="w-full flex mb-3 items-center">
+                    {loader && <Loader />}
                     <div class="w-32">
                         <span class="text-gray-600 font-semibold">Contact</span>
                     </div>

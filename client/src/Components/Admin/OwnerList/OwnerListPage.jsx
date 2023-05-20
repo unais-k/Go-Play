@@ -39,17 +39,25 @@ function OwnerListPage() {
                                 <table className="min-w-max w-full table-auto">
                                     <thead>
                                         <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                            <th className="py-3 px-6 text-center">Profile</th>
                                             <th className="py-3 px-6 text-center">Name</th>
                                             <th className="py-3 px-6 text-center">Phone</th>
+                                            <th className="py-3 px-6 text-center">Email</th>
+                                            <th className="py-3 px-6 text-center">Place</th>
                                             {/* <th className="py-3 px-6 text-center">Booking</th> */}
-                                            <th className="py-3 px-6 text-center">Actions</th>
+                                            {/* <th className="py-3 px-6 text-center">Actions</th> */}
                                             <th className="py-3 px-6 text-center">View</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-600 text-sm font-light">
                                         {state.map((res) => {
                                             return (
-                                                <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                                <tr key={res._id} className="border-b border-gray-200 hover:bg-gray-100">
+                                                    <td className="text-center items-center ">
+                                                        <div className="w-fit items-center mx-auto text-center">
+                                                            <img className="w-10 h-10 rounded-full" src={res?.profile} />
+                                                        </div>
+                                                    </td>
                                                     <td className="py-3 px-6 text-left">
                                                         <div className=" text-center">
                                                             <span className="font-medium ">{res.name}</span>
@@ -60,41 +68,20 @@ function OwnerListPage() {
                                                             <span className="font-medium ">{res.phone}</span>
                                                         </div>
                                                     </td>
+                                                    <td className="py-3 px-6 text-left">
+                                                        <div className=" text-center">
+                                                            <span className="font-medium ">{res.email}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3 px-6 text-center whitespace-nowrap">
+                                                        <div className=" text-center">
+                                                            <span className="font-medium ">{res.place}</span>
+                                                        </div>
+                                                    </td>
                                                     {/* <td className="py-3 px-6 text-center">
                                                         <div className="items-center justify-center">0</div>
                                                     </td> */}
-                                                    <td className="py-3 px-6 text-center">
-                                                        {/* {res.status ? (
-                                                            <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-                                                                Blocked
-                                                            </span>
-                                                        ) : (
-                                                            <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                                                                Active
-                                                            </span>
-                                                        )} */}
-                                                        hello
-                                                    </td>
-                                                    {/* <td className="py-3 px-6 text-center">
-                                                        <div className="flex item-center justify-center">
-                                                            {res.status ? (
-                                                                <div
-                                                                    className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                                                                    onClick={() => handleUnBlock(res._id)}
-                                                                >
-                                                                    <TbLockOpenOff size={20} />
-                                                                </div>
-                                                            ) : (
-                                                                <div
-                                                                    className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                                                                    onClick={() => handleBlock(res._id)}
-                                                                >
-                                                                    <TbLockOpen size={20} />
-                                                                </div>
-                                                            )}
-                                                            hello
-                                                        </div>
-                                                    </td> */}
+                                                    {/* <td className="py-3 px-6 text-center">hello</td> */}
                                                     <td className="py-3 px-6 text-center">
                                                         <div className="flex item-center justify-center">
                                                             <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
