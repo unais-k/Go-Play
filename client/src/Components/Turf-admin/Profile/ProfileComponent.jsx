@@ -41,12 +41,12 @@ function ProfileComponent() {
     return (
         <div className="flex justify-center">
             {loader && <Loader />}
-            <section class="flex space-x-10 w-10/12 bg-blueGray-50 pt-16">
+            <section className="flex space-x-10 w-10/12 bg-blueGray-50 pt-16">
                 <div>
                     <CardComponents setShowModal={setShowModal} data={data} />
                 </div>
                 {showModal && <EditPhoto setShowModal={setShowModal} />}
-                <div class="w-full lg:w-10/12 px-4 mx-auto">
+                <div className="w-full lg:w-10/12 px-4 mx-auto">
                     <FormComponents editProfile={editProfile} edit={edit} data={data} />
                 </div>
             </section>

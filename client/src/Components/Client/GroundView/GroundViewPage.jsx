@@ -16,6 +16,7 @@ import "react-calendar/dist/Calendar.css";
 import ModalBookingComponent from "./Modal";
 import GroundDetailComponent from "./Components/GroundDetailComponent";
 import { FiDelete } from "react-icons/fi";
+import Loader from "./../../Turf-admin/Layout/Loader";
 
 function GroundViewPage() {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ function GroundViewPage() {
     const [eventOnTime, setEventOnTime] = useState([]);
     const [date, setDate] = useState(new Date());
     const [price, setPrice] = useState(0);
+    const [loader, setLoader] = useState(false);
     const [bookedData, setBookedData] = useState([]);
     const [bookedTime, setBookedTime] = useState([]);
     const [review, setReview] = useState({});
@@ -143,12 +145,14 @@ function GroundViewPage() {
     };
 
     const GroundData = async () => {
+        setLoader(true);
         const response = await GroundViewReqApi(id);
 
         if (response.status === 200) {
             setState(response.data.result);
             setEvent(response.data.events);
             setReview(response.data.review);
+            setLoader(false);
         } else {
             message.error("Something went wrong");
         }
@@ -283,6 +287,7 @@ function GroundViewPage() {
                                 <div>Turf under process</div>
                             )}
                         </div>
+                        {loader && <Loader />}
                     </div>
                     {showDiv1 && (
                         <div ref={movingDiv1}>

@@ -14,21 +14,21 @@ function FormComponent({ handleInputChange, handleSubmit, handleCheckboxSport })
     const type = [{ name: "Turf" }, { name: "Soapy" }, { name: "Grass" }, { name: "Sand" }, { name: "Court" }];
     return (
         <form onSubmit={handleSubmit}>
-            <div class="grid gap-4 max-w-xl m-auto">
+            <div className="grid gap-4 max-w-xl m-auto">
                 <div className="col-span-2">
                     <input
                         type="groundName"
                         name="groundName"
                         onChange={handleInputChange}
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Ground name"
                     />
                 </div>
                 <LabelCheckbox handleCheckboxSport={handleCheckboxSport} />
 
-                <div class="col-span-2">
+                <div className="col-span-2">
                     <select
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="password"
                         type="text"
                         onChange={handleInputChange}
@@ -45,9 +45,9 @@ function FormComponent({ handleInputChange, handleSubmit, handleCheckboxSport })
                     </select>
                 </div>
 
-                <div class="col-span-2">
+                <div className="col-span-2">
                     <select
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="password"
                         type="text"
                         onChange={handleInputChange}
@@ -68,7 +68,7 @@ function FormComponent({ handleInputChange, handleSubmit, handleCheckboxSport })
                         type="price"
                         name="price"
                         onChange={handleInputChange}
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Price"
                     />
                 </div>
@@ -77,14 +77,14 @@ function FormComponent({ handleInputChange, handleSubmit, handleCheckboxSport })
                         type="priceAtNight"
                         onChange={handleInputChange}
                         name="priceAtNight"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Price at night"
                     />
                 </div>
                 <div className="text-lime-500 text-sm">Submit for Time manage</div>
 
-                <div class="col-span-2 text-right">
-                    <button class="py-3 px-6 bg-green-500 text-white font-bold w-full sm:w-32" type="submit">
+                <div className="col-span-2 text-right">
+                    <button className="py-3 px-6 bg-green-500 text-white font-bold w-full sm:w-32" type="submit">
                         Submit
                     </button>
                 </div>

@@ -207,15 +207,15 @@ function AddBookingViewComponent() {
 
     return (
         <div className="overflow-y-auto h-screen">
-            <div class="min-w-screen min-h-screen">
-                <div class="w-11/12 m-auto bg- pt-20 border-t p-5 text-gray-800">
-                    <div class="w-full">
-                        <div class="-mx-3 md:flex items-start">
-                            <div class="px-3 md:w-7/12 lg:pr-10">
+            <div className="min-w-screen min-h-screen">
+                <div className="w-11/12 m-auto bg- pt-20 border-t p-5 text-gray-800">
+                    <div className="w-full">
+                        <div className="-mx-3 md:flex items-start">
+                            <div className="px-3 md:w-7/12 lg:pr-10">
                                 <div className="grid grid-cols-2 space-x-8">
-                                    <div class="w-full mx-auto text-gray-800 font-light mb-4 border-b border-gray-200 pb-4">
+                                    <div className="w-full mx-auto text-gray-800 font-light mb-4 border-b border-gray-200 pb-4">
                                         <div className="uppercase font-bold text-sm text-lime-500">Select a sport</div>
-                                        <div class="w-full flex items-center">
+                                        <div className="w-full flex items-center">
                                             {sport.length > 0 &&
                                                 sport?.map((res) => {
                                                     return (
@@ -240,7 +240,7 @@ function AddBookingViewComponent() {
                                         </div>
                                     </div>
                                     {showDiv && (
-                                        <div class="mb-4 pb-4 border-b border-gray-200">
+                                        <div className="mb-4 pb-4 border-b border-gray-200">
                                             <div>
                                                 <div className="uppercase font-bold text-sm text-lime-500">
                                                     Select Ground
@@ -270,7 +270,7 @@ function AddBookingViewComponent() {
                                     )}
                                 </div>
                                 {showDiv1 && (
-                                    <div class="mb-6 pb-6 border-b border-gray-200 text-gray-800">
+                                    <div className="mb-6 pb-6 border-b border-gray-200 text-gray-800">
                                         <div>
                                             <div className="text-lime-600 mb-5 text-2xl font-bold">Select Date</div>
                                             <div className="w-96">

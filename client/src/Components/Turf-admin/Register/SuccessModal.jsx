@@ -21,17 +21,17 @@ export default function Modal({ setModal }) {
                             </button>
                         </div>
                         <div className="relative p-6 flex-auto">
-                            <h1 class="font-bold text-xl text-center md:text-left p-5">
+                            <h1 className="font-bold text-xl text-center md:text-left p-5">
                                 Your Account is under verification it may take up to 48 hours, but you can further continue
                                 and add your venue, but it will only available for customers after admin verified
                             </h1>
-                            <div class="mt-6 text-center md:text-left">
-                                <p class="font-serif">
+                            <div className="mt-6 text-center md:text-left">
+                                <p className="font-serif">
                                     For further Details Contact us:-
-                                    <br class="md:hidden" /> go-play@gmail.com
+                                    <br className="md:hidden" /> go-play@gmail.com
                                 </p>
                             </div>
-                            <div class="mt-4 pb-4">
+                            <div className="mt-4 pb-4">
                                 <button className="bg-black rounded text-white px-3 py-2" onClick={handleHome}>
                                     Continue
                                 </button>

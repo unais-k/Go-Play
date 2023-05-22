@@ -1,7 +1,6 @@
 import React from "react";
 
 function EditLabelComponent({ sport, handleCheckboxSport }) {
-    console.log(sport);
     const types = [
         { title: "Football" },
         { title: "Cricket" },
@@ -11,11 +10,11 @@ function EditLabelComponent({ sport, handleCheckboxSport }) {
         { title: "Volley ball" },
     ];
     return (
-        <div class="col-span-2">
+        <div className="col-span-2">
             <ul className="flex justify-between">
                 {types?.map((res, index) => {
                     return (
-                        <>
+                        <span key={res._id}>
                             {sport?.includes(res.title) ? (
                                 <li className="me-2">
                                     <label className="">
@@ -44,7 +43,7 @@ function EditLabelComponent({ sport, handleCheckboxSport }) {
                                     </label>
                                 </li>
                             )}
-                        </>
+                        </span>
                     );
                 })}
             </ul>

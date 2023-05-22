@@ -9,7 +9,6 @@ import GroundAdd from "../Pages/Turf-Admin/GroundAdd";
 import GroundView from "../Pages/Turf-Admin/GroundView";
 import AddEvent from "../Pages/Turf-Admin/AddEvent";
 import EditEvent from "../Pages/Turf-Admin/EditEvent";
-import EventView from "../Pages/Turf-Admin/EventView";
 import Profile from "../Pages/Turf-Admin/Profile";
 import Booking from "../Pages/Turf-Admin/Booking";
 import Error from "../Pages/Turf-Admin/Error";
@@ -24,7 +23,7 @@ function TurfAdminRouter() {
     return (
         <div>
             <Routes>
-                <Route path="/login" element={isAuth ? <TurfAdminHome /> : <Navigate to="/turf-admin/login" />} />
+                <Route path="/login" element={isAuth ? <TurfAdminHome /> : <TurfAdminLogin />} />
                 <Route path="/register" element={<TurfRegisterPage />} />
                 <Route path="/home" element={isAuth ? <TurfAdminHome /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/ground-list" element={isAuth ? <GroundList /> : <Navigate to="/turf-admin/login" />} />
@@ -33,7 +32,6 @@ function TurfAdminRouter() {
                 <Route path="/add-event/:id" element={isAuth ? <AddEvent /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/edit-event/:id" element={isAuth ? <EditEvent /> : <Navigate to="/turf-admin/login" />} />
-                <Route path="/event-view/:id" element={isAuth ? <EventView /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/booking" element={isAuth ? <Booking /> : <Navigate to="/turf-admin/login" />} />
                 <Route path="/add-booking" element={isAuth ? <AddBooking /> : <Navigate to="/turf-admin/login" />} />
                 <Route

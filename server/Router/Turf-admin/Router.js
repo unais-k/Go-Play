@@ -8,6 +8,7 @@ import {
     BookingListResApi,
     BookingStatusSetResApi,
     CanceledTimeResApi,
+    EditEventResApi,
     EditProfilePhotoResApi,
     EventDetailFetchResApi,
     EventFetchOnSelectResApi,
@@ -29,7 +30,6 @@ import {
     SelectedTimeResApi,
     SubmitBookingAdminResApi,
     TimeSaveOnEventResApi,
-    TimeSlotResApi,
     addGroundReq,
 } from "../../Controller/TurfAdmin/TurfAdminController.js";
 import { turfAdminVerifyToken } from "../../Middleware/AuthVerify.js";
@@ -43,7 +43,6 @@ router.post("/register", TurfAdminRegister);
 router.post("/ground-add", turfAdminVerifyToken, addGroundReq);
 router.get("/ground-list", turfAdminVerifyToken, GroundListResApi);
 router.get("/ground-view", turfAdminVerifyToken, GroundViewResApi);
-router.get("/time-slot", turfAdminVerifyToken, TimeSlotResApi);
 router.get("/find-city", turfAdminVerifyToken, FindCity);
 router.patch("/available-status", turfAdminVerifyToken, AvailableStatusChangeResApi);
 router.get("/rule-fetch", turfAdminVerifyToken, RuleFindResApi);
@@ -53,6 +52,7 @@ router.get("/rule-update-find", turfAdminVerifyToken, RuleUpdateFindResApi);
 router.patch("/rule-update", turfAdminVerifyToken, RuleUpdateResApi);
 router.post("/selected-time-slot", turfAdminVerifyToken, SelectedTimeResApi);
 router.post("/add-event", turfAdminVerifyToken, AddEventResApi);
+router.post("/edit-event", turfAdminVerifyToken, EditEventResApi);
 router.post("/canceled-time-slot", turfAdminVerifyToken, CanceledTimeResApi);
 router.post("/ground-detail-form-submit", turfAdminVerifyToken, GroundDetailSubmitResApi);
 router.post("/add-time-on-event", turfAdminVerifyToken, TimeSaveOnEventResApi);

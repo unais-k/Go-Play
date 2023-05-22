@@ -98,7 +98,6 @@ export const FindRuleReqApi = (data, token) => {
 };
 
 export const RuleAddReqApi = (data, token) => {
-    console.log(data, "data");
     try {
         const response = AxiosTurfAdmin.post(
             "/rule-add",
@@ -182,6 +181,7 @@ export const GroundDetailSubmitReqApi = async (data, id, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -193,6 +193,7 @@ export const AddEventReqApi = async (data, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -204,11 +205,11 @@ export const TimeSaveOnEventReqApi = async (data, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
 export const EventDetailFetchReqApi = async (data, token) => {
-    console.log(data, "data");
     try {
         const response = AxiosTurfAdmin.get(`/event-detail?id=${data}`, {
             headers: { Authorization: "Bearer " + token },
@@ -216,6 +217,20 @@ export const EventDetailFetchReqApi = async (data, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
+    }
+};
+
+export const EditEventReqApi = async (data, token) => {
+    console.log(data, "data");
+    try {
+        const response = AxiosTurfAdmin.post("/edit-event", data, {
+            headers: { Authorization: "Bearer " + token },
+        });
+        return response;
+    } catch (error) {
+        console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -227,6 +242,7 @@ export const OwnerDataFetchReqApi = async (token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -239,6 +255,7 @@ export const AddPhotoOnEventPostApi = async (data, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -250,6 +267,7 @@ export const BookingListReqApi = async (token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -261,6 +279,7 @@ export const PaymentStatusSetReqApi = async (data, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -272,6 +291,7 @@ export const BookingStatusSetReqApi = async (data, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -283,6 +303,7 @@ export const FindReviewReqApi = async (token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -295,6 +316,7 @@ export const AdminEditReqApi = (data, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 
@@ -306,6 +328,7 @@ export const EditProfilePhotoReqApi = (data, token) => {
         return response;
     } catch (error) {
         console.log(error.message);
+        return error?.response;
     }
 };
 

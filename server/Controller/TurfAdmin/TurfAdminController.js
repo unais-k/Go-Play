@@ -82,24 +82,16 @@ export const GroundViewResApi = async (req, res, next) => {
     }
 };
 
-export const TimeSlotResApi = async (req, res, next) => {
-    try {
-        console.log(req.body);
-        console.log(req.query);
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({ error: error.message });
-    }
-};
-
 export const AvailableStatusChangeResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
+
         const updateStatus = await GroundModel.findOneAndUpdate(
             { _id: id },
             { $set: { status: req.body.toggle } },
             { new: true }
         );
+
         res.status(200).json({ result: updateStatus });
     } catch (error) {
         console.log(error.message);
@@ -272,6 +264,30 @@ export const AddEventResApi = async (req, res, next) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
+    }
+};
+
+export const EditEventResApi = async (req, res) => {
+    try {
+        console.log(req.body);
+        const data = req.body.data;
+        const set = await eventModel.updateOne(
+            { _id: req.body.eventId },
+            {
+                $set: {
+                    groundName: data.groundName,
+                    size: data.size,
+                    type: data.type,
+                    price: data.price,
+                    priceAtNight: data.priceAtNight,
+                    eventAvailable: req.body.sport,
+                },
+            }
+        );
+        res.status(201).json({ status: "ok" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
     }
 };
 

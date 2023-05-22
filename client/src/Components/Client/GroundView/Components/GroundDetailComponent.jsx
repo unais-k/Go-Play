@@ -19,7 +19,7 @@ function GroundDetailComponent({ reviewDiv, state, handleBookNow }) {
                 <div className="">
                     <img className="w-full h-96" src={state.images} alt="image of turf" />
                 </div>
-                <div className="h-52 w-full flex mt-3">
+                {/* <div className="h-52 w-full flex mt-3">
                     <marquee behavior="alternate" direction="left">
                         <div className="flex ms-3 ">
                             <img className="w-52 h-56 ms-1 me-1" src={state.images} alt="" />
@@ -29,7 +29,7 @@ function GroundDetailComponent({ reviewDiv, state, handleBookNow }) {
                             <img className="w-52 h-56 ms-1 me-1" src="/box-img.jpg" alt="" />
                         </div>
                     </marquee>
-                </div>
+                </div> */}
             </div>
             <div className="w-6/12">
                 <div className="text-left m-3">

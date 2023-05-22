@@ -3,10 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { HiHome } from "react-icons/hi";
 import TimeSlot from "../GroundView/Components/TimeSlot";
 import { useNavigate, useParams } from "react-router-dom";
-import { AddEventReqApi, GroundViewReqApi, TimeSaveOnEventReqApi } from "../../../API/Services/TurfAdminRequest";
+import { AddEventReqApi, GroundViewReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
 import { message } from "antd";
-import LabelCheckbox from "./Components/LabelCheckbox";
 import FormComponent from "./Components/FormComponent";
 
 function AddEventComponent() {
@@ -30,7 +29,6 @@ function AddEventComponent() {
         priceAtNight: "",
     });
     const groundId = params.id;
-    console.log(groundId);
 
     const groundDetails = async () => {
         const response = await GroundViewReqApi(groundId, token);
@@ -77,33 +75,16 @@ function AddEventComponent() {
             groundDetails().then((res) => {
                 setViewData(res);
             });
-        } else {
-            console.log("no id");
         }
     }, [groundId]);
-    const title = [
-        { titles: "Football" },
-        { titles: "Cricket" },
-        { titles: "Tennis" },
-        { titles: "Basket Ball" },
-        { titles: "Volley Ball" },
-        { titles: "Badminton" },
-    ];
-    const type = [{ name: "Turf" }, { name: "Soapy" }, { name: "Grass" }, { name: "Sand" }, { name: "Court" }];
+
     const handleInputChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
-    const size = [
-        { name: "5 * 5" },
-        { name: "6 * 6" },
-        { name: "7 * 7" },
-        { name: "8 * 8" },
-        { name: "10 * 10" },
-        { name: "11 * 11" },
-    ];
+
     const move = () => {
         movingDiv?.current?.scrollIntoView({ behavior: "smooth" });
     };
@@ -125,7 +106,7 @@ function AddEventComponent() {
         }
 
         const response = await AddEventReqApi({ groundId: groundId, sport: sport, data: formData, slots: rows }, token);
-        console.log(response);
+
         if (response.status === 201) {
             message.success("Event added");
             setEventData(response.data.result);
@@ -136,11 +117,7 @@ function AddEventComponent() {
             move();
         }
     };
-    console.log(viewData, time);
 
-    const TimeSaveOnEvent = async () => {
-        const response = await TimeSaveOnEventReqApi();
-    };
     const movingDiv = useRef(null);
 
     return (
@@ -153,8 +130,8 @@ function AddEventComponent() {
                 <Breadcrumb.Item>Add Event</Breadcrumb.Item>
             </Breadcrumb>
             <div>
-                <div class="max-w-2xl bg-white py-10 px-5 m-auto w-full mt-10">
-                    <div class="text-3xl mb-6 text-center ">Ready to build your Dream?</div>
+                <div className="max-w-2xl bg-white py-10 px-5 m-auto w-full mt-10">
+                    <div className="text-3xl mb-6 text-center ">Ready to build your Dream?</div>
 
                     {addEvent && (
                         <FormComponent

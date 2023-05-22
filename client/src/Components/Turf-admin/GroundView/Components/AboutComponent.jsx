@@ -9,7 +9,6 @@ function AboutComponent({ viewData }) {
     const date = new Date(viewData.createdAt).toDateString();
 
     const handleToggle = async () => {
-        console.log(viewData.status);
         setToggle((current) => !current);
 
         const id = viewData._id;
@@ -24,73 +23,77 @@ function AboutComponent({ viewData }) {
             message.error("Something went wrong");
         }
     };
-    useEffect(() => {
-        console.log("UseEffect working");
-    }, [toggle]);
+    useEffect(() => {}, [toggle]);
 
     return (
-        <div class="bg-white p-3 shadow-sm rounded-sm">
-            <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                <span class="text-green-500">
+        <div className="bg-white p-3 shadow-sm rounded-sm">
+            <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                <span className="text-green-500">
                     <svg
-                        class="h-5"
+                        className="h-5"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                     >
                         <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                         />
                     </svg>
                 </span>
-                <span class="tracking-wide">About</span>
+                <span className="tracking-wide">About</span>
             </div>
-            <div class="text-gray-700">
-                <div class="grid md:grid-cols-2 text-sm">
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Owner name</div>
-                        <div class="px-4 py-2">{viewData?.Owner?.name}</div>
+            <div className="text-gray-700">
+                <div className="grid md:grid-cols-2 text-sm">
+                    <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Owner name</div>
+                        <div className="px-4 py-2">{viewData?.Owner?.name}</div>
                     </div>
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Venue Name</div>
-                        <div class="px-4 py-2">{viewData?.name}</div>
+                    <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Venue Name</div>
+                        <div className="px-4 py-2">{viewData?.name}</div>
                     </div>
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Contact No.</div>
-                        <div class="px-4 py-2">+91{viewData?.phone}</div>
+                    <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Contact No.</div>
+                        <div className="px-4 py-2">+91{viewData?.phone}</div>
                     </div>
 
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Available Status</div>
-                        <div class="px-4 py-2">
-                            <label class="relative inline-flex items-center cursor-pointer">
+                    <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Available Status</div>
+                        <div className="px-4 py-2">
+                            <label className="relative inline-flex items-center cursor-pointer">
                                 <input
                                     type="checkbox"
                                     value={viewData?.status}
                                     onClick={handleToggle}
-                                    class="sr-only peer"
+                                    className="sr-only peer"
                                     checked={toggle}
                                 />
-                                <div class="w-11 h-6 bg-blue-600 peer-focus:outline-none dark:peer-focus:ring-blue-800  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gray-200"></div>
+                                <div
+                                    className={`w-11 h-6 ${
+                                        viewData?.status
+                                            ? "bg-blue-600 peer-checked:bg-gray-200"
+                                            : "bg-gray-200 peer-checked:bg-blue-600"
+                                    } peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all`}
+                                ></div>
                             </label>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Email.</div>
-                        <div class="px-4 py-2">
-                            <a class="" href={`mailto:${viewData?.email}`}>
+                    <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Email.</div>
+                        <div className="px-4 py-2">
+                            <a className="" href={`mailto:${viewData?.email}`}>
                                 {viewData?.email}
                             </a>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Created At</div>
-                        <div class="px-4 py-2">{date}</div>
+                    <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Created At</div>
+                        <div className="px-4 py-2">{date}</div>
                     </div>
                 </div>
             </div>

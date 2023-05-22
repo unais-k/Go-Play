@@ -119,15 +119,15 @@ function AddGroundPage() {
             <div>
                 <h2 className="text-center text-3xl m-3 text-groundAdd">Start a new Venue</h2>
             </div>
-            <div class="container mx-auto w-8/12">
-                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
-                    <div class="mb-4 flex">
+            <div className="container mx-auto w-8/12">
+                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+                    <div className="mb-4 flex">
                         <div className="w-8/12 h-1/12">
-                            <label class="block text-gray-700 font-bold mb-2" for="company_name">
+                            <label className="block text-gray-700 font-bold mb-2" for="company_name">
                                 Profile Photo
                             </label>
                             <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="company_name"
                                 name="picturePath"
                                 ref={inputRef}
@@ -143,12 +143,12 @@ function AddGroundPage() {
                     </div>
                     <div onClick={handleDelete}>{imagePreview ? <MdDelete /> : ""}</div>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="company_name">
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-bold mb-2" for="company_name">
                             Full Name
                         </label>
                         <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id=""
                             name="name"
                             onChange={handleInputChange}
@@ -156,12 +156,12 @@ function AddGroundPage() {
                             placeholder="Enter your company name"
                         />
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="email">
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-bold mb-2" for="email">
                             Email Address
                         </label>
                         <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="email"
                             name="email"
                             onChange={handleInputChange}
@@ -169,12 +169,12 @@ function AddGroundPage() {
                             placeholder="Enter company email address"
                         />
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="Phone">
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-bold mb-2" for="Phone">
                             Phone
                         </label>
                         <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="phone"
                             type="text"
                             onChange={handleInputChange}
@@ -182,25 +182,25 @@ function AddGroundPage() {
                             placeholder="Enter your Dial number"
                         />
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="address">
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-bold mb-2" for="address">
                             Address
                         </label>
                         <textarea
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="address"
                             onChange={handleInputChange}
                             name="address"
                             placeholder="Enter your Turf's address"
                         ></textarea>
                     </div>
-                    <div class="flex justify-between w-full mb-4">
+                    <div className="flex justify-between w-full mb-4">
                         <div className="me-2 basis-1/2">
-                            <label class="block text-gray-700 font-bold mb-2" for="phone_number">
+                            <label className="block text-gray-700 font-bold mb-2" for="phone_number">
                                 Nearest City
                             </label>
                             <select
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 type="text"
                                 name="nearCity"
                                 onChange={handleInputChange}
@@ -213,11 +213,11 @@ function AddGroundPage() {
                             </select>
                         </div>
                         <div className="ms-2 basis-1/2">
-                            <label class="block text-gray-700 font-bold mb-2" for="Phone">
+                            <label className="block text-gray-700 font-bold mb-2" for="Phone">
                                 pin code
                             </label>
                             <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="phone"
                                 type="text"
                                 onChange={handleInputChange}
@@ -226,24 +226,24 @@ function AddGroundPage() {
                             />
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="phone_number">
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-bold mb-2" for="phone_number">
                             Place
                         </label>
                         <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             onChange={handleInputChange}
                             name="place"
                             placeholder="Enter company Place"
                         ></input>
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="confirm_password">
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-bold mb-2" for="confirm_password">
                             State
                         </label>
                         <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="password"
                             type="text"
                             onChange={handleInputChange}

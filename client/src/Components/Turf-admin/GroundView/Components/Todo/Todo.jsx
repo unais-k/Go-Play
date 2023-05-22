@@ -27,8 +27,6 @@ function TodoApp({ id }) {
     useEffect(() => {
         if (id) {
             findTask();
-        } else {
-            console.log("no id");
         }
     }, [toDo && id]);
 
@@ -45,8 +43,6 @@ function TodoApp({ id }) {
     };
 
     const deleteTask = async (deleteId) => {
-        console.log(deleteId);
-
         const response = await RuleDeleteReqApi({ deleteId: deleteId, id: id }, token);
         if (response.status === 201) {
             setToDo(response.data.result.rules);

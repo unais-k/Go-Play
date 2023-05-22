@@ -76,7 +76,7 @@ function TurfPage() {
                         <div className="card-list">
                             {state
                                 ? state?.map((res) => {
-                                      return <ClientCard res={res} />;
+                                      return <ClientCard key={res._id} res={res} />;
                                   })
                                 : "Not found any"}
                         </div>

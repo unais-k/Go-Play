@@ -2,7 +2,7 @@ import React from "react";
 
 function LabelCheckbox({ handleCheckboxSport }) {
     return (
-        <div class="col-span-2">
+        <div className="col-span-2">
             <ul className="flex justify-between">
                 <li className="me-2">
                     <label className="">
