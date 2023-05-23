@@ -1,14 +1,16 @@
 import React, { useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { AddPhotoOnEventPostApi } from "../../../../API/Services/TurfAdminRequest";
+import { AddPhotoOnGroundPostApi } from "../../../../API/Services/TurfAdminRequest";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 
-export default function AddPhotoModalComponent({ setShowModal, state }) {
+export default function AddPhotoModalComponent({ setModal, viewData }) {
     const token = useSelector((state) => state.turfAdminLogin.token);
 
     const [photo, setPhoto] = useState("");
     const [profileImage, setProfileImage] = useState("");
+    const [imagePreview, setImagePreview] = useState(null);
+    const inputRef = useRef(null);
 
     const base64 = (img) => {
         setProfileImage(img.target.files[0]);
@@ -19,11 +21,10 @@ export default function AddPhotoModalComponent({ setShowModal, state }) {
             setPhoto(reader.result);
         };
         reader.onerror = (error) => {
-            console.log("Error: ", error);
+            console.log("Error: line 24 ", error);
         };
     };
-    const inputRef = useRef(null);
-    const [imagePreview, setImagePreview] = useState(null);
+
     const handleDelete = () => {
         setImagePreview(null);
         inputRef.current.value = null;
@@ -32,38 +33,33 @@ export default function AddPhotoModalComponent({ setShowModal, state }) {
 
     const handlePhotoAdd = async (e) => {
         e.preventDefault();
-        const response = AddPhotoOnEventPostApi(
+        const response = AddPhotoOnGroundPostApi(
             {
                 photo: photo,
-                eventId: state._id,
-                groundId: state.groundId._id,
+                groundId: viewData._id,
             },
             token
         );
         if (response.status === 201) {
             message.success("Photo added");
-            setShowModal(false);
+            setModal(false);
         }
     };
 
     return (
         <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                <div className="relative w-auto mt-6 mb-3 mx-auto max-w-3xl">
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                            <h3 className="text-3xl font-semibold">Add Photo</h3>
-                        </div>
-
-                        <div className="relative p-6 flex-auto">
+                        <div className="relative pt-6 pb-3 px-6 flex-auto">
                             <form onSubmit={handlePhotoAdd}>
-                                <div class="mb-4 flex">
+                                <div class="mb-4 w-full">
                                     <div className="">
                                         <label class="block text-gray-700 font-bold mb-2" for="company_name">
-                                            Photo
+                                            Add Photo
                                         </label>
                                         <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            class="shadow appearance-none border rounded w-full py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="company_name"
                                             name="picturePath"
                                             ref={inputRef}
@@ -73,32 +69,34 @@ export default function AddPhotoModalComponent({ setShowModal, state }) {
                                             placeholder="Enter your company name"
                                         />
                                     </div>
-                                    {imagePreview?.(
-                                        <div className="h-40 w-40">
-                                            {imagePreview && <img src={imagePreview && imagePreview} alt="ProfileImage" />}
-                                        </div>
-                                    )}
+
+                                    <div className="h-28 w-52 mx-auto mt-3">
+                                        {imagePreview && <img src={imagePreview} alt="ProfileImage" />}
+                                    </div>
                                 </div>
                                 <div onClick={handleDelete}>
                                     {imagePreview ? (
-                                        <div>
+                                        <div className="flex">
                                             <span>Delete Photo</span>
-                                            <MdDelete />
+                                            <MdDelete size={20} />
                                         </div>
                                     ) : (
                                         ""
                                     )}
                                 </div>
-                                <button type="submit" className="bg-green-400 text-white font-bold uppercase p-2 rounded">
+                                <button
+                                    type="submit"
+                                    className="bg-green-400 mt-2 text-white font-bold uppercase p-2 rounded"
+                                >
                                     Submit
                                 </button>
                             </form>
                         </div>
-                        <div className="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
+                        <div className="flex items-center justify-end border-t border-solid border-slate-200 rounded-b">
                             <button
                                 className="text-red-500 background-transparent font-bold uppercase px-2 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={() => setShowModal(false)}
+                                onClick={() => setModal(false)}
                             >
                                 Close
                             </button>

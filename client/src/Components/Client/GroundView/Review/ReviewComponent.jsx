@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-function ReviewComponent({ moveToReview, review }) {
+import Pagination from "../Components/Pagination";
+function ReviewComponent({ numbers, currentPage, changeCPage, nextPage, prePage, moveToReview, review }) {
     return (
         <div>
             <div ref={moveToReview} className="text-2xl font-bold text-lime-600 mt-10 mb-5">
@@ -55,6 +55,17 @@ function ReviewComponent({ moveToReview, review }) {
                     <>No Reviews....</>
                 )}
             </article>
+            {review.length > 3 ? (
+                <Pagination
+                    nextPage={nextPage}
+                    changeCPage={changeCPage}
+                    numbers={numbers}
+                    currentPage={currentPage}
+                    prePage={prePage}
+                />
+            ) : (
+                <></>
+            )}
         </div>
     );
 }

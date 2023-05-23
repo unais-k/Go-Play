@@ -26,6 +26,9 @@ function GroundViewPage() {
     const { id } = useParams();
     const [state, setState] = useState([]);
     const [sport, setSport] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rating, setRating] = useState(null);
+
     const [selectedSport, setSelectedSport] = useState({});
     const [time, setTime] = useState([]);
     const [event, setEvent] = useState([]);
@@ -152,6 +155,7 @@ function GroundViewPage() {
             setState(response.data.result);
             setEvent(response.data.events);
             setReview(response.data.review);
+            setRating(response.data.rating);
             setLoader(false);
         } else {
             message.error("Something went wrong");
@@ -222,6 +226,34 @@ function GroundViewPage() {
         setShowDiv4(false);
     };
 
+    // pagination starts
+    const perPage = 3;
+    const lastIndex = currentPage * perPage;
+    const firstIndex = lastIndex - perPage;
+    let records;
+    let nPage;
+    let numbers;
+    if (review.length > 0) {
+        records = review.slice(firstIndex, lastIndex);
+        nPage = Math.ceil(review.length / perPage);
+        numbers = [...Array(nPage + 1).keys()].slice(1);
+    }
+
+    function prePage() {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+    function changeCPage(id) {
+        setCurrentPage(id);
+    }
+    function nextPage() {
+        if (currentPage !== nPage) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+    // pagination ends
+
     const handleBookingSubmit = async () => {
         setBookingData({
             date: date,
@@ -252,19 +284,24 @@ function GroundViewPage() {
             console.log("use");
         }
     }, [id]);
-    console.log(sport);
 
     return (
         <div>
             <div className="flex justify-center items-center">
                 <div className="w-9/12">
                     <div>
-                        <h1 className="text-3xl font-bold text-lime-600 my-3">{state.name} -by Go Play</h1>
+                        <h1 className="text-3xl font-bold text-lime-600 my-3">{state?.name} -by Go Play</h1>
                     </div>
                     {/* GroundDetailComponent */}
-                    <GroundDetailComponent reviewDiv={reviewDiv} state={state} handleBookNow={handleBookNow} />
-                    <div>
-                        <div className="text-lime-600 mt-5 text-2xl font-bold">Step 1: Select Sport</div>
+
+                    <GroundDetailComponent
+                        rating={rating}
+                        reviewDiv={reviewDiv}
+                        state={state}
+                        handleBookNow={handleBookNow}
+                    />
+                    <div ref={movingDiv}>
+                        <div className="text-lime-600 text-2xl font-bold">Step 1: Select Sport</div>
                         <div className="flex">
                             {sport ? (
                                 sport.map((res) => {
@@ -430,25 +467,16 @@ function GroundViewPage() {
                         <RulesComponent state={state} />
                     </div>
                     <div className="pb-10 border-b">
-                        <ReviewComponent moveToReview={moveToReview} review={review} />
+                        <ReviewComponent
+                            nextPage={nextPage}
+                            changeCPage={changeCPage}
+                            numbers={numbers}
+                            currentPage={currentPage}
+                            prePage={prePage}
+                            moveToReview={moveToReview}
+                            review={review}
+                        />
                     </div>
-                    {/* <div>
-                        {token ? (
-                            <ReviewAddComponent handleSubmitReview={handleSubmitReview} />
-                        ) : (
-                            <div className="py-10">
-                                <h2 className=" py-3 text-3xl font-bold text-lime-600">Write a review</h2>
-                                <a onClick={() => navigate("/login")} className="text-orange-400">
-                                    Login
-                                </a>{" "}
-                                or{" "}
-                                <a onClick={() => navigate("/register")} className="text-orange-400">
-                                    Register
-                                </a>{" "}
-                                first
-                            </div>
-                        )}
-                    </div> */}
                 </div>
             </div>
         </div>

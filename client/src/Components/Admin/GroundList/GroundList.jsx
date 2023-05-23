@@ -67,13 +67,8 @@ function GroundListPageAdmin() {
                                     {state?.map((res) => {
                                         return (
                                             <tr key={res._id} className="border-b border-gray-200 hover:bg-gray-100">
-                                                <td className="py-3 px-6 text-left">
-                                                    <div className="flex items-center">
-                                                        <div className="mr-2">
-                                                            <img className="w-6 h-6 rounded-full" src={res?.images} />
-                                                        </div>
-                                                        <span></span>
-                                                    </div>
+                                                <td className="flex justify-center">
+                                                    <img className="w-10 h-10  rounded-full" src={res?.images[0]} />
                                                 </td>
                                                 <td className="py-3 px-6 text-center whitespace-nowrap">
                                                     <div className=" text-center">
@@ -85,30 +80,38 @@ function GroundListPageAdmin() {
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
                                                     {res?.status ? (
-                                                        <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-                                                            Blocked
-                                                        </span>
-                                                    ) : (
                                                         <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
                                                             Active
+                                                        </span>
+                                                    ) : (
+                                                        <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                                                            Blocked
                                                         </span>
                                                     )}
                                                 </td>
                                                 <td className="py-3 px-6 text-center">
                                                     <div className="flex item-center justify-center">
                                                         {res?.status ? (
+                                                            // (
+                                                            //     <div
+                                                            //         className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                                                            //         onClick={() => handleUnBlock(res?._id)}
+                                                            //     >
+                                                            //         <TbLockOpenOff size={20} />
+                                                            //     </div>
+                                                            // )
                                                             <div
                                                                 className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                                                                 onClick={() => handleUnBlock(res?._id)}
                                                             >
-                                                                <TbLockOpenOff size={20} />
+                                                                <TbLockOpen size={20} />
                                                             </div>
                                                         ) : (
                                                             <div
                                                                 className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                                                                 onClick={() => handleBlock(res?._id)}
                                                             >
-                                                                <TbLockOpen size={20} />
+                                                                <TbLockOpenOff size={20} />
                                                             </div>
                                                         )}
                                                     </div>

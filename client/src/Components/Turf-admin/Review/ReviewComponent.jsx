@@ -28,13 +28,19 @@ function ReviewComponent() {
             {loader && <Loader />}
             <div className="text-2xl font-bold text-lime-600 mt-10 ms-10 mb-5">Reviews</div>
             <div className="grid grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1">
-                {reviewFetch?.map((res) => {
-                    return (
-                        <div className="p-10" key={res._id}>
-                            <CardComponent reviewFetch={res} />
-                        </div>
-                    );
-                })}
+                {reviewFetch.length > 0 ? (
+                    <>
+                        {reviewFetch?.map((res) => {
+                            return (
+                                <div className="p-10" key={res._id}>
+                                    <CardComponent reviewFetch={res} />
+                                </div>
+                            );
+                        })}
+                    </>
+                ) : (
+                    <div className="mx-auto">No Review has been found</div>
+                )}
             </div>
         </div>
     );

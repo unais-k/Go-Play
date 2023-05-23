@@ -70,32 +70,43 @@ function InboxMain() {
 
     return (
         <div className="h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-green-400 scrollbar-slate-700">
-            <div>
-                {loader && <Loader />}
-                {list?.length > 0 ? (
-                    <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Notification</h1>
-                ) : (
-                    <></>
-                )}
-            </div>
+            {data.length > 0 && list.length > 0 ? (
+                <>
+                    <div>
+                        {loader && <Loader />}
+                        {list?.length > 0 ? (
+                            <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Notification</h1>
+                        ) : (
+                            <div className="text-2xl">No New Notification</div>
+                        )}
+                    </div>
 
-            {list?.map((res) => {
-                return (
-                    <div key={res._id}>
-                        <InboxPage handleApprove={handleApprove} handleCancel={handleCancel} list={res} />
-                    </div>
-                );
-            })}
-            <div>
-                <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Chat Request</h1>
-            </div>
-            {data?.map((res) => {
-                return (
-                    <div className="mb-32" key={res._id}>
-                        <ChatReqComponent handleApproveChat={handleApproveChat} han data={res} />
-                    </div>
-                );
-            })}
+                    {list?.map((res) => {
+                        return (
+                            <div key={res._id}>
+                                <InboxPage handleApprove={handleApprove} handleCancel={handleCancel} list={res} />
+                            </div>
+                        );
+                    })}
+                    {data?.length > 0 ? (
+                        <div>
+                            <h1 className="w-full mx-4 my-3 font-normal text-2xl font-heading uppercase">Chat Request</h1>
+                        </div>
+                    ) : (
+                        <div className="text-2xl">No New Chat request</div>
+                    )}
+
+                    {data?.map((res) => {
+                        return (
+                            <div className="mb-32" key={res._id}>
+                                <ChatReqComponent handleApproveChat={handleApproveChat} han data={res} />
+                            </div>
+                        );
+                    })}
+                </>
+            ) : (
+                <div className="text-2xl uppercase font-semibold">NO New NOtification</div>
+            )}
         </div>
     );
 }

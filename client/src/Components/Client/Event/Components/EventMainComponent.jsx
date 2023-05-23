@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import SuccessModal from "./SucessModal";
 import TimeComponent from "./TimeComponent";
+import Loader from "../../../Turf-admin/Layout/Loader";
 
 function EventMainComponent({ state }) {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ function EventMainComponent({ state }) {
     const [groundData, setGroundData] = useState([]);
     const [event, setEvent] = useState([]);
     const [sport, setSport] = useState([]);
+    const [loader, setLoader] = useState(false);
     const [time, setTime] = useState([]);
     const [states, setStates] = useState(null);
     const [selectedType, setSelectedType] = useState("");
@@ -57,10 +59,11 @@ function EventMainComponent({ state }) {
     const movingDiv4 = useRef(null);
 
     const GroundData = async () => {
+        setLoader(true);
         const response = await GroundViewReqApi(state?.groundDetail?._id);
-
         if (response.status === 200) {
             setEvent(response.data.events);
+            setLoader(false);
         } else {
             message.error("Something went wrong");
         }
@@ -292,6 +295,7 @@ function EventMainComponent({ state }) {
                             );
                         })}
                     </div>
+                    {loader && <Loader />}
                     {modalO && <Modal setModalO={setModalO} />}
                     {modal1 && <SuccessModal selectedType={selectedType} bookingData={bookingData} setModal1={setModal1} />}
                     <div class="-mx-4 flex flex-wrap lg:justify-between">

@@ -17,7 +17,7 @@ function ProfileCardComponent({ ground, state }) {
                 <div className="mt-4">
                     <p className="max-w-[40ch] text-sm text-gray-500">
                         this ground have a {state?.size} ground of playing{" "}
-                        {state?.eventAvailable.map((res, ind) => {
+                        {state?.eventAvailable?.map((res, ind) => {
                             return <span key={ind}>{res}</span>;
                         })}{" "}
                         in a perfect {state?.type}, anyone who books the ground can review

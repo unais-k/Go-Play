@@ -62,8 +62,21 @@ export const GroundViewResApi = async (req, res, next) => {
         const find = await GroundModel.findOne({ _id: id });
         const events = await eventModel.find({ groundId: id });
         const review = await reviewModel.find({ turf: id }).populate("client");
-
-        res.status(200).json({ result: find, events: events, review: review });
+        const avgRating = await reviewModel.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    average: { $avg: "$rating" },
+                },
+            },
+        ]);
+        if (avgRating.length > 0) {
+            const rating = avgRating[0].average;
+            res.status(200).json({ result: find, events: events, review: review, rating: rating });
+        } else {
+            const rating = 0;
+            res.status(200).json({ result: find, events: events, review: review, rating: rating });
+        }
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error });
@@ -176,7 +189,7 @@ export const BookingSubmitResApi = async (req, res, next) => {
             turf: bookingData[0].groundId,
             time: req.body.time[0],
         });
-        console.log(booking, "booking");
+        const addBooking = await UserModel.findOneAndUpdate({ _id: req.user.id }, { $push: { booking: booking._id } });
         res.status(201).json({ result: booking });
     } catch (error) {
         console.log(error.message);
@@ -248,7 +261,7 @@ export const UserBookingDetailFetchResApi = async (req, res, next) => {
             .find({ client: id, offer: false })
             .populate("turf")
             .populate("event")
-            .sort({ bookDate: -1 });
+            .sort({ bookDate: 1 });
 
         res.status(201).json({ result: find });
     } catch (error) {
@@ -284,6 +297,19 @@ export const SubmitReviewResApi = async (req, res, next) => {
             { _id: req.body.id },
             { $set: { review: true } }
         );
+
+        const avgRating = await reviewModel.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    average: { $avg: "$rating" },
+                },
+            },
+        ]);
+        const rate = avgRating[0].average.toFixed(1);
+        console.log(rate);
+        // const addingRating = await GroundModel.findOneAndUpdate({ _id: groundId }, { $set: { rating: rate } });
+
         const reviewAdd = await GroundModel.findOneAndUpdate({ _id: groundId }, { $push: { reviews: setReview._id } });
         const find = await reviewModel.find({ turf: req.body.id }).populate("client");
         console.log(setReview);
@@ -331,7 +357,7 @@ export const CancelBookingResApi = async (req, res, next) => {
         const id = req.user.id;
         const findAndUpdate = await bookingModel.findOneAndUpdate(
             { _id: req.body.id },
-            { $set: { status: "Cancelled", bookingStatus: false } }
+            { $set: { status: "Cancelled", bookingStatus: false, payment: "Cancelled" } }
         );
         const find = await bookingModel.find({ client: id }).populate("turf").populate("event");
         res.status(201).json({ result: find });

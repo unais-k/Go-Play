@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema(
             min: 5,
             required: true,
         },
+        booking: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "booking",
+            },
+        ],
     },
     { timestamps: true }
 );

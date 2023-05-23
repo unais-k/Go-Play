@@ -5,7 +5,7 @@ import PopoverRender from "./DropDown";
 function CardComponents({ data, setShowModal }) {
     return (
         <>
-            <section className="bg-gradient-to-r from-[#cbffba] to-[#d6feff]  w-64 mx-auto rounded-2xl px-8 py-6 shadow-lg">
+            <section className="bg-gradient-to-r from-[#000000] to-[#494747]  w-64 mx-auto rounded-2xl px-8 py-6 shadow-lg">
                 <div className="flex items-center justify-between">
                     {/* <span className="text-gray-400 text-sm">2d ago</span> */}
 
@@ -22,8 +22,10 @@ function CardComponents({ data, setShowModal }) {
                         {data?.name}
                     </h2>
                 </div>
-                <p className="text-emerald-400 font-semibold mt-2.5">Place</p>
-                <p className="text-emerald-400 font-semibold mt-2.5">{data?.place}</p>
+                <div className="flex justify-start">
+                    <p className="text-emerald-400 font-semibold mt-2.5">Place</p>
+                    <p className="text-emerald-400 font-semibold mt-2.5">{data?.place}</p>
+                </div>
             </section>
         </>
     );

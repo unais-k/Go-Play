@@ -14,6 +14,7 @@ function AboutComponent({ viewData }) {
         const id = viewData._id;
         const response = await AvailableStatusChangeReqApi({ toggle: toggle }, id, token);
         if (response.status === 200) {
+            console.log(response.data.result, "line 17");
             if (response.data.result.status === true) {
                 message.success("Venue Available");
             } else {

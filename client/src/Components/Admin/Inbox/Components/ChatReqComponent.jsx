@@ -25,7 +25,7 @@ function ChatReqComponent({ handleApproveChat, data }) {
                                         <div className="flex">
                                             <div
                                                 className="bg-lime-500 mt-3 text-white flex py-2 px-3 me-3 rounded"
-                                                onClick={() => handleApproveChat({ id: data._id })}
+                                                onClick={() => handleApproveChat({ id: data.sender._id })}
                                             >
                                                 <button className="text-xs uppercase font-semibold">Start Chat</button>
                                             </div>

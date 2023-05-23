@@ -61,7 +61,6 @@ export const TimeSlotReqApi = async (data, token) => {
 };
 
 export const AvailableStatusChangeReqApi = (data, id, token) => {
-    console.log(data, "data", "id", id, token, "token");
     try {
         const response = AxiosTurfAdmin.patch(`/available-status?id=${id}`, data, {
             headers: { Authorization: "Bearer " + token },
@@ -246,10 +245,10 @@ export const OwnerDataFetchReqApi = async (token) => {
     }
 };
 
-export const AddPhotoOnEventPostApi = async (data, token) => {
+export const AddPhotoOnGroundPostApi = async (data, token) => {
     console.log(data, "dataOnPost");
     try {
-        const response = AxiosTurfAdmin.post("/photo-add-on-event", data, {
+        const response = AxiosTurfAdmin.post(`/photo-add-on-ground?id=${data.groundId}`, data, {
             headers: { Authorization: "Bearer " + token },
         });
         return response;

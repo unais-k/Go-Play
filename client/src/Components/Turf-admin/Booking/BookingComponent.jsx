@@ -3,17 +3,18 @@ import { useSelector } from "react-redux";
 import { BookingListReqApi, BookingStatusSetReqApi, PaymentStatusSetReqApi } from "../../../API/Services/TurfAdminRequest";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Layout/Loader";
+import Pagination from "../../Admin/Booking/Components/Pagination";
 
 function BookingComponent() {
     const token = useSelector((state) => state.turfAdminLogin.token);
     const navigate = useNavigate();
+    const [currentPage, setCurrentPage] = useState(1);
     const [data, setData] = useState([]);
     const [loader, setLoader] = useState(false);
 
     const bookingListData = useCallback(async () => {
         setLoader(true);
         const response = await BookingListReqApi(token);
-
         if (response.data.result) {
             setData(response.data.result);
             setLoader(false);
@@ -31,6 +32,34 @@ function BookingComponent() {
             change();
         }
     };
+
+    // pagination
+    const perPage = 3;
+    const lastIndex = currentPage * perPage;
+    const firstIndex = lastIndex - perPage;
+    let records;
+    let nPage;
+    let numbers;
+    if (data.length > 0) {
+        records = data.slice(firstIndex, lastIndex);
+        nPage = Math.ceil(data.length / perPage);
+        numbers = [...Array(nPage + 1).keys()].slice(1);
+    }
+
+    function prePage() {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+    function changeCPage(id) {
+        setCurrentPage(id);
+    }
+    function nextPage() {
+        if (currentPage !== nPage) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+    // pagination end here
 
     const handleBooking = async (id) => {
         if (id.value === "Pending") {
@@ -82,6 +111,7 @@ function BookingComponent() {
                                                     <th className="py-3 px-6 text-center">Date</th>
                                                     <th className="py-3 px-6 text-center">Sport</th>
                                                     <th className="py-3 px-6 text-center">total</th>
+                                                    <th className="py-3 px-6 text-center">Average</th>
                                                     <th className="py-3 px-6 text-center">Booking Model</th>
                                                     <th className="py-3 px-6 text-center">Payment status</th>
                                                     <th className="py-3 px-6 text-center">Booking status</th>
@@ -120,6 +150,11 @@ function BookingComponent() {
                                                     <td className="py-3 px-6 text-center">
                                                         <div className="text-center">
                                                             <span className="font-medium text-lg">{res?.total}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3 px-6 text-center">
+                                                        <div className="text-center">
+                                                            <span className="font-medium text-lg">{res?.advance}</span>
                                                         </div>
                                                     </td>
                                                     <td className="py-3 px-6 text-center">
@@ -210,6 +245,17 @@ function BookingComponent() {
                             </div>
                         </section>
                     </div>
+                )}
+                {data.length > 3 ? (
+                    <Pagination
+                        nextPage={nextPage}
+                        changeCPage={changeCPage}
+                        numbers={numbers}
+                        currentPage={currentPage}
+                        prePage={prePage}
+                    />
+                ) : (
+                    <></>
                 )}
             </div>
         </div>

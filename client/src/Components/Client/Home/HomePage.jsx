@@ -6,8 +6,11 @@ import { GroundListReqApi, SearchGroundReqApi } from "../../../API/Services/Clie
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Loader from "../../Turf-admin/Layout/Loader";
 
 function HomePage() {
+    const location = useSelector((state) => state.userLogin.city);
+
     const token = useSelector((state) => state.userLogin.token);
     const navigate = useNavigate();
     const truncate = (string, n) => {
@@ -15,16 +18,18 @@ function HomePage() {
     };
     const [ground, setGround] = useState([]);
     const [place, setPlace] = useState([]);
+    const [loader, setLoader] = useState(false);
     useEffect(() => {
         groundList();
     }, [""]);
 
     const groundList = async () => {
+        setLoader(true);
         const response = await GroundListReqApi();
         if (response.status === 200) {
-            console.log(response.data.result);
             setGround(response.data.result);
             setPlace(response.data.result);
+            setLoader(false);
         } else {
             message.error("Something went wrong");
         }
@@ -42,7 +47,6 @@ function HomePage() {
     };
 
     const handleGroundCard = async (id) => {
-        console.log(id);
         navigate(`/ground-view/${id}`);
     };
     return (
@@ -58,6 +62,7 @@ function HomePage() {
                         <b>Search for the best turf grounds, indoor courts grounds in your city</b>
                     </h4>
                 </div>
+                {loader && <Loader />}
                 <div className="search-in flex justify-center">
                     <input
                         type="text"
@@ -87,14 +92,14 @@ function HomePage() {
                                             onClick={() => handleGroundCard(res._id)}
                                         >
                                             <div className="box-img mb-2">
-                                                <img src={res.images} className="w-full h-60" alt="box-img" />
+                                                <img src={res.images[0]} className="w-full h-60" alt="box-img" />
                                             </div>
                                             <div className="img-head">
                                                 <p className="font-bold text-lime-600 uppercase">
-                                                    {truncate(res ? res.name : "", 150)}
+                                                    {truncate(res ? res?.name : "", 150)}
                                                 </p>
                                                 <p className="text-xs">
-                                                    {res.place},{res.nearCity}
+                                                    {res?.place},{res?.nearCity}
                                                 </p>
                                             </div>
                                             <div className="books flex justify-between mt-4">

@@ -31,7 +31,7 @@ const Popover = ({ setShowModal }) => {
                         }}
                         ref={btnRef}
                     >
-                        <BsThreeDots size={25} />
+                        <BsThreeDots color="white" size={25} />
                     </button>
                     <div className={(popoverShow ? "" : "hidden ") + "bg-white rounded"} ref={popoverRef}>
                         <div onClick={() => handleEdit()} className="text-dark p-3">

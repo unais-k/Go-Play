@@ -27,7 +27,9 @@ const groundSchema = new mongoose.Schema(
         phone: {
             type: String,
         },
-
+        rating: {
+            type: Number,
+        },
         images: {
             type: Array,
             required: true,

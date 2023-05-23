@@ -3,6 +3,7 @@ import AdminModel from "../../Model/Admin.js";
 import chatModel from "../../Model/Chat.js";
 import conversationModel from "../../Model/Conversation.js";
 import TurfAdminModel from "../../Model/TurfAdmin.js";
+import notificationModel from "./../../Model/Notification.js";
 //new conversation
 
 export const NewConversationReqApi = async (req, res, next) => {
@@ -11,6 +12,14 @@ export const NewConversationReqApi = async (req, res, next) => {
         const find = await conversationModel.findOne({
             members: { $in: [req.body.id] },
         });
+        const notify = await notificationModel.findOne({ sender: new mongoose.Types.ObjectId(req.body.id) });
+        console.log(notify);
+        if (notify) {
+            const updateNotify = await notificationModel.updateOne(
+                { sender: new mongoose.Types.ObjectId(req.body.id) },
+                { $set: { status: true } }
+            );
+        }
         if (req.body.id) {
             if (find) {
                 console.log("user exist");
@@ -22,7 +31,7 @@ export const NewConversationReqApi = async (req, res, next) => {
                     status: true,
                 });
                 const savedConversation = await newConversation.save();
-                console.log(savedConversation, "savedConversation");
+
                 res.status(201).json({ result: savedConversation, message: "success" });
             }
         }
@@ -36,7 +45,6 @@ export const NewConversationReqApi = async (req, res, next) => {
 
 export const GetChatResApi = async (req, res, next) => {
     try {
-        console.log(req.params.userId);
         const conversation = await chatModel.find({
             conversationId: req.params.userId,
         });
@@ -53,7 +61,6 @@ export const GetConversationResApi = async (req, res, next) => {
         const conversation = await conversationModel.find({
             members: { $in: [new mongoose.Types.ObjectId(req.params.userId)] },
         });
-        console.log(conversation);
         res.status(201).json({ result: conversation });
     } catch (error) {
         console.log(error.message);
@@ -104,7 +111,6 @@ export const GetConversationListResApi = async (req, res, next) => {
 export const GetChatWithAdminResApi = async (req, res, next) => {
     try {
         const check = await conversationModel.findOne({ members: { $in: [new mongoose.Types.ObjectId(req.user.id)] } });
-        console.log(check);
         res.status(201).json({ result: check });
     } catch (error) {
         console.log(error);

@@ -23,7 +23,7 @@ function TableComponent({ data }) {
                         <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
                                 <div className=" text-center">
-                                    <span className="font-medium ">{data?.client?.name}</span>
+                                    <span className="font-medium ">{data?.client?.name || data?.name}</span>
                                 </div>
                             </div>
                         </td>

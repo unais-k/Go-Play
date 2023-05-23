@@ -2,7 +2,7 @@ import express from "express";
 import { TurfAdminLogin, TurfAdminRegister } from "../../Controller/TurfAdmin/AuthController.js";
 import {
     AddEventResApi,
-    AddPhotoOnEventPostApi,
+    AddPhotoOnGroundPostApi,
     AdminEditResApi,
     AvailableStatusChangeResApi,
     BookingListResApi,
@@ -58,7 +58,7 @@ router.post("/ground-detail-form-submit", turfAdminVerifyToken, GroundDetailSubm
 router.post("/add-time-on-event", turfAdminVerifyToken, TimeSaveOnEventResApi);
 router.get("/event-detail", turfAdminVerifyToken, EventDetailFetchResApi);
 router.get("/owner-data", turfAdminVerifyToken, OwnerDataFetchResApi);
-router.post("/photo-add-on-event", turfAdminVerifyToken, AddPhotoOnEventPostApi);
+router.post("/photo-add-on-ground", turfAdminVerifyToken, AddPhotoOnGroundPostApi);
 router.get("/booking-list", turfAdminVerifyToken, BookingListResApi);
 router.patch("/payment-status-set", turfAdminVerifyToken, PaymentStatusSetResApi);
 router.patch("/booking-status-set", turfAdminVerifyToken, BookingStatusSetResApi);

@@ -73,7 +73,7 @@ export const GroundViewResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
         const find = await GroundModel.findOne({ _id: id }).populate("Owner");
-        console.log(find);
+
         const events = await eventModel.find({ groundId: id });
         res.status(201).json({ result: find, event: events });
     } catch (error) {
@@ -133,7 +133,6 @@ export const RuleDeleteResApi = async (req, res, next) => {
     try {
         const data = req.body;
         const { id, index } = req.query;
-        console.log(req.query);
 
         const response = await GroundModel.findOneAndUpdate(
             { _id: id, "rules._id": index },
@@ -294,7 +293,6 @@ export const EditEventResApi = async (req, res) => {
 export const TimeSaveOnEventResApi = async (req, res, next) => {
     try {
         console.log(req.body);
-        console.log(req.query);
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
@@ -303,7 +301,6 @@ export const TimeSaveOnEventResApi = async (req, res, next) => {
 
 export const EventDetailFetchResApi = async (req, res, next) => {
     try {
-        console.log(req.query);
         console.log(req.body);
         const id = req.query.id;
         const findDetail = await eventModel.findOne({ _id: id }).populate("groundId");
@@ -328,11 +325,10 @@ export const OwnerDataFetchResApi = async (req, res, next) => {
     }
 };
 
-export const AddPhotoOnEventPostApi = async (req, res, next) => {
+export const AddPhotoOnGroundPostApi = async (req, res, next) => {
     try {
-        console.log(req.query);
-        console.log(req.body);
-        const { photo, groundId, eventId } = req.body;
+        const { photo, groundId } = req.body;
+
         const Profile = "profile";
         const result = await cloudinary.uploader
             .upload(photo, {
@@ -343,10 +339,10 @@ export const AddPhotoOnEventPostApi = async (req, res, next) => {
                 console.log(err);
             });
 
-        const updatePhoto = await eventModel.updateOne({ _id: eventId }, { $push: { photo: result.secure_url } });
-        const find = await eventModel.findOne({ _id: eventId });
-        const addToGround = await GroundModel.updateOne({ _id: find.groundId }, { $push: { images: result.secure_url } });
-        res.status(201).json({ result: find });
+        const updatePhoto = await GroundModel.updateOne({ _id: groundId }, { $push: { images: result.secure_url } });
+        res.status(201).json({ msg: "Photo added" });
+        // const find = await eventModel.findOne({ _id: eventId });
+        // const addToGround = await GroundModel.updateOne({ _id: find.groundId }, { $push: { images: result.secure_url } });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });
@@ -410,7 +406,6 @@ export const PaymentStatusSetResApi = async (req, res, next) => {
 
 export const BookingStatusSetResApi = async (req, res, next) => {
     try {
-        console.log(req.body);
         const find = await bookingModel
             .findOneAndUpdate({ _id: req.body.id }, { $set: { status: req.body.value } })
             .populate("turf")
@@ -449,7 +444,7 @@ export const FindReviewResApi = async (req, res, next) => {
                 .populate("bookingId");
             reviewId.push(finding);
         }
-        console.log(reviewId);
+
         res.status(201).json({ result: reviewId });
     } catch (error) {
         console.log(error.message);

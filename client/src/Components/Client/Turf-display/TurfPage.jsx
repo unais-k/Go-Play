@@ -7,18 +7,20 @@ import { GroundListReqApi, SearchGroundReqApi } from "../../../API/Services/Clie
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import ClientCard from "../Layout/ClientCard";
+import Loader from "./../../Turf-admin/Layout/Loader";
 
 function TurfPage() {
     const navigate = useNavigate();
     const [state, setState] = useState([]);
+    const [loader, setLoader] = useState(false);
     const [click, setClick] = useState(null);
-    useEffect(() => {
-        groundList();
-    }, []);
+
     const groundList = async () => {
+        setLoader(true);
         const response = await GroundListReqApi();
         if (response.status === 200) {
             setState(response.data.result);
+            setLoader(false);
         } else {
             message.error("Something went wrong");
         }
@@ -36,6 +38,10 @@ function TurfPage() {
         APIcall(e.target.value);
     };
 
+    useEffect(() => {
+        groundList();
+    }, []);
+
     return (
         <div className="flex justify-center items-center">
             <div className="w-11/12">
@@ -51,6 +57,7 @@ function TurfPage() {
                 </Breadcrumb>
                 <div className="flex justify-center">
                     <div className="listing w-10/12">
+                        {loader && <Loader />}
                         <div className="search-bar justify-center items-center flex flex-col pt-3">
                             <p className="text-lime-600 text-sm font-bold">
                                 Search for the best turf grounds, indoor courts grounds in your city
