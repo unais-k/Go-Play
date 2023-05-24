@@ -23,7 +23,7 @@ function CardComponents({ data, setShowModal }) {
                     </h2>
                 </div>
                 <div className="flex justify-start">
-                    <p className="text-emerald-400 font-semibold mt-2.5">Place</p>
+                    <p className="text-emerald-400 font-semibold mt-2.5">Place</p>&nbsp;
                     <p className="text-emerald-400 font-semibold mt-2.5">{data?.place}</p>
                 </div>
             </section>

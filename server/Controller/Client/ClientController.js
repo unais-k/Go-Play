@@ -2,7 +2,7 @@ import CityModel from "../../Model/City.js";
 import timeModel from "../../Model/Time.js";
 import GroundModel from "./../../Model/Grounds.js";
 import eventModel from "./../../Model/Events.js";
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import bookingModel from "../../Model/Booking.js";
 import UserModel from "../../Model/Client.js";
 import reviewModel from "../../Model/Review.js";
@@ -58,25 +58,25 @@ export const FootballGroundResApi = async (req, res, next) => {
 export const GroundViewResApi = async (req, res, next) => {
     try {
         const id = req.query.id;
-        console.log(id, "id");
         const find = await GroundModel.findOne({ _id: id });
         const events = await eventModel.find({ groundId: id });
         const review = await reviewModel.find({ turf: id }).populate("client");
-        const avgRating = await reviewModel.aggregate([
-            {
-                $group: {
-                    _id: null,
-                    average: { $avg: "$rating" },
-                },
-            },
-        ]);
-        if (avgRating.length > 0) {
-            const rating = avgRating[0].average;
-            res.status(200).json({ result: find, events: events, review: review, rating: rating });
-        } else {
-            const rating = 0;
-            res.status(200).json({ result: find, events: events, review: review, rating: rating });
-        }
+        // const avgRating = await reviewModel.aggregate([
+        //     {
+        //         $group: {
+        //             _id: null,
+        //             average: { $avg: "$rating" },
+        //         },
+        //     },
+        // ]);
+        // if (avgRating.length > 0) {
+        //     const rating = avgRating[0].average;
+        //     res.status(200).json({ result: find, events: events, review: review, rating: rating });
+        // } else {
+        //     const rating = 0;
+        //     res.status(200).json({ result: find, events: events, review: review, rating: rating });
+        // }
+        res.status(200).json({ result: find, events: events, review: review });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error });
@@ -211,13 +211,14 @@ export const UserDataFetchResApi = async (req, res, next) => {
 
 export const UserEditResApi = async (req, res, next) => {
     try {
-        const { name, email, phone, city, dob } = req.body;
+        const { name, email, phone, city } = req.body;
 
         const updateUser = await UserModel.updateMany(
             { _id: req.body._id },
-            { $set: { name: name, email: email, phone: phone, city: city, dob: dob } }
-        );
-        console.log(updateUser);
+            { $set: { name: name, email: email, phone: phone, city: city } }
+        ).then(() => {
+            res.status(201).json({ msg: "Profile Updated" });
+        });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ error: error.message });

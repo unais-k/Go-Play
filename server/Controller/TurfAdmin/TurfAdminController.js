@@ -317,7 +317,6 @@ export const OwnerDataFetchResApi = async (req, res, next) => {
         const id = req.user.id;
         const find = await TurfAdminModel.findOne({ _id: id });
         const ground = await GroundModel.find({ Owner: id });
-
         res.status(201).json({ result: find, ground: ground });
     } catch (error) {
         console.log(error.message);
@@ -454,11 +453,13 @@ export const FindReviewResApi = async (req, res, next) => {
 
 export const AdminEditResApi = async (req, res, next) => {
     try {
+        console.log(req.body, "req.body");
         const { name, email, phone, aadhar, pan } = req.body;
-        const updateProfile = await TurfAdminModel.findOneAndUpdate(
+        const updateProfile = await TurfAdminModel.updateMany(
             { _id: req.user.id },
             { $set: { name: name, email: email, phone: phone, aadhar: aadhar, pan: pan } }
         );
+        console.log(updateProfile, "updated data");
         res.status(201).json({ result: updateProfile });
     } catch (error) {
         console.log(error.message);

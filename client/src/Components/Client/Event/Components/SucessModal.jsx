@@ -13,7 +13,6 @@ export default function SuccessModal({ bookingData, selectedType, setModal1 }) {
     const [date, setDate] = useState(new Date(Date.now()));
     const [price, setPrice] = useState(null);
     const [groundId, setGroundId] = useState(null);
-    const [groundData, setGroundData] = useState({});
 
     useEffect(() => {
         if (bookingData) {
@@ -71,7 +70,7 @@ export default function SuccessModal({ bookingData, selectedType, setModal1 }) {
                         {/*body*/}
                         <div className="relative p-6 flex-auto">
                             <div className="relative p-6 flex-auto">
-                                <table class="table-auto">
+                                <table className="table-auto">
                                     <thead>
                                         <tr>
                                             <th>Time</th>

@@ -27,7 +27,6 @@ function GroundViewPage() {
     const [state, setState] = useState([]);
     const [sport, setSport] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [rating, setRating] = useState(null);
 
     const [selectedSport, setSelectedSport] = useState({});
     const [time, setTime] = useState([]);
@@ -155,7 +154,7 @@ function GroundViewPage() {
             setState(response.data.result);
             setEvent(response.data.events);
             setReview(response.data.review);
-            setRating(response.data.rating);
+
             setLoader(false);
         } else {
             message.error("Something went wrong");
@@ -294,12 +293,7 @@ function GroundViewPage() {
                     </div>
                     {/* GroundDetailComponent */}
 
-                    <GroundDetailComponent
-                        rating={rating}
-                        reviewDiv={reviewDiv}
-                        state={state}
-                        handleBookNow={handleBookNow}
-                    />
+                    <GroundDetailComponent reviewDiv={reviewDiv} state={state} handleBookNow={handleBookNow} />
                     <div ref={movingDiv}>
                         <div className="text-lime-600 text-2xl font-bold">Step 1: Select Sport</div>
                         <div className="flex">

@@ -5,6 +5,7 @@ import CardComponents from "./Components/CardComponents";
 import FormComponents from "./Components/FormComponents";
 import EditPhoto from "./Components/EditPhoto";
 import Loader from "../Layout/Loader";
+import { toast } from "react-toastify";
 
 function ProfileComponent() {
     const [data, setData] = useState([]);
@@ -24,7 +25,7 @@ function ProfileComponent() {
     const edit = async (e) => {
         e.preventDefault();
         const response = await AdminEditReqApi(data, token);
-        setData(response.data.result);
+        if (response.status === 201) toast.success("Profile Updated");
     };
 
     useEffect(() => {

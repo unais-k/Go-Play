@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 function OtpComponent({ handleOTP, otp, setOtp }) {
     const input1Ref = useRef(null);

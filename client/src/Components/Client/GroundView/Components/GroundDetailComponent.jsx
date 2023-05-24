@@ -6,8 +6,7 @@ import Loader from "../../../Turf-admin/Layout/Loader";
 
 function GroundDetailComponent({ reviewDiv, rating, state, handleBookNow }) {
     const navigate = useNavigate();
-    const roundedNumber = rating?.toFixed(1);
-    console.log(rating, "line9");
+
     const [loader, setLoader] = useState(false);
     const handleViewEvent = () => {
         navigate("/event", {
@@ -62,7 +61,7 @@ function GroundDetailComponent({ reviewDiv, rating, state, handleBookNow }) {
                     <p className="mb-3 flex text-amber-500">
                         <div className="flex w-fit px-3 py-0.5 ms-2 bg-green-700 text-white me-3">
                             <AiFillStar className="pt-1" size={20} color="white" />
-                            {roundedNumber}
+                            1.1111
                         </div>
                     </p>
                     <p>Dial :{state?.phone}</p>

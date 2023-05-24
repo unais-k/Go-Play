@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../../Components/Admin/SideBarComponents/components/Layout";
 import ChatComponent from "../../Components/Admin/Chat/ChatComponent";
 import Sidebar from "../../Components/Admin/SideBarComponents/components/Sidebar";
 

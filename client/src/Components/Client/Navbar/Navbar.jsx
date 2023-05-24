@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./NavbarPage.css";
-import { setCityOff, setCityOn, setLogout } from "../../../Utils/Store/Slice/Client";
+import { setCityOn } from "../../../Utils/Store/Slice/Client";
 import { LocationListReqApi } from "../../../API/Services/ClientRequest";
 function NavbarPage(props) {
     const navigate = useNavigate();

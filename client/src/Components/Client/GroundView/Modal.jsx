@@ -84,7 +84,7 @@ function ModalBookingComponent({ bookingData, setShowModal }) {
                                         <tr>
                                             <td className="px-4">
                                                 {time?.map((res) => {
-                                                    return <div>{res.slots}</div>;
+                                                    return <div key={res._id}>{res.slots}</div>;
                                                 })}
                                             </td>
                                             <td className="px-4">{new Date(date).toDateString()}</td>

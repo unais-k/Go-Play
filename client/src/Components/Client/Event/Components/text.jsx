@@ -3,7 +3,7 @@ import React from "react";
 export const Text = () => {
     return (
         <div>
-            <span class="absolute -top-10 -right-9 z-[-1]">
+            <span className="absolute -top-10 -right-9 z-[-1]">
                 <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         fill-rule="evenodd"
@@ -13,7 +13,7 @@ export const Text = () => {
                     />
                 </svg>
             </span>
-            <span class="absolute -right-10 top-[90px] z-[-1]">
+            <span className="absolute -right-10 top-[90px] z-[-1]">
                 <svg width="34" height="134" viewBox="0 0 34 134" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="31.9993" cy="132" r="1.66667" transform="rotate(180 31.9993 132)" fill="#13C296" />
                     <circle cx="31.9993" cy="117.333" r="1.66667" transform="rotate(180 31.9993 117.333)" fill="#13C296" />
@@ -47,7 +47,7 @@ export const Text = () => {
                     <circle cx="2.66536" cy="1.66665" r="1.66667" transform="rotate(180 2.66536 1.66665)" fill="#13C296" />
                 </svg>
             </span>
-            <span class="absolute -left-7 -bottom-7 z-[-1]">
+            <span className="absolute -left-7 -bottom-7 z-[-1]">
                 <svg width="107" height="134" viewBox="0 0 107 134" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="104.999" cy="132" r="1.66667" transform="rotate(180 104.999 132)" fill="#13C296" />
                     <circle cx="104.999" cy="117.333" r="1.66667" transform="rotate(180 104.999 117.333)" fill="#13C296" />
@@ -137,7 +137,7 @@ export const Text = () => {
 
 export const AnotherCircle = () => {
     return (
-        <span class="absolute right-4 top-4 z-[-1]">
+        <span className="absolute right-4 top-4 z-[-1]">
             <svg width="41" height="89" viewBox="0 0 41 89" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="38.9138" cy="87.4849" r="1.42021" transform="rotate(180 38.9138 87.4849)" fill="#3056D3" />
                 <circle cx="38.9138" cy="74.9871" r="1.42021" transform="rotate(180 38.9138 74.9871)" fill="#3056D3" />

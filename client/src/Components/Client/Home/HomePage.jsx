@@ -88,6 +88,7 @@ function HomePage() {
                                 ground.map((res) => {
                                     return (
                                         <div
+                                            key={res._id}
                                             className="w-11/12 h-auto bg-white p-3 m-4 h-fit"
                                             onClick={() => handleGroundCard(res._id)}
                                         >

@@ -307,7 +307,6 @@ export const FindReviewReqApi = async (token) => {
 };
 
 export const AdminEditReqApi = (data, token) => {
-    console.log(data);
     try {
         const response = AxiosTurfAdmin.post("/profile-edit", data, {
             headers: { Authorization: "Bearer " + token },

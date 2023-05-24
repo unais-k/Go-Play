@@ -66,7 +66,6 @@ function ForgetPasswordPage({ handlePasswordSubmit, setPassword }) {
         const NewPasswordInput = { ...passwordInput, [passwordInputFieldName]: passwordInputValue };
         setPasswordInput(NewPasswordInput);
         setPassword(passwordInput);
-        console.log(passwordInput, "--------");
     };
 
     return (

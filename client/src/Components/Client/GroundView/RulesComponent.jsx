@@ -15,9 +15,9 @@ function RulesComponent({ state }) {
             <div>
                 {rule?.map((res) => {
                     return (
-                        <>
+                        <span key={res._id}>
                             <div className="font-semibold text-xl"> -{res.task}</div>
-                        </>
+                        </span>
                     );
                 })}
             </div>

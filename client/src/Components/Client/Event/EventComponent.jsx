@@ -1,6 +1,5 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import GroundDetailComponent from "../GroundView/Components/GroundDetailComponent";
 import EventMainComponent from "./Components/EventMainComponent";
 
 function EventComponent() {

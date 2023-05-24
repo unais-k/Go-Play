@@ -4,17 +4,17 @@ function EventCardComponent({ cardTitle, states }) {
     return (
         <div>
             <div
-                class={`relative mt-6 flex w-96 flex-col ${
+                className={`relative mt-6 flex w-96 flex-col ${
                     states === cardTitle.id ? "bg-blue-400" : "bg-white"
                 } rounded-xl bg-clip-border text-gray-700 shadow-md`}
             >
-                <div class="p-6">
+                <div className="p-6">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="currentColor"
                         aria-hidden="true"
-                        class="mb-4 h-12 w-12 text-pink-500"
+                        className="mb-4 h-12 w-12 text-pink-500"
                     >
                         <path
                             fill-rule="evenodd"
@@ -23,17 +23,17 @@ function EventCardComponent({ cardTitle, states }) {
                         ></path>
                         <path d="M5.26 17.242a.75.75 0 10-.897-1.203 5.243 5.243 0 00-2.05 5.022.75.75 0 00.625.627 5.243 5.243 0 005.022-2.051.75.75 0 10-1.202-.897 3.744 3.744 0 01-3.008 1.51c0-1.23.592-2.323 1.51-3.008z"></path>
                     </svg>
-                    <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                    <h5 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                         Book for {cardTitle.title}
                     </h5>
-                    <p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
+                    <p className="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
                         {cardTitle.description}
                     </p>
                 </div>
-                <div class="p-6 pt-0">
-                    <a class="!font-medium !text-blue-gray-900 !transition-colors hover:!text-pink-500">
+                <div className="p-6 pt-0">
+                    <a className="!font-medium !text-blue-gray-900 !transition-colors hover:!text-pink-500">
                         <button
-                            class="flex select-none items-center gap-2 rounded-lg py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            className="flex select-none items-center gap-2 rounded-lg py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                             type="button"
                             data-ripple-dark="true"
                         >
@@ -45,7 +45,7 @@ function EventCardComponent({ cardTitle, states }) {
                                 stroke-width="2"
                                 stroke="currentColor"
                                 aria-hidden="true"
-                                class="h-4 w-4"
+                                className="h-4 w-4"
                             >
                                 <path
                                     stroke-linecap="round"

@@ -46,13 +46,11 @@ function EventMainComponent({ state }) {
     const [date, setDate] = useState(new Date(Date.now()));
     const [selectedSport, setSelectedSport] = useState("");
 
-    const [showDiv, setShowDiv] = useState(true);
     const [showDiv1, setShowDiv1] = useState(false);
     const [showDiv2, setShowDiv2] = useState(false);
     const [showDiv3, setShowDiv3] = useState(false);
     const [showDiv4, setShowDiv4] = useState(false);
 
-    const movingDiv = useRef(null);
     const movingDiv1 = useRef(null);
     const movingDiv2 = useRef(null);
     const movingDiv3 = useRef(null);
@@ -278,8 +276,8 @@ function EventMainComponent({ state }) {
 
     return (
         <div className="px-10">
-            <section class="relative z-10 p-10 overflow-hidden bg-white lg:py-[40px]">
-                <div class="container mx-auto">
+            <section className="relative z-10 p-10 overflow-hidden bg-white lg:py-[40px]">
+                <div className="container mx-auto">
                     <div className="flex justify-center gap-10 mb-5">
                         {cardTitle.map((res) => {
                             return (
@@ -298,10 +296,10 @@ function EventMainComponent({ state }) {
                     {loader && <Loader />}
                     {modalO && <Modal setModalO={setModalO} />}
                     {modal1 && <SuccessModal selectedType={selectedType} bookingData={bookingData} setModal1={setModal1} />}
-                    <div class="-mx-4 flex flex-wrap lg:justify-between">
+                    <div className="-mx-4 flex flex-wrap lg:justify-between">
                         <RightSideComponent state={state} />
-                        <div class="w-full px-4 lg:w-1/2 xl:w-5/12">
-                            <div class="relative rounded-lg bg-white p-8 shadow-lg sm:p-12">
+                        <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
+                            <div className="relative rounded-lg bg-white p-8 shadow-lg sm:p-12">
                                 <div>
                                     <div className="text-dark mt-5 text-xl font-bold uppercase">Choose Sport Type</div>
                                     <div className="flex">

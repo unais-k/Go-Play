@@ -8,12 +8,10 @@ function BookingList() {
     const navigate = useNavigate();
     const token = useSelector((state) => state.userLogin.token);
     const [bookings, setBookings] = useState([]);
-    const [ground, setGround] = useState([]);
-    const [event, setEvent] = useState([]);
 
     const data = async () => {
         const response = await UserBookingDetailFetchReqApi(token);
-        // console.log(response.data)
+
         if (response.status === 201) {
             console.log(response.data.result);
             setBookings(response.data.result);
@@ -39,49 +37,49 @@ function BookingList() {
         <div>
             <div className="text-lime-600 font-semibold text-2xl mb-5">My Bookings</div>
             <div>
-                <div class="">
-                    <div class="overflow-x-auto">
-                        <div class="min-w-screen  rounded ps-5 justify-center  font-sans overflow-hidden">
-                            <div class="w-full ">
+                <div className="">
+                    <div className="overflow-x-auto">
+                        <div className="min-w-screen  rounded ps-5 justify-center  font-sans overflow-hidden">
+                            <div className="w-full ">
                                 {bookings.length > 0 ? (
-                                    <div class="bg-white shadow-md rounded my-6 h-96 overflow-auto ">
-                                        <table class="relative min-w-max w-full table-auto">
+                                    <div className="bg-white shadow-md rounded my-6 h-96 overflow-auto ">
+                                        <table className="relative min-w-max w-full table-auto">
                                             <thead className="">
-                                                <tr class="bg-gray-200 rounded text-gray-600 uppercase text-sm leading-normal">
-                                                    <th class="py-3 px-6 text-left">Turf Name</th>
-                                                    <th class="py-3 px-6 text-center">Sport Selected</th>
-                                                    <th class="py-3 px-6 text-center">Date</th>
-                                                    <th class="py-3 px-6 text-center">Time</th>
-                                                    <th class="py-3 px-6 text-center">View</th>
-                                                    <th class="py-3 px-6 text-center">Cancel</th>
+                                                <tr className="bg-gray-200 rounded text-gray-600 uppercase text-sm leading-normal">
+                                                    <th className="py-3 px-6 text-left">Turf Name</th>
+                                                    <th className="py-3 px-6 text-center">Sport Selected</th>
+                                                    <th className="py-3 px-6 text-center">Date</th>
+                                                    <th className="py-3 px-6 text-center">Time</th>
+                                                    <th className="py-3 px-6 text-center">View</th>
+                                                    <th className="py-3 px-6 text-center">Cancel</th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="text-gray-600 text-sm font-light">
+                                            <tbody className="text-gray-600 text-sm font-light">
                                                 {bookings?.length > 0 &&
                                                     bookings?.map((state) => {
                                                         return (
                                                             <>
-                                                                <tr class="border-b rounded border-gray-200 hover:bg-gray-100">
-                                                                    <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                                        <div class="flex items-center">
-                                                                            <span class="font-medium">
+                                                                <tr className="border-b rounded border-gray-200 hover:bg-gray-100">
+                                                                    <td className="py-3 px-6 text-left whitespace-nowrap">
+                                                                        <div className="flex items-center">
+                                                                            <span className="font-medium">
                                                                                 {state?.turf?.name}
                                                                             </span>
                                                                         </div>
                                                                     </td>
-                                                                    <td class="py-3 px-6 text-left">
-                                                                        <div class="flex font-medium items-center">
-                                                                            <div class="mr-2"></div>
+                                                                    <td className="py-3 px-6 text-left">
+                                                                        <div className="flex font-medium items-center">
+                                                                            <div className="mr-2"></div>
                                                                             <span>{state?.sport}</span>
                                                                         </div>
                                                                     </td>
-                                                                    <td class="py-3 px-6 text-center">
-                                                                        <div class="flex items-center justify-center">
+                                                                    <td className="py-3 px-6 text-center">
+                                                                        <div className="flex items-center justify-center">
                                                                             {new Date(state?.bookDate).toDateString()}
                                                                         </div>
                                                                     </td>
-                                                                    <td class="py-3 px-6 text-center">
-                                                                        <div class="font-medium items-center">
+                                                                    <td className="py-3 px-6 text-center">
+                                                                        <div className="font-medium items-center">
                                                                             {state?.time?.map((res) => {
                                                                                 return (
                                                                                     <>
@@ -93,27 +91,27 @@ function BookingList() {
                                                                             })}
                                                                         </div>
                                                                     </td>
-                                                                    <td class=" text-center">
+                                                                    <td className=" text-center">
                                                                         <div
                                                                             onClick={() => handleSelectView(state._id)}
-                                                                            class="flex item-center justify-center"
+                                                                            className="flex item-center justify-center"
                                                                         >
                                                                             <AiFillFolderOpen size={23} />
                                                                         </div>
                                                                     </td>
-                                                                    <td class="py-3 px-6 text-center">
+                                                                    <td className="py-3 px-6 text-center">
                                                                         {state?.bookingStatus ? (
                                                                             <div
                                                                                 onClick={() =>
                                                                                     handleCancel({ id: state._id })
                                                                                 }
-                                                                                class=" font-medium px-3 py-2 bg-red-500 items-center"
+                                                                                className=" font-medium px-3 py-2 bg-red-500 items-center"
                                                                             >
                                                                                 <span className="">Cancel</span>
                                                                             </div>
                                                                         ) : (
-                                                                            <div class=" font-medium items-center">
-                                                                                <div class="mr-2"></div>
+                                                                            <div className=" font-medium items-center">
+                                                                                <div className="mr-2"></div>
                                                                                 <span>{state?.status}</span>
                                                                             </div>
                                                                         )}

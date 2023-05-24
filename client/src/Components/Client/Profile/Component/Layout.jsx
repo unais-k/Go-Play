@@ -4,6 +4,7 @@ import ProfileEdit from "./ProfileEdit";
 import BreadCrumbComponent from "./BreadCrumbComponent";
 import { UserDataFetchReqApi, UserEditReqApi } from "../../../../API/Services/ClientRequest";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function Layout() {
     const token = useSelector((state) => state.userLogin.token);
@@ -15,9 +16,10 @@ function Layout() {
             setClientData(response.data.result);
         }
     };
-    const edit = async () => {
+    const edit = async (e) => {
+        e.preventDefault();
         const response = await UserEditReqApi(clientData, token);
-        console.log(response.data.result);
+        if (response.status === 201) toast.success("Profile updated");
     };
     useEffect(() => {
         token && userData();

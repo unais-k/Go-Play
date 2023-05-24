@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FPEmailReqApi } from "../../../../API/Services/ClientRequest";
 
 function EmailComponent({ handleSubmit, setEmail }) {
     const navigate = useNavigate();
@@ -53,12 +52,6 @@ function EmailComponent({ handleSubmit, setEmail }) {
                                     Cancel
                                 </a>
                             </p>
-                            {/* <p className="text-end text-sm text-gray-500 font-light">
-                                New to Go Play?
-                                <a className="text-green-400" onClick={handleRegister}>
-                                    &nbsp;Register
-                                </a>
-                            </p> */}
                         </div>
                     </div>
                 </div>
