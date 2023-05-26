@@ -9,8 +9,7 @@ import { useSelector } from "react-redux";
 import Loader from "../../Turf-admin/Layout/Loader";
 
 function HomePage() {
-    const location = useSelector((state) => state.userLogin.city);
-
+    const dispatchLocation = useSelector((state) => state.userLogin.city);
     const token = useSelector((state) => state.userLogin.token);
     const navigate = useNavigate();
     const truncate = (string, n) => {
@@ -20,12 +19,12 @@ function HomePage() {
     const [place, setPlace] = useState([]);
     const [loader, setLoader] = useState(false);
     useEffect(() => {
-        groundList();
-    }, [""]);
+        if (dispatchLocation) groundList();
+    }, [dispatchLocation]);
 
     const groundList = async () => {
         setLoader(true);
-        const response = await GroundListReqApi();
+        const response = await GroundListReqApi(dispatchLocation);
         if (response.status === 200) {
             setGround(response.data.result);
             setPlace(response.data.result);
@@ -36,7 +35,7 @@ function HomePage() {
     };
 
     const APIcall = async (id) => {
-        const response = await SearchGroundReqApi(id);
+        const response = await SearchGroundReqApi({ id: id, place: dispatchLocation });
         if (response.status === 201) {
             setGround(response.data.result);
         }
@@ -123,8 +122,12 @@ function HomePage() {
                     <p>Explore grounds & venues in and around popular areas of your city</p>
 
                     <ul className="grid grid-cols-3 mt-10">
-                        {place?.map((res) => {
-                            return <li className="font-mono hover:text-amber-500">{res.place}</li>;
+                        {place?.map((res, index) => {
+                            return (
+                                <li key={index} className="font-mono hover:text-amber-500">
+                                    {res.place}
+                                </li>
+                            );
                         })}
                     </ul>
                 </div>
