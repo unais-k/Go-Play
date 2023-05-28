@@ -154,7 +154,7 @@ export const OnDateBookedResApi = async (req, res, next) => {
         for (let i = 0; i < find.length; i++) {
             selectedTime.push(find[i].time);
         }
-        const combinedArray = selectedTime.reduce((acc, curr) => acc.concat(curr), []);
+        const combinedArray = await selectedTime.reduce((acc, curr) => acc.concat(curr), []);
         res.status(201).json({ result: find, time: combinedArray });
     } catch (error) {
         console.log(error);
@@ -174,6 +174,7 @@ export const BookingSubmitResApi = async (req, res, next) => {
         const advance = parseInt(req.body.advance);
         const total = parseInt(req.body.total);
         const { bookingData } = req.body;
+        console.log(typeof advance);
         const booking = await bookingModel.create({
             client: req.user.id,
             total: total,

@@ -33,6 +33,13 @@ function PaymentComponent() {
             console.log(11);
         }
     }, [""]);
+
+    let advanceAmount = 0;
+    if (advance.length > 0) {
+        advanceAmount = advance.toString();
+        console.log(typeof advanceAmount);
+    }
+
     const bookinDate = new Date(date ? date : "").toDateString();
     const handlePayment = async (id) => {
         const response = await BookingSubmitReqApi(
